@@ -3,13 +3,18 @@
   "version": "0.0.0",
   "private": true,
   "main": "index.js",
-  "files": [],
+  "files": [
+    "eslint-nest.js",
+    "eslint-next.js",
+    "eslint-preset.js"
+  ],
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "eslint-config-next": "^12.0.8",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "7.28.0"
   }
 }

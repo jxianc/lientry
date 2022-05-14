@@ -12,7 +12,10 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md}\"",
     "prepare": "husky install",
-    "web": "pnpm --filter web"
+    "web": "pnpm --filter web",
+    "api": "pnpm --filter api",
+    "tsconfig": "pnpm --filter tsconfig",
+    "config": "pnpm --filter config"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.4",
