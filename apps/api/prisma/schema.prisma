@@ -10,6 +10,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Provider {
+  id       String @id @default(uuid())
+  provider String
+  user     User   @relation(fields: [userId], references: [id])
+  userId   String
+
+  @@map("providers")
+}
+
 model User {
-  id String @id @default(uuid())
+  id                  String     @id @default(uuid())
+  displayName         String?
+  email               String     @unique
+  image               String?
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt()
+  refreshTokenVersion Int
+  providers           Provider[]
+  trees               Tree[]
+
+  @@map("users")
+}
+
+model Tree {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt()
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  links       Link[]
+
+  @@map("trees")
+}
+
+model Link {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  url         String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  tree        Tree     @relation(fields: [treeId], references: [id])
+  treeId      String
+
+  @@map("links")
 }
