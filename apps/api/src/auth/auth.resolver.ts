@@ -1,11 +1,12 @@
 import { UseGuards } from '@nestjs/common'
-import { Args, Context, Mutation, Resolver } from '@nestjs/graphql'
-import { User } from '@prisma/client'
+import { Args, Context, Mutation, Resolver, Query } from '@nestjs/graphql'
+import { User } from '../users/entities/user.entity'
 import { UsersService } from '../users/users.service'
 import { AuthService } from './auth.service'
 import { AuthResponse } from './dto/auth.response'
 import { LoginUserInput } from './dto/login-user.input'
 import { RegisterUserInput } from './dto/register-user.input'
+import { JwtGqlAuthGuard } from './guards/jwt.guard'
 import { LocalGqlAuthGuard } from './guards/local-gql.guard'
 
 @Resolver()
@@ -50,5 +51,11 @@ export class AuthResolver {
       user: ctx.user,
       accessToken,
     }
+  }
+
+  @UseGuards(JwtGqlAuthGuard)
+  @Query(() => User)
+  me(@Context() ctx: any): User {
+    return ctx.req.user
   }
 }
