@@ -18,12 +18,14 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
-    "test:e2e-watch": "jest --config ./test/jest-e2e.json",
     "gen-env": "nx gen-env-types .env -o env.d.ts -e .",
-    "dc-test:up": "docker-compose -f docker-compose-test.yml up -d",
+    "dc-test:up": "docker-compose -f docker-compose-test.yml up -d && sleep 1",
     "dc-test:down": "docker-compose -f docker-compose-test.yml down",
-    "pm:test": "dotenv -e .env.test -- prisma migrate reset --force"
+    "test:pm": "dotenv -e .env.test -- prisma migrate reset --force",
+    "test:e2e": "dotenv -e .env.test -- jest --config ./test/jest-e2e.json",
+    "test:e2e-watch": "dotenv -e .env.test -- jest --config ./test/jest-e2e.json --watch",
+    "itest": "nr dc-test:down && nr dc-test:up && nr test:pm && nr test:e2e",
+    "test:ps": "dotenv -e .env.test -- prisma studio"
   },
   "dependencies": {
     "@nestjs/apollo": "^10.0.11",
