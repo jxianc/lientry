@@ -2,10 +2,11 @@ import { Injectable } from '@nestjs/common'
 import { compare, hash } from 'bcrypt'
 import { User } from '../users/entities/user.entity'
 import { UsersService } from '../users/users.service'
-import { Response } from 'express'
+import { Request, Response } from 'express'
 import { JwtService } from '@nestjs/jwt'
 import { TokenPayload } from '../utils/token-payload.type'
 import { PrismaService } from '../prisma.service'
+import { AuthResponse } from './dto/auth.response'
 
 @Injectable()
 export class AuthService {
@@ -43,6 +44,68 @@ export class AuthService {
     this.sendRefreshToken(refreshToken, res)
 
     return accessToken
+  }
+
+  async refreshToken(req: Request, res: Response): Promise<AuthResponse> {
+    // get refreshtoken from cookie
+    // verify refreshtoken
+    // generate new accesstoken and refreshtoken
+    // update new refreshtoken to db
+    // return acesstoken and send refreshtoken as cookie
+    const refreshToken = req.cookies[process.env.REFRESH_TOKEN_COOKIE_KEY]
+    if (!refreshToken) {
+      return {
+        success: false,
+        errMsg: 'unauthorized',
+      }
+    }
+
+    let tokenPayload: TokenPayload
+    try {
+      tokenPayload = this.jwtService.verify<TokenPayload>(refreshToken, {
+        secret: process.env.REFRESH_TOKEN_SECRET,
+      })
+    } catch (err) {
+      console.log(err)
+      return {
+        success: false,
+        errMsg: 'unauthorized',
+      }
+    }
+
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: tokenPayload.userId,
+      },
+    })
+    if (!user || !user.refreshToken) {
+      return {
+        success: false,
+        errMsg: 'unauthorized',
+      }
+    }
+
+    const tokenIsValid = await compare(refreshToken, user.refreshToken)
+    if (!tokenIsValid) {
+      return {
+        success: false,
+        errMsg: 'unauthorized',
+      }
+    }
+
+    const { accessToken, refreshToken: newRefreshToken } = this.generateToken({
+      email: user.email,
+      userId: user.id,
+    })
+
+    this.updateRefreshToken(newRefreshToken, tokenPayload.userId)
+    this.sendRefreshToken(newRefreshToken, res)
+
+    return {
+      success: true,
+      accessToken,
+      user,
+    }
   }
 
   generateToken(tokenPayload: TokenPayload) {

@@ -21,6 +21,7 @@ input LoginUserInput {
 
 type Mutation {
   login(loginUserInput: LoginUserInput!): AuthResponse!
+  refreshToken: AuthResponse!
   register(registerUserInput: RegisterUserInput!): AuthResponse!
 }
 

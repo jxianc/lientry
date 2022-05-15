@@ -58,4 +58,9 @@ export class AuthResolver {
   me(@Context() ctx: any): User {
     return ctx.req.user
   }
+
+  @Mutation(() => AuthResponse)
+  refreshToken(@Context() ctx: any): Promise<AuthResponse> {
+    return this.authService.refreshToken(ctx.req, ctx.res)
+  }
 }
