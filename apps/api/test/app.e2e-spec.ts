@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { INestApplication } from '@nestjs/common'
-import * as request from 'supertest'
+import request from 'supertest'
 import { AppModule } from './../src/app.module'
 
-describe('AppController (e2e)', () => {
+describe('app E2E test', () => {
   let app: INestApplication
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile()
@@ -15,10 +15,19 @@ describe('AppController (e2e)', () => {
     await app.init()
   })
 
-  it('/ (GET)', () => {
+  afterAll(async () => {
+    await app.close()
+  })
+
+  it('should return world', () => {
     return request(app.getHttpServer())
-      .get('/')
+      .post('/graphql')
+      .send({
+        query: 'query Greeting { greeting }',
+      })
       .expect(200)
-      .expect('Hello World!')
+      .expect((res) => {
+        expect(res.body.data.greeting).toBe('hello world')
+      })
   })
 })

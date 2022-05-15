@@ -36,6 +36,7 @@ lerna-debug.log*
 
 # environement variable
 .env
+.env.test
 
 # docker
 dbdata

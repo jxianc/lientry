@@ -11,5 +11,9 @@ services:
       POSTGRES_DB: lientrydb
     volumes:
       - ./dbdata:/var/lib/postgresql/data
+    networks:
+      - api-dev
+networks:
+  api-dev:
 volumes:
   dbdata:

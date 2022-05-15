@@ -25,7 +25,7 @@ type Mutation {
 }
 
 type Query {
-  hello: String!
+  greeting: String!
 }
 
 input RegisterUserInput {

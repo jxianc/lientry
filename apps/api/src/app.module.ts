@@ -4,6 +4,7 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { join } from 'path'
 import { UsersModule } from './users/users.module'
 import { AuthModule } from './auth/auth.module'
+import { AppResolver } from './app.resolver'
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import { AuthModule } from './auth/auth.module'
     AuthModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [AppResolver],
 })
 export class AppModule {}

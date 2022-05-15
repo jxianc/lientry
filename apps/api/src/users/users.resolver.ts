@@ -7,10 +7,10 @@ import { CreateUserInput } from './dto/create-user.input'
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
-  @Query(() => String)
-  hello() {
-    return 'world'
-  }
+  // @Query(() => String)
+  // hello() {
+  //   return 'world'
+  // }
 
   // @Mutation(() => User)
   // createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
