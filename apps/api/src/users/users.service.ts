@@ -10,7 +10,7 @@ export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
   async createUser({
-    username,
+    name,
     email,
     password,
   }: CreateUserInput): Promise<CreateUserResponse> {
@@ -38,7 +38,7 @@ export class UsersService {
     try {
       const newUser = await this.prisma.user.create({
         data: {
-          username: username || null,
+          name: name || null,
           email,
           password: hashedPassword || null,
         },
@@ -61,6 +61,14 @@ export class UsersService {
     return await this.prisma.user.findUnique({
       where: {
         email,
+      },
+    })
+  }
+
+  async getUserById(id: string): Promise<User | null> {
+    return await this.prisma.user.findUnique({
+      where: {
+        id,
       },
     })
   }

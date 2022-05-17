@@ -7,6 +7,7 @@ import { JwtService } from '@nestjs/jwt'
 import { TokenPayload } from '../utils/token-payload.type'
 import { PrismaService } from '../prisma.service'
 import { AuthResponse } from './dto/auth.response'
+import { GoogleUser } from './dto/google.user'
 
 @Injectable()
 export class AuthService {
@@ -16,9 +17,9 @@ export class AuthService {
     private readonly prisma: PrismaService,
   ) {}
 
+  // only use in local auth
   async validate(email: string, password: string): Promise<User | null> {
     const user = await this.usersService.getUserByEmail(email)
-
     if (!user) {
       return null
     }
@@ -37,13 +38,112 @@ export class AuthService {
 
     const { accessToken, refreshToken } = this.generateToken({
       userId: user.id,
-      email: user.email,
     })
 
     this.updateRefreshToken(refreshToken, user.id)
     this.sendRefreshToken(refreshToken, res)
 
     return accessToken
+  }
+
+  // todo: use generic
+  async oauthLogin(
+    providerId: string,
+    providerName: string,
+    profileInfo: GoogleUser,
+    res: Response,
+  ): Promise<AuthResponse> {
+    // find user by provider id
+    // if user exists, update user info then login
+    // if user not exists,
+    //    check user email, if used, throw error
+    //    if not, create user and then login
+    const provider = await this.prisma.provider.findUnique({
+      where: {
+        providerId_providerName: {
+          providerId,
+          providerName,
+        },
+      },
+      include: {
+        user: true,
+      },
+    })
+
+    if (provider) {
+      const updatedUser = await this.prisma.user.update({
+        where: {
+          id: provider.userId,
+        },
+        data: {
+          name: profileInfo.displayName,
+          image: profileInfo.photos
+            ? profileInfo.photos.length
+              ? profileInfo.photos[0].value
+              : undefined
+            : undefined,
+        },
+      })
+      const accessToken = await this.login(updatedUser, res)
+      return {
+        success: true,
+        accessToken,
+        user: updatedUser,
+      }
+    } else {
+      if (profileInfo.emails) {
+        for (const email of profileInfo.emails) {
+          const user = await this.prisma.user.findUnique({
+            where: {
+              email: email.value,
+            },
+          })
+          if (user) {
+            return {
+              success: false,
+              errMsg: 'email is already been used',
+            }
+          }
+        }
+      }
+
+      // no email provided or email is not used
+      try {
+        const newUser = await this.prisma.user.create({
+          data: {
+            name: profileInfo.displayName,
+            image: profileInfo.photos
+              ? profileInfo.photos.length
+                ? profileInfo.photos[0].value
+                : undefined
+              : undefined,
+            email: profileInfo.emails
+              ? profileInfo.emails.length
+                ? profileInfo.emails[0].value
+                : undefined
+              : undefined,
+            provider: {
+              create: {
+                providerId,
+                providerName,
+              },
+            },
+          },
+        })
+        const accessToken = await this.login(newUser, res)
+        return {
+          success: true,
+          user: newUser,
+          accessToken,
+        }
+      } catch (err) {
+        console.log(err)
+        return {
+          success: false,
+          errMsg: 'failed to create user',
+        }
+      }
+    }
   }
 
   async refreshToken(req: Request, res: Response): Promise<AuthResponse> {
@@ -94,7 +194,6 @@ export class AuthService {
     }
 
     const { accessToken, refreshToken: newRefreshToken } = this.generateToken({
-      email: user.email,
       userId: user.id,
     })
 

@@ -32,15 +32,15 @@ type Query {
 
 input RegisterUserInput {
   email: String!
+  name: String
   password: String!
-  username: String
 }
 
 type User {
   createdAt: DateTime!
-  email: String!
+  email: String
   id: String!
   image: String
+  name: String
   updatedAt: DateTime!
-  username: String
 }
