@@ -9,6 +9,7 @@ import { LocalStrategy } from './strategies/local.strategy'
 import { JwtStrategy } from './strategies/jwt.strategy'
 import { AuthController } from './auth.controller'
 import { GoogleStrategy } from './strategies/google.strategy'
+import { GithubStrategy } from './strategies/github.strategy'
 
 @Module({
   imports: [PassportModule, JwtModule.register({})],
@@ -20,6 +21,7 @@ import { GoogleStrategy } from './strategies/google.strategy'
     LocalStrategy,
     JwtStrategy,
     GoogleStrategy,
+    GithubStrategy,
   ],
   controllers: [AuthController],
 })

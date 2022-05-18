@@ -7,7 +7,7 @@ import { JwtService } from '@nestjs/jwt'
 import { TokenPayload } from '../utils/token-payload.type'
 import { PrismaService } from '../prisma.service'
 import { AuthResponse } from './dto/auth.response'
-import { GoogleUser } from './dto/google.user'
+import { OAuthUser } from './dto/oauth.user'
 
 @Injectable()
 export class AuthService {
@@ -46,11 +46,8 @@ export class AuthService {
     return accessToken
   }
 
-  // todo: use generic
   async oauthLogin(
-    providerId: string,
-    providerName: string,
-    profileInfo: GoogleUser,
+    { id, provider: providerName, displayName, photos, emails }: OAuthUser,
     res: Response,
   ): Promise<AuthResponse> {
     // find user by provider id
@@ -61,7 +58,7 @@ export class AuthService {
     const provider = await this.prisma.provider.findUnique({
       where: {
         providerId_providerName: {
-          providerId,
+          providerId: id,
           providerName,
         },
       },
@@ -76,10 +73,10 @@ export class AuthService {
           id: provider.userId,
         },
         data: {
-          name: profileInfo.displayName,
-          image: profileInfo.photos
-            ? profileInfo.photos.length
-              ? profileInfo.photos[0].value
+          name: displayName,
+          image: photos
+            ? photos.length
+              ? photos[0].value
               : undefined
             : undefined,
         },
@@ -91,8 +88,8 @@ export class AuthService {
         user: updatedUser,
       }
     } else {
-      if (profileInfo.emails) {
-        for (const email of profileInfo.emails) {
+      if (emails) {
+        for (const email of emails) {
           const user = await this.prisma.user.findUnique({
             where: {
               email: email.value,
@@ -111,20 +108,20 @@ export class AuthService {
       try {
         const newUser = await this.prisma.user.create({
           data: {
-            name: profileInfo.displayName,
-            image: profileInfo.photos
-              ? profileInfo.photos.length
-                ? profileInfo.photos[0].value
+            name: displayName,
+            image: photos
+              ? photos.length
+                ? photos[0].value
                 : undefined
               : undefined,
-            email: profileInfo.emails
-              ? profileInfo.emails.length
-                ? profileInfo.emails[0].value
+            email: emails
+              ? emails.length
+                ? emails[0].value
                 : undefined
               : undefined,
             provider: {
               create: {
-                providerId,
+                providerId: id,
                 providerName,
               },
             },

@@ -1,7 +1,8 @@
 import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common'
 import { Request, Response } from 'express'
 import { AuthService } from './auth.service'
-import { GoogleUser } from './dto/google.user'
+import { OAuthUser } from './dto/oauth.user'
+import { GithubAuthGuard } from './guards/github.guard'
 import { GoogleAuthGuard } from './guards/google.guard'
 
 @Controller('auth')
@@ -10,21 +11,30 @@ export class AuthController {
 
   @UseGuards(GoogleAuthGuard)
   @Get('google')
-  googleLogin(@Req() req: Request, @Res() res: Response) {
-    console.log(req.user)
+  googleLogin(@Res() res: Response) {
     res.status(200).send({ msg: 'logged in' })
   }
 
   @UseGuards(GoogleAuthGuard)
   @Get('google/redirect')
   async googleRedirect(@Req() req: Request, @Res() res: Response) {
-    const user = req.user as GoogleUser
-    const response = await this.authService.oauthLogin(
-      user.id,
-      user.provider,
-      user,
-      res,
-    )
+    const user = req.user as OAuthUser
+    const response = await this.authService.oauthLogin(user, res)
+    res.status(200).send(response)
+    return response
+  }
+
+  @UseGuards(GithubAuthGuard)
+  @Get('github')
+  githubLogin(@Res() res: Response) {
+    res.status(200).send({ msg: 'logged in' })
+  }
+
+  @UseGuards(GithubAuthGuard)
+  @Get('github/redirect')
+  async githubRedirect(@Req() req: Request, @Res() res: Response) {
+    const user = req.user as OAuthUser
+    const response = await this.authService.oauthLogin(user, res)
     res.status(200).send(response)
     return response
   }
