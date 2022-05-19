@@ -5,6 +5,7 @@ import { join } from 'path'
 import { UsersModule } from './users/users.module'
 import { AuthModule } from './auth/auth.module'
 import { AppResolver } from './app.resolver'
+import { TreesModule } from './trees/trees.module'
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { AppResolver } from './app.resolver'
     }),
     UsersModule,
     AuthModule,
+    TreesModule,
   ],
   controllers: [],
   providers: [AppResolver],

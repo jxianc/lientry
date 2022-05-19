@@ -1,4 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql'
+import { Tree } from '../../trees/entities/tree.entity'
+import { Provider } from '../../auth/entities/provider.entity'
 
 @ObjectType()
 export class User {
@@ -24,5 +26,9 @@ export class User {
 
   refreshToken?: string | null
 
-  // todo: providers and trees
+  @Field(() => Provider, { nullable: true })
+  provider?: Provider | null
+
+  @Field(() => [Tree], { nullable: true })
+  trees?: Tree[] | null
 }

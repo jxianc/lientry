@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common'
 import { compare, hash } from 'bcrypt'
-import { User } from '../users/entities/user.entity'
 import { UsersService } from '../users/users.service'
 import { Request, Response } from 'express'
 import { JwtService } from '@nestjs/jwt'
@@ -8,6 +7,7 @@ import { TokenPayload } from '../utils/token-payload.type'
 import { PrismaService } from '../prisma.service'
 import { AuthResponse } from './dto/auth.response'
 import { OAuthUser } from './dto/oauth.user'
+import { User } from '../users/entities/user.entity'
 
 @Injectable()
 export class AuthService {

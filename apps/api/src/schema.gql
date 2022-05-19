@@ -8,6 +8,17 @@ type AuthResponse {
   success: Boolean!
 }
 
+input CreateTreeInput {
+  description: String
+  name: String!
+}
+
+type CreateTreeResponse {
+  errMsg: String!
+  success: Boolean!
+  tree: Tree
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -19,12 +30,21 @@ input LoginUserInput {
 }
 
 type Mutation {
+  createTree(createTreeInput: CreateTreeInput!): CreateTreeResponse!
   login(loginUserInput: LoginUserInput!): AuthResponse!
   refreshToken: AuthResponse!
   register(registerUserInput: RegisterUserInput!): AuthResponse!
 }
 
+type Provider {
+  id: String!
+  providerId: String!
+  providerName: String!
+  user: User!
+}
+
 type Query {
+  getTreeById(treeId: String!): Tree!
   greeting: String!
   me: User!
 }
@@ -35,11 +55,22 @@ input RegisterUserInput {
   password: String!
 }
 
+type Tree {
+  createdAt: DateTime!
+  description: String
+  id: String!
+  name: String!
+  updatedAt: DateTime!
+  user: User!
+}
+
 type User {
   createdAt: DateTime!
   email: String
   id: String!
   image: String
   name: String
+  provider: Provider
+  trees: [Tree!]
   updatedAt: DateTime!
 }

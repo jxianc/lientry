@@ -3,8 +3,8 @@ import { User } from '../entities/user.entity'
 
 @ObjectType()
 export class CreateUserResponse {
-  @Field({ nullable: true })
-  user?: User
+  @Field(() => User, { nullable: true })
+  user?: User | null
 
   @Field()
   success!: boolean

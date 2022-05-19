@@ -14,7 +14,7 @@ model Provider {
   id           String @id @default(cuid())
   providerId   String
   providerName String
-  user         User   @relation(fields: [userId], references: [id])
+  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String @unique
 
   @@unique([providerId, providerName])
@@ -38,10 +38,10 @@ model User {
 model Tree {
   id          String   @id @default(cuid())
   name        String
-  description String
+  description String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt()
-  user        User     @relation(fields: [userId], references: [id])
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
   links       Link[]
 
@@ -55,7 +55,7 @@ model Link {
   url         String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  tree        Tree     @relation(fields: [treeId], references: [id])
+  tree        Tree     @relation(fields: [treeId], references: [id], onDelete: Cascade)
   treeId      String
 
   @@map("links")
