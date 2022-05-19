@@ -5,6 +5,9 @@ import cookieParser from 'cookie-parser'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   app.use(cookieParser())
-  await app.listen(4000)
+  await app.listen(process.env.PORT)
+  console.log(
+    `[Lientry]: GraphQL API server is currently running at http://localhost:${process.env.PORT}/graphql`,
+  )
 }
 bootstrap()
