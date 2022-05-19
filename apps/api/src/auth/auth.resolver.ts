@@ -28,7 +28,6 @@ export class AuthResolver {
       const accessToken = await this.authService.login(user, ctx.res)
       return {
         success,
-        user,
         accessToken,
       }
     } else {
@@ -48,7 +47,6 @@ export class AuthResolver {
     const accessToken = await this.authService.login(ctx.user as User, ctx.res)
     return {
       success: true,
-      user: ctx.user,
       accessToken,
     }
   }

@@ -6,7 +6,6 @@ type AuthResponse {
   accessToken: String
   errMsg: String
   success: Boolean!
-  user: User
 }
 
 """

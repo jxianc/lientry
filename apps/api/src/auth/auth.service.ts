@@ -85,7 +85,6 @@ export class AuthService {
       return {
         success: true,
         accessToken,
-        user: updatedUser,
       }
     } else {
       if (emails) {
@@ -130,7 +129,6 @@ export class AuthService {
         const accessToken = await this.login(newUser, res)
         return {
           success: true,
-          user: newUser,
           accessToken,
         }
       } catch (err) {
@@ -200,7 +198,6 @@ export class AuthService {
     return {
       success: true,
       accessToken,
-      user,
     }
   }
 
