@@ -1,9 +1,10 @@
 import { Field, ObjectType } from '@nestjs/graphql'
 import { Tree } from '../../trees/entities/tree.entity'
 import { Provider } from '../../auth/entities/provider.entity'
+import { BaseEntity } from '../../base/base.entity'
 
 @ObjectType()
-export class User {
+export class User extends BaseEntity {
   @Field()
   id!: string
 
@@ -17,12 +18,6 @@ export class User {
 
   @Field(() => String, { nullable: true })
   image?: string | null
-
-  @Field()
-  createdAt!: Date
-
-  @Field()
-  updatedAt!: Date
 
   refreshToken?: string | null
 

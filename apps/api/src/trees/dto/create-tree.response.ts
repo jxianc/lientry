@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql'
-import { BaseResponse } from '../../utils/base.response'
+import { BaseResponse } from '../../base/base.response'
 import { Tree } from '../entities/tree.entity'
 
 @ObjectType()

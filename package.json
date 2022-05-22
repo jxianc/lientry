@@ -22,7 +22,7 @@
     "@commitlint/config-conventional": "^16.2.4",
     "husky": "^8.0.1",
     "prettier": "latest",
-    "turbo": "latest"
+    "turbo": "^1.2.11"
   },
   "engines": {
     "npm": ">=7.0.0",

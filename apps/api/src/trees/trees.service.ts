@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { BaseResponse } from '../utils/base.response'
+import { BaseResponse } from '../base/base.response'
 import { PrismaService } from '../prisma.service'
 import { CreateTreeInput } from './dto/create-tree.input'
 import { CreateTreeResponse } from './dto/create-tree.response'

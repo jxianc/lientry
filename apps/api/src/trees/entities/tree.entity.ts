@@ -1,8 +1,10 @@
 import { ObjectType, Field } from '@nestjs/graphql'
+import { BaseEntity } from '../../base/base.entity'
+import { Link } from '../../links/entities/link.entity'
 import { User } from '../../users/entities/user.entity'
 
 @ObjectType()
-export class Tree {
+export class Tree extends BaseEntity {
   @Field()
   id!: string
 
@@ -12,14 +14,9 @@ export class Tree {
   @Field(() => String, { nullable: true })
   description?: string | null
 
-  @Field()
-  createdAt!: Date
-
-  @Field()
-  updatedAt!: Date
-
   @Field(() => User)
   user!: User
 
-  // todo: links
+  @Field(() => [Link], { nullable: true })
+  links?: Link[] | null
 }
