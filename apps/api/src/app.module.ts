@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module'
 import { AuthModule } from './auth/auth.module'
 import { AppResolver } from './app.resolver'
 import { TreesModule } from './trees/trees.module'
+import { LinksModule } from './links/links.module'
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { TreesModule } from './trees/trees.module'
     UsersModule,
     AuthModule,
     TreesModule,
+    LinksModule,
   ],
   controllers: [],
   providers: [AppResolver],
