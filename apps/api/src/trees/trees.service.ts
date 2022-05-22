@@ -39,7 +39,7 @@ export class TreesService {
     }
   }
 
-  async getTreeById(treeId: string): Promise<Tree | null> {
+  async getTreeById(treeId: string) {
     return await this.prisma.tree.findUnique({
       where: {
         id: treeId,

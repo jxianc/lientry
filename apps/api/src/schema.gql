@@ -8,6 +8,18 @@ type AuthResponse {
   success: Boolean!
 }
 
+input CreateLinkInput {
+  description: String
+  title: String!
+  url: String!
+}
+
+type CreateLinkResponse {
+  errMsg: String!
+  link: Link
+  success: Boolean!
+}
+
 input CreateTreeInput {
   description: String
   name: String!
@@ -40,6 +52,7 @@ input LoginUserInput {
 }
 
 type Mutation {
+  createLink(createLinkInput: CreateLinkInput!, treeId: String!): CreateLinkResponse!
   createTree(createTreeInput: CreateTreeInput!): CreateTreeResponse!
   login(loginUserInput: LoginUserInput!): AuthResponse!
   refreshToken: AuthResponse!
