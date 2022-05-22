@@ -46,6 +46,7 @@ export class TreesService {
       },
       include: {
         user: true,
+        links: true,
       },
     })
   }
