@@ -1,8 +1,9 @@
 import { UseGuards } from '@nestjs/common'
-import { Args, Context, Mutation, Resolver } from '@nestjs/graphql'
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CreateLinkInput } from './dto/create-link.input'
 import { CreateLinkResponse } from './dto/create-link.response'
+import { Link } from './entities/link.entity'
 import { LinksService } from './links.service'
 
 @Resolver()
@@ -23,6 +24,15 @@ export class LinksResolver {
     )
   }
 
-  // get link by id
-  // get links by treeid
+  // not sure if this will be used
+  @Query(() => Link, { nullable: true })
+  async getLinkById(@Args({ name: 'linkId' }) linkId: string) {
+    return await this.linksService.getLinkById(linkId)
+  }
+
+  // not sure if this will be used
+  @Query(() => [Link])
+  async getLinksByTreeId(@Args({ name: 'treeId' }) treeId: string) {
+    return await this.linksService.getLinksByTreeId(treeId)
+  }
 }

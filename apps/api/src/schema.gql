@@ -67,6 +67,8 @@ type Provider {
 }
 
 type Query {
+  getLinkById(linkId: String!): Link
+  getLinksByTreeId(treeId: String!): [Link!]!
   getTreeById(treeId: String!): Tree!
   greeting: String!
   me: User!
