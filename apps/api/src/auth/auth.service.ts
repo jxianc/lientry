@@ -144,7 +144,7 @@ export class AuthService {
   async refreshToken(req: Request, res: Response): Promise<AuthResponse> {
     // get refreshtoken from cookie
     // verify refreshtoken
-    // generate new accesstoken and refreshtoken
+    // generate new pair of accesstoken and refreshtoken
     // update new refreshtoken to db
     // return acesstoken and send refreshtoken as cookie
     const refreshToken = req.cookies[process.env.REFRESH_TOKEN_COOKIE_KEY]
@@ -173,6 +173,7 @@ export class AuthService {
         id: tokenPayload.userId,
       },
     })
+    // if refreshtoken not in db, we should ask user to login again
     if (!user || !user.refreshToken) {
       return {
         success: false,
@@ -216,6 +217,7 @@ export class AuthService {
     }
   }
 
+  // update refreshtoken in db
   async updateRefreshToken(refreshToken: string, userId: string) {
     const hashedRefreshToken = await hash(refreshToken, 11)
     await this.prisma.user.update({
@@ -228,6 +230,7 @@ export class AuthService {
     })
   }
 
+  // send refreshtoken cookie
   sendRefreshToken(refreshToken: string, res: Response) {
     res.cookie(process.env.REFRESH_TOKEN_COOKIE_KEY, refreshToken, {
       httpOnly: true,

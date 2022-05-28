@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { PassportStrategy } from '@nestjs/passport'
-import { Profile, Strategy, VerifyCallback } from 'passport-google-oauth20'
+import { Profile, Strategy } from 'passport-google-oauth20'
 import { OAuthUser } from '../dto/oauth.user'
 
 @Injectable()
@@ -18,7 +18,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
     _accessToken: string,
     _refreshToken: string,
     profile: Profile,
-    _done: VerifyCallback,
+    // _done: VerifyCallback,
   ): OAuthUser {
     const { displayName, emails, provider, photos, id } = profile
     return {

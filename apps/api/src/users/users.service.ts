@@ -28,13 +28,14 @@ export class UsersService {
       }
     }
 
-    // hashing password
+    // hash password
     let hashedPassword = ''
     if (password) {
       const saltOrRounds = 7
       hashedPassword = await hash(password, saltOrRounds)
     }
 
+    // create might throw error, so using try catch here
     try {
       const newUser = await this.prisma.user.create({
         data: {
@@ -43,7 +44,6 @@ export class UsersService {
           password: hashedPassword || null,
         },
       })
-
       return {
         success: true,
         user: newUser,
@@ -72,12 +72,4 @@ export class UsersService {
       },
     })
   }
-
-  // update(id: number, updateUserInput: UpdateUserInput) {
-  //   return `This action updates a #${id} user`
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} user`
-  // }
 }

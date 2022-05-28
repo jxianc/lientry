@@ -16,7 +16,7 @@ import { LinksModule } from './links/links.module'
       sortSchema: true,
       playground: true,
       // plugins: [ApolloServerPluginLandingPageLocalDefault()],
-      context: ({ req, res }) => ({ req, res }),
+      context: ({ req, res }) => ({ req, res }), // attach request and response to graphql context
     }),
     UsersModule,
     AuthModule,

@@ -18,7 +18,7 @@ export class GithubStrategy extends PassportStrategy(Strategy) {
     _accessToken: string,
     _refreshToken: string,
     profile: Profile,
-    _done: any,
+    // _done: any,
   ): OAuthUser {
     const { id, displayName, emails, provider, photos } = profile
     return {

@@ -1,8 +1,9 @@
 import { Field, ObjectType } from '@nestjs/graphql'
+import { BaseResponse } from '../../base/base.response'
 import { User } from '../entities/user.entity'
 
 @ObjectType()
-export class CreateUserResponse {
+export class CreateUserResponse extends BaseResponse {
   @Field(() => User, { nullable: true })
   user?: User | null
 
