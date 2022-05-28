@@ -1,5 +1,8 @@
 # Lientry
 
+> **Warning**
+> This project is still in development
+
 ### Links Hub - a place to store your links and share it to other people
 
 ### current stacks
