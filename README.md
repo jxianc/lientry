@@ -13,4 +13,3 @@
 - packages
   - tsconfig - shared `tsconfig.json` file
   - config - shared config file (eslint, tailwind)
-  - ui (considering) - shared Tailwind CSS components
