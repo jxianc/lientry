@@ -1,5 +1,6 @@
 import { UseGuards } from '@nestjs/common'
-import { Args, Context, Mutation, Resolver } from '@nestjs/graphql'
+import { Args, Mutation, Resolver } from '@nestjs/graphql'
+import { TreeAuthorGuard } from 'src/trees/guards/tree-author.guard'
 import { JwtGqlAuthGuard } from '../auth/guards/jwt.guard'
 import { EditLinksInput } from './dto/edit-links.input'
 import { EditLinksResponse } from './dto/edit-links.response'
@@ -10,21 +11,16 @@ import { LinksService } from './links.service'
 export class LinksResolver {
   constructor(private readonly linksService: LinksService) {}
 
-  @UseGuards(JwtGqlAuthGuard)
+  @UseGuards(JwtGqlAuthGuard, TreeAuthorGuard)
   @Mutation(() => EditLinksResponse)
   async EditLinks(
     @Args({ name: 'CURLinksInput' })
     { creates, updates, removes }: EditLinksInput,
     @Args({ name: 'treeId' }) treeId: string,
-    @Context() ctx: any,
   ): Promise<EditLinksResponse> {
     let links: Link[] = []
     if (creates && creates.length > 0) {
-      const response = await this.linksService.createManyLinks(
-        creates,
-        treeId,
-        ctx.req.user.id,
-      )
+      const response = await this.linksService.createManyLinks(creates, treeId)
       if (!response.success && response.errMsg) {
         return {
           success: false,
@@ -35,11 +31,7 @@ export class LinksResolver {
     }
 
     if (updates && updates.length > 0) {
-      const response = await this.linksService.updateManyLinks(
-        updates,
-        treeId,
-        ctx.req.user.id,
-      )
+      const response = await this.linksService.updateManyLinks(updates)
       if (!response.success && response.errMsg) {
         return {
           success: false,
@@ -50,11 +42,7 @@ export class LinksResolver {
     }
 
     if (removes && removes.length > 0) {
-      const response = await this.linksService.removeManyLinks(
-        removes,
-        treeId,
-        ctx.req.user.id,
-      )
+      const response = await this.linksService.removeManyLinks(removes)
       if (!response.success && response.errMsg) {
         return {
           success: false,

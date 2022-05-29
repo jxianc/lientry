@@ -68,28 +68,16 @@ export class TreesService {
   }
 
   async updateTree(
-    { treeId, name, description }: UpdateTreeInput,
-    userId: string,
+    { name, description }: UpdateTreeInput,
+    treeId: string,
   ): Promise<UpdateTreeResponse> {
     const tree = await this.getTreeById(treeId)
-    if (!tree) {
-      return {
-        success: false,
-        errMsg: 'tree not found',
-      }
-    }
-
-    if (tree.user.id !== userId) {
-      return {
-        success: false,
-        errMsg: 'unauthorized',
-      }
-    }
 
     try {
       const updatedTree = await this.prisma.tree.update({
         where: {
-          id: tree.id,
+          // guard in resolver checked this, so tree is guaranteed exists
+          id: tree?.id,
         },
         data: {
           name: name ? name : undefined,
@@ -112,22 +100,7 @@ export class TreesService {
     }
   }
 
-  async removeTree(treeId: string, userId: string): Promise<BaseResponse> {
-    const tree = await this.getTreeById(treeId)
-    if (!tree) {
-      return {
-        success: false,
-        errMsg: 'tree not found',
-      }
-    }
-
-    if (tree.user.id !== userId) {
-      return {
-        success: false,
-        errMsg: 'unauthorized',
-      }
-    }
-
+  async removeTree(treeId: string): Promise<BaseResponse> {
     await this.prisma.tree.delete({
       where: {
         id: treeId,

@@ -25,11 +25,10 @@ export class LinksService {
   async createManyLinks(
     createLinksInput: CreateLinkInput[],
     treeId: string,
-    userId: string,
   ): Promise<CreateManyLinksResponse> {
     const newLinks: Link[] = []
     for (const input of createLinksInput) {
-      const response = await this.createLink(input, treeId, userId)
+      const response = await this.createLink(input, treeId)
       if (!response.success || !response.link) {
         // failed to create link
         return {
@@ -47,12 +46,10 @@ export class LinksService {
 
   async updateManyLinks(
     updateLinksInput: UpdateLinkInput[],
-    treeId: string,
-    userId: string,
   ): Promise<UpdateManyLinksResponse> {
     const newLinks: Link[] = []
     for (const input of updateLinksInput) {
-      const response = await this.updateLink(input, treeId, userId)
+      const response = await this.updateLink(input)
       if (!response.success || !response.link) {
         // failed to update link
         return {
@@ -70,12 +67,10 @@ export class LinksService {
 
   async removeManyLinks(
     removeLinkInput: RemoveLinkInput[],
-    treeId: string,
-    userId: string,
   ): Promise<BaseResponse> {
     let removeSuccessCount = 0
     for (const input of removeLinkInput) {
-      const response = await this.removeLink(input, treeId, userId)
+      const response = await this.removeLink(input)
       if (!response.success) {
         // failed to update link
         return {
@@ -99,22 +94,7 @@ export class LinksService {
   async createLink(
     { title, description, url }: CreateLinkInput,
     treeId: string,
-    userId: string,
   ): Promise<CreateLinkResponse> {
-    const tree = await this.treesService.getTreeById(treeId)
-    if (!tree) {
-      return {
-        success: false,
-        errMsg: 'tree not found',
-      }
-    }
-    if (userId !== tree.userId) {
-      return {
-        success: false,
-        errMsg: 'unauthorized',
-      }
-    }
-
     try {
       const link = await this.prisma.link.create({
         data: {
@@ -144,24 +124,12 @@ export class LinksService {
     }
   }
 
-  async updateLink(
-    { linkId, title, description, url }: UpdateLinkInput,
-    treeId: string,
-    userId: string,
-  ): Promise<UpdateLinkResponse> {
-    const tree = await this.treesService.getTreeById(treeId)
-    if (!tree) {
-      return {
-        success: false,
-        errMsg: 'tree not found',
-      }
-    }
-    if (userId !== tree.userId) {
-      return {
-        success: false,
-        errMsg: 'unauthorized',
-      }
-    }
+  async updateLink({
+    linkId,
+    title,
+    description,
+    url,
+  }: UpdateLinkInput): Promise<UpdateLinkResponse> {
     try {
       const updatedLink = await this.prisma.link.update({
         where: {
@@ -193,24 +161,7 @@ export class LinksService {
     }
   }
 
-  async removeLink(
-    { linkId }: RemoveLinkInput,
-    treeId: string,
-    userId: string,
-  ): Promise<BaseResponse> {
-    const tree = await this.treesService.getTreeById(treeId)
-    if (!tree) {
-      return {
-        success: false,
-        errMsg: 'tree not found',
-      }
-    }
-    if (userId !== tree.userId) {
-      return {
-        success: false,
-        errMsg: 'unauthorized',
-      }
-    }
+  async removeLink({ linkId }: RemoveLinkInput): Promise<BaseResponse> {
     try {
       await this.prisma.link.delete({
         where: {

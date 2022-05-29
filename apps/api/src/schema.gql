@@ -69,7 +69,7 @@ type Mutation {
   refreshToken: AuthResponse!
   register(registerUserInput: RegisterUserInput!): AuthResponse!
   removeTree(treeId: String!): BaseResponse!
-  updateTree(updateTreeInput: UpdateTreeInput!): UpdateTreeResponse!
+  updateTree(treeId: String!, updateTreeInput: UpdateTreeInput!): UpdateTreeResponse!
 }
 
 type Provider {
@@ -116,7 +116,6 @@ input UpdateLinkInput {
 input UpdateTreeInput {
   description: String
   name: String
-  treeId: String!
 }
 
 type UpdateTreeResponse {

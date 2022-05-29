@@ -7,6 +7,7 @@ import { CreateTreeResponse } from './dto/create-tree.response'
 import { UpdateTreeInput } from './dto/update-tree.input'
 import { UpdateTreeResponse } from './dto/update-tree.response'
 import { Tree } from './entities/tree.entity'
+import { TreeAuthorGuard } from './guards/tree-author.guard'
 import { TreesService } from './trees.service'
 
 @Resolver(() => Tree)
@@ -27,22 +28,19 @@ export class TreesResolver {
     return await this.treesService.getTreeById(treeId)
   }
 
-  @UseGuards(JwtGqlAuthGuard)
+  @UseGuards(JwtGqlAuthGuard, TreeAuthorGuard)
   @Mutation(() => UpdateTreeResponse)
   async updateTree(
     @Args({ name: 'updateTreeInput' }) updateTreeInput: UpdateTreeInput,
-    @Context() ctx: any,
+    @Args({ name: 'treeId' }) treeId: string,
   ) {
-    return await this.treesService.updateTree(updateTreeInput, ctx.req.user.id)
+    return await this.treesService.updateTree(updateTreeInput, treeId)
   }
 
-  @UseGuards(JwtGqlAuthGuard)
+  @UseGuards(JwtGqlAuthGuard, TreeAuthorGuard)
   @Mutation(() => BaseResponse)
-  async removeTree(
-    @Args({ name: 'treeId' }) treeId: string,
-    @Context() ctx: any,
-  ) {
-    return await this.treesService.removeTree(treeId, ctx.req.user.id)
+  async removeTree(@Args({ name: 'treeId' }) treeId: string) {
+    return await this.treesService.removeTree(treeId)
   }
 
   // TODO get recent trees
