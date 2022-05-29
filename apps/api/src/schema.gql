@@ -8,6 +8,11 @@ type AuthResponse {
   success: Boolean!
 }
 
+type BaseResponse {
+  errMsg: String
+  success: Boolean!
+}
+
 input CreateLinkInput {
   description: String
   title: String!
@@ -63,6 +68,8 @@ type Mutation {
   login(loginUserInput: LoginUserInput!): AuthResponse!
   refreshToken: AuthResponse!
   register(registerUserInput: RegisterUserInput!): AuthResponse!
+  removeTree(treeId: String!): BaseResponse!
+  updateTree(updateTreeInput: UpdateTreeInput!): UpdateTreeResponse!
 }
 
 type Provider {
@@ -104,6 +111,18 @@ input UpdateLinkInput {
   linkId: String!
   title: String
   url: String
+}
+
+input UpdateTreeInput {
+  description: String
+  name: String
+  treeId: String!
+}
+
+type UpdateTreeResponse {
+  errMsg: String
+  success: Boolean!
+  tree: Tree
 }
 
 type User {
