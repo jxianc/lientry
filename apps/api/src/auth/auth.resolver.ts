@@ -3,6 +3,7 @@ import { Args, Context, Mutation, Resolver, Query } from '@nestjs/graphql'
 import { User } from '../users/entities/user.entity'
 import { UsersService } from '../users/users.service'
 import { AuthService } from './auth.service'
+import { CurrentUser } from './decorators/current-user.decorator'
 import { AuthResponse } from './dto/auth.response'
 import { LoginUserInput } from './dto/login-user.input'
 import { RegisterUserInput } from './dto/register-user.input'
@@ -53,8 +54,8 @@ export class AuthResolver {
 
   @UseGuards(JwtGqlAuthGuard)
   @Query(() => User)
-  me(@Context() ctx: any): User {
-    return ctx.req.user
+  me(@CurrentUser() user: User): User {
+    return user
   }
 
   @Mutation(() => AuthResponse)

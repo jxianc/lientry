@@ -1,7 +1,9 @@
 import { UseGuards } from '@nestjs/common'
-import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { BaseResponse } from 'src/base/base.response'
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { CurrentUser } from '../auth/decorators/current-user.decorator'
 import { JwtGqlAuthGuard } from '../auth/guards/jwt.guard'
+import { BaseResponse } from '../base/base.response'
+import { User } from '../users/entities/user.entity'
 import { CreateTreeInput } from './dto/create-tree.input'
 import { CreateTreeResponse } from './dto/create-tree.response'
 import { UpdateTreeInput } from './dto/update-tree.input'
@@ -18,9 +20,9 @@ export class TreesResolver {
   @Mutation(() => CreateTreeResponse)
   async createTree(
     @Args({ name: 'createTreeInput' }) createTreeInput: CreateTreeInput,
-    @Context() ctx: any,
+    @CurrentUser() user: User,
   ): Promise<CreateTreeResponse> {
-    return await this.treesService.createTree(createTreeInput, ctx.req.user.id)
+    return await this.treesService.createTree(createTreeInput, user.id)
   }
 
   @Query(() => Tree)
