@@ -14,6 +14,9 @@ export class Tree extends BaseEntity {
   @Field(() => String, { nullable: true })
   description?: string | null
 
+  @Field()
+  viewed!: number
+
   @Field(() => User)
   user!: User
 

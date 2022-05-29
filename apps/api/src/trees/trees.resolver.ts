@@ -23,4 +23,7 @@ export class TreesResolver {
   async getTreeById(@Args({ name: 'treeId' }) treeId: string) {
     return await this.treesService.getTreeById(treeId)
   }
+
+  // TODO get recent trees
+  // TODO get trees by viewed ranking
 }

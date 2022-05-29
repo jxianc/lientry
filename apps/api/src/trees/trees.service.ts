@@ -39,7 +39,7 @@ export class TreesService {
   }
 
   async getTreeById(treeId: string) {
-    return await this.prisma.tree.findUnique({
+    const tree = await this.prisma.tree.findUnique({
       where: {
         id: treeId,
       },
@@ -48,6 +48,23 @@ export class TreesService {
         links: true,
       },
     })
+    if (tree) {
+      // increment viewed count
+      const updatedTree = await this.prisma.tree.update({
+        where: {
+          id: tree.id,
+        },
+        data: {
+          viewed: tree.viewed + 1,
+        },
+        include: {
+          user: true,
+          links: true,
+        },
+      })
+      return updatedTree
+    }
+    return tree
   }
 
   async updateTree(
