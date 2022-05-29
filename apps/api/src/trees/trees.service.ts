@@ -5,6 +5,7 @@ import { CreateTreeInput } from './dto/create-tree.input'
 import { CreateTreeResponse } from './dto/create-tree.response'
 import { UpdateTreeInput } from './dto/update-tree.input'
 import { UpdateTreeResponse } from './dto/update-tree.response'
+import { Tree } from './entities/tree.entity'
 
 @Injectable()
 export class TreesService {
@@ -65,6 +66,25 @@ export class TreesService {
       return updatedTree
     }
     return tree
+  }
+
+  async getRecentTree(cursorId: string): Promise<Tree[]> {
+    const trees = await this.prisma.tree.findMany({
+      include: {
+        user: true,
+      },
+      take: 2,
+      skip: cursorId ? 1 : undefined,
+      cursor: cursorId
+        ? {
+            id: cursorId,
+          }
+        : undefined,
+      orderBy: {
+        createdAt: 'desc',
+      },
+    })
+    return trees
   }
 
   async updateTree(

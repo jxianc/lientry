@@ -80,6 +80,7 @@ type Provider {
 }
 
 type Query {
+  getRecentTrees(cursorId: String): [Tree!]!
   getTreeById(treeId: String!): Tree!
   greeting: String!
   me: User!

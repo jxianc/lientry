@@ -45,6 +45,13 @@ export class TreesResolver {
     return await this.treesService.removeTree(treeId)
   }
 
-  // TODO get recent trees
+  @Query(() => [Tree])
+  async getRecentTrees(
+    @Args({ name: 'cursorId', nullable: true, type: () => String })
+    cursorId: string,
+  ) {
+    return await this.treesService.getRecentTree(cursorId)
+  }
+
   // TODO get trees by viewed ranking
 }
