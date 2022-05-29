@@ -53,5 +53,11 @@ export class TreesResolver {
     return await this.treesService.getRecentTree(cursorId)
   }
 
-  // TODO get trees by viewed ranking
+  @Query(() => [Tree])
+  async getTrendingTrees(
+    @Args({ name: 'cursorId', nullable: true, type: () => String })
+    cursorId: string,
+  ) {
+    return await this.treesService.getTrendingTrees(cursorId)
+  }
 }

@@ -87,6 +87,23 @@ export class TreesService {
     return trees
   }
 
+  async getTrendingTrees(cursorId: string): Promise<Tree[]> {
+    const trendingTrees = await this.prisma.tree.findMany({
+      include: {
+        user: true,
+      },
+      take: 10,
+      skip: cursorId ? 1 : undefined,
+      cursor: cursorId
+        ? {
+            id: cursorId,
+          }
+        : undefined,
+      orderBy: [{ viewed: 'desc' }, { createdAt: 'desc' }],
+    })
+    return trendingTrees
+  }
+
   async updateTree(
     { name, description }: UpdateTreeInput,
     treeId: string,
