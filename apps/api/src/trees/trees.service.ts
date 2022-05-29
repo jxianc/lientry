@@ -5,7 +5,6 @@ import { CreateTreeInput } from './dto/create-tree.input'
 import { CreateTreeResponse } from './dto/create-tree.response'
 import { UpdateTreeInput } from './dto/update-tree.input'
 import { UpdateTreeResponse } from './dto/update-tree.response'
-import { Tree } from './entities/tree.entity'
 
 @Injectable()
 export class TreesService {

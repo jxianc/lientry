@@ -15,7 +15,7 @@ input CreateLinkInput {
 }
 
 type CreateLinkResponse {
-  errMsg: String!
+  errMsg: String
   link: Link
   success: Boolean!
 }
@@ -26,7 +26,7 @@ input CreateTreeInput {
 }
 
 type CreateTreeResponse {
-  errMsg: String!
+  errMsg: String
   success: Boolean!
   tree: Tree
 }

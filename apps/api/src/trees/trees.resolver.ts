@@ -1,10 +1,10 @@
-import { Resolver, Query, Mutation, Args, Int, Context } from '@nestjs/graphql'
-import { TreesService } from './trees.service'
-import { Tree } from './entities/tree.entity'
+import { UseGuards } from '@nestjs/common'
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { JwtGqlAuthGuard } from '../auth/guards/jwt.guard'
 import { CreateTreeInput } from './dto/create-tree.input'
 import { CreateTreeResponse } from './dto/create-tree.response'
-import { UseGuards } from '@nestjs/common'
-import { JwtGqlAuthGuard } from '../auth/guards/jwt.guard'
+import { Tree } from './entities/tree.entity'
+import { TreesService } from './trees.service'
 
 @Resolver(() => Tree)
 export class TreesResolver {
