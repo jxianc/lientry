@@ -5,14 +5,14 @@ import {
   CreateLinkInput,
   RemoveLinkInput,
   UpdateLinkInput,
-} from './dto/cur-links.input'
+} from './dto/edit-links.input'
 import { Link } from './entities/link.entity'
 import {
   CreateLinkResponse,
   CreateManyLinksResponse,
   UpdateLinkResponse,
   UpdateManyLinksResponse,
-} from './dto/cur-links.response'
+} from './dto/edit-links.response'
 import { BaseResponse } from '../base/base.response'
 
 @Injectable()

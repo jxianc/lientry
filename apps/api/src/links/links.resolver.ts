@@ -1,8 +1,8 @@
 import { UseGuards } from '@nestjs/common'
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql'
 import { JwtGqlAuthGuard } from '../auth/guards/jwt.guard'
-import { EditLinksInput } from './dto/cur-links.input'
-import { EditLinksResponse } from './dto/cur-links.response'
+import { EditLinksInput } from './dto/edit-links.input'
+import { EditLinksResponse } from './dto/edit-links.response'
 import { Link } from './entities/link.entity'
 import { LinksService } from './links.service'
 
