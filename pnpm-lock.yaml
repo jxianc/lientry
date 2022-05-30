@@ -140,12 +140,14 @@ importers:
       postcss: ^8.4.14
       react: 17.0.2
       react-dom: 17.0.2
+      react-icons: ^4.4.0
       tailwindcss: ^3.0.24
       typescript: ^4.5.3
     dependencies:
       next: 12.0.8_sfoxds7t5ydpegc3knd667wn6m
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
+      react-icons: 4.4.0_react@17.0.2
     devDependencies:
       '@li/config': link:../../packages/config
       '@li/tsconfig': link:../../packages/tsconfig
@@ -6917,6 +6919,14 @@ packages:
       object-assign: 4.1.1
       react: 17.0.2
       scheduler: 0.20.2
+    dev: false
+
+  /react-icons/4.4.0_react@17.0.2:
+    resolution: {integrity: sha512-fSbvHeVYo/B5/L4VhB7sBA1i2tS8MkT0Hb9t2H1AVPkwGfVHLJCqyr2Py9dKMxsyM63Eng1GkdZfbWj+Fmv8Rg==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 17.0.2
     dev: false
 
   /react-is/16.13.1:
