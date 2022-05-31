@@ -8,8 +8,8 @@ interface SignInProps {}
 const SignIn: NextPage<SignInProps> = ({}) => {
   return (
     <AuthLayout>
-      <div className="max-w-md w-full">
-        <h3 className="mb-8 text-center text-lg font-semibold">
+      <div className="max-w-md w-full text-xs md:text-sm">
+        <h3 className="mb-6 lg:mb-8 text-center text-sm md:text-base lg:text-lg font-semibold">
           <span className="text-teal-700">Sign in </span>
           to your account
         </h3>
@@ -25,7 +25,7 @@ const SignIn: NextPage<SignInProps> = ({}) => {
                 type="email"
                 autoComplete="email"
                 required
-                className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-t-md focus:outline-none focus:border-teal-500 focus:z-10 sm:text-sm"
+                className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-t-md focus:outline-none focus:border-teal-500 focus:z-10 text-xs md:text-sm"
                 placeholder="Email address"
               />
             </div>
@@ -39,12 +39,12 @@ const SignIn: NextPage<SignInProps> = ({}) => {
                 type="password"
                 autoComplete="current-password"
                 required
-                className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-b-md focus:outline-none focus:border-teal-500 focus:z-10 sm:text-sm"
+                className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-b-md focus:outline-none focus:border-teal-500 focus:z-10 text-xs md:text-sm"
                 placeholder="Password"
               />
             </div>
           </div>
-          <div className="flex items-end justify-between text-sm font-medium">
+          <div className="flex items-end justify-between text-xs md:text-sm font-medium">
             <div className="flex items-center">
               <input
                 id="remember-me"
@@ -66,21 +66,21 @@ const SignIn: NextPage<SignInProps> = ({}) => {
           <div>
             <button
               type="submit"
-              className="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-teal-700 hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+              className="w-full py-2 px-4 border border-transparent font-medium rounded-md text-white bg-teal-700 hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
             >
               Sign in
             </button>
           </div>
           <div className="relative flex py-2 px-0.5 items-center">
             <div className="flex-grow border-t border-gray-300"></div>
-            <span className="flex-shrink mx-3 text-sm text-gray-400">
+            <span className="flex-shrink mx-3 text-gray-400">
               or sign in with
             </span>
             <div className="flex-grow border-t border-gray-300"></div>
           </div>
           <OAuthButtonsGroup />
         </form>
-        <div className="mt-8 text-sm font-medium">
+        <div className="mt-8 font-medium">
           <span className="text-gray-600">{"Don't have an account? "}</span>
           <NextLink href="/sign-up" passHref>
             <a className="text-teal-700 hover:text-teal-600 hover:underline focus:outline-teal-500">
