@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "formik": "^2.2.9",
+    "graphql": "^16.5.0",
     "next": "12.0.8",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-icons": "^4.4.0"
+    "react-icons": "^4.4.0",
+    "urql": "^2.2.0"
   },
   "devDependencies": {
     "@li/config": "workspace:*",
