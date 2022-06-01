@@ -1,3 +1,4 @@
+import { Form, Formik } from 'formik'
 import { NextPage } from 'next'
 import NextLink from 'next/link'
 import { InputField } from '../components/InputField'
@@ -15,29 +16,45 @@ const SignUp: NextPage<SignUpProps> = ({}) => {
           <span className="text-teal-700">Sign up </span>
           for an account
         </h3>
-        <form className="space-y-4">
-          <div className="rounded-md -space-y-px">
-            {signUpInputs.map((input, idx) => (
-              <InputField key={idx} {...input} />
-            ))}
-          </div>
-          <div>
-            <button
-              type="submit"
-              className="w-full py-2 px-4 border border-transparent font-medium rounded-md text-white bg-teal-700 hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
-            >
-              Sign up
-            </button>
-          </div>
-          <div className="relative flex py-2 px-0.5 items-center">
-            <div className="flex-grow border-t border-gray-300"></div>
-            <span className="flex-shrink mx-3 text-gray-400">
-              or continue with
-            </span>
-            <div className="flex-grow border-t border-gray-300"></div>
-          </div>
-          <OAuthButtonsGroup />
-        </form>
+        <Formik
+          initialValues={{
+            email: '',
+            displayName: '',
+            password: '',
+          }}
+          onSubmit={({ email, displayName, password }) => {
+            console.log('submitted')
+            console.log('email', email)
+            console.log('displayName', displayName)
+            console.log('password', password)
+          }}
+        >
+          {() => (
+            <Form className="space-y-4">
+              <div className="rounded-md -space-y-px">
+                {signUpInputs.map((input, idx) => (
+                  <InputField key={idx} {...input} />
+                ))}
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  className="w-full py-2 px-4 border border-transparent font-medium rounded-md text-white bg-teal-700 hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                >
+                  Sign up
+                </button>
+              </div>
+              <div className="relative flex py-2 px-0.5 items-center">
+                <div className="flex-grow border-t border-gray-300"></div>
+                <span className="flex-shrink mx-3 text-gray-400">
+                  or continue with
+                </span>
+                <div className="flex-grow border-t border-gray-300"></div>
+              </div>
+              <OAuthButtonsGroup />
+            </Form>
+          )}
+        </Formik>
         <div className="mt-8 font-medium">
           <span className="text-gray-600">{'Already have an account? '}</span>
           <NextLink href="/sign-in" passHref>
