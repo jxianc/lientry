@@ -1,7 +1,9 @@
 import { NextPage } from 'next'
 import NextLink from 'next/link'
-import { AuthLayout } from '../layouts/AuthLayout'
+import { InputField } from '../components/InputField'
 import { OAuthButtonsGroup } from '../components/OAuthButtonsGroup'
+import { AuthLayout } from '../layouts/AuthLayout'
+import { signUpInputs } from '../lib/inputs'
 
 interface SignUpProps {}
 
@@ -15,46 +17,9 @@ const SignUp: NextPage<SignUpProps> = ({}) => {
         </h3>
         <form className="space-y-4">
           <div className="rounded-md -space-y-px">
-            <div>
-              <label htmlFor="email-address" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="email-address"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-t-md focus:outline-none focus:border-teal-500 focus:z-10 text-xs md:text-sm"
-                placeholder="Email address"
-              />
-            </div>
-            <div>
-              <label htmlFor="display-name" className="sr-only">
-                Display name
-              </label>
-              <input
-                id="display-name"
-                name="name"
-                type="text"
-                className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 focus:outline-none focus:border-teal-500 focus:z-10 text-xs md:text-sm"
-                placeholder="Display name"
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-b-md focus:outline-none focus:border-teal-500 focus:z-10 text-xs md:text-sm"
-                placeholder="Password"
-              />
-            </div>
+            {signUpInputs.map((input, idx) => (
+              <InputField key={idx} {...input} />
+            ))}
           </div>
           <div>
             <button
