@@ -5,10 +5,13 @@ import NextLink from 'next/link'
 import { signInInputs } from '../lib/inputs'
 import { InputField } from '../components/InputField'
 import { Form, Formik } from 'formik'
+import { useLoginMutation } from '../generated/graphql'
 
 interface SignInProps {}
 
 const SignIn: NextPage<SignInProps> = ({}) => {
+  const [_, execLogin] = useLoginMutation()
+
   return (
     <AuthLayout>
       <div className="max-w-md w-full text-xs md:text-sm">
@@ -21,10 +24,17 @@ const SignIn: NextPage<SignInProps> = ({}) => {
             email: '',
             password: '',
           }}
-          onSubmit={({ email, password }) => {
-            console.log('submitted')
-            console.log('email', email)
-            console.log('password', password)
+          onSubmit={async ({ email, password }) => {
+            const { data, error } = await execLogin({
+              loginUserInput: { email, password },
+            })
+            if (error) {
+              console.log('error', error)
+            }
+            if (data && data.login.success && data.login.accessToken) {
+              console.log('response', data.login)
+              console.log('accessToken', data.login.accessToken)
+            }
           }}
         >
           {() => (

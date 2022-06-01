@@ -202,10 +202,37 @@ export type User = {
   updatedAt: Scalars['DateTime']
 }
 
+export type LoginMutationVariables = Exact<{
+  loginUserInput: LoginUserInput
+}>
+
+export type LoginMutation = {
+  __typename?: 'Mutation'
+  login: {
+    __typename?: 'AuthResponse'
+    accessToken?: string | null
+    errMsg?: string | null
+    success: boolean
+  }
+}
+
 export type GreetingQueryVariables = Exact<{ [key: string]: never }>
 
 export type GreetingQuery = { __typename?: 'Query'; greeting: string }
 
+export const LoginDocument = gql`
+  mutation Login($loginUserInput: LoginUserInput!) {
+    login(loginUserInput: $loginUserInput) {
+      accessToken
+      errMsg
+      success
+    }
+  }
+`
+
+export function useLoginMutation() {
+  return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument)
+}
 export const GreetingDocument = gql`
   query Greeting {
     greeting
