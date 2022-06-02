@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app'
 import { Provider } from 'urql'
-import { client } from '../lib/urql-client'
+import { client } from '../lib/urql/urql-client'
 import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }: AppProps) {

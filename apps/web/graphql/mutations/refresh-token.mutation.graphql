@@ -1,0 +1,7 @@
+mutation RefreshToken {
+  refreshToken {
+    success
+    accessToken
+    errMsg
+  }
+}

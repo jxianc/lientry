@@ -216,6 +216,18 @@ export type LoginMutation = {
   }
 }
 
+export type RefreshTokenMutationVariables = Exact<{ [key: string]: never }>
+
+export type RefreshTokenMutation = {
+  __typename?: 'Mutation'
+  refreshToken: {
+    __typename?: 'AuthResponse'
+    success: boolean
+    accessToken?: string | null
+    errMsg?: string | null
+  }
+}
+
 export type GreetingQueryVariables = Exact<{ [key: string]: never }>
 
 export type GreetingQuery = { __typename?: 'Query'; greeting: string }
@@ -232,6 +244,21 @@ export const LoginDocument = gql`
 
 export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument)
+}
+export const RefreshTokenDocument = gql`
+  mutation RefreshToken {
+    refreshToken {
+      success
+      accessToken
+      errMsg
+    }
+  }
+`
+
+export function useRefreshTokenMutation() {
+  return Urql.useMutation<RefreshTokenMutation, RefreshTokenMutationVariables>(
+    RefreshTokenDocument,
+  )
 }
 export const GreetingDocument = gql`
   query Greeting {
