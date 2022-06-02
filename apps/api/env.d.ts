@@ -3,6 +3,7 @@ declare global {
     interface ProcessEnv {
       NODE_ENV: string
       PORT: number
+      CLIENT_ORIGIN: string
       DATABASE_URL: string
       ACCESS_TOKEN_SECRET: string
       REFRESH_TOKEN_SECRET: string

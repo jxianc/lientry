@@ -18,6 +18,10 @@ import { LinksModule } from './links/links.module'
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       context: ({ req, res }) => ({ req, res }), // attach request and response to graphql context
+      cors: {
+        origin: [process.env.CLIENT_ORIGIN],
+        credentials: true,
+      },
     }),
     UsersModule,
     AuthModule,
