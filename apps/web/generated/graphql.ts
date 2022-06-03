@@ -232,6 +232,20 @@ export type GreetingQueryVariables = Exact<{ [key: string]: never }>
 
 export type GreetingQuery = { __typename?: 'Query'; greeting: string }
 
+export type MeQueryVariables = Exact<{ [key: string]: never }>
+
+export type MeQuery = {
+  __typename?: 'Query'
+  me: {
+    __typename?: 'User'
+    id: string
+    name?: string | null
+    email?: string | null
+    createdAt: any
+    updatedAt: any
+  }
+}
+
 export const LoginDocument = gql`
   mutation Login($loginUserInput: LoginUserInput!) {
     login(loginUserInput: $loginUserInput) {
@@ -270,4 +284,21 @@ export function useGreetingQuery(
   options?: Omit<Urql.UseQueryArgs<GreetingQueryVariables>, 'query'>,
 ) {
   return Urql.useQuery<GreetingQuery>({ query: GreetingDocument, ...options })
+}
+export const MeDocument = gql`
+  query Me {
+    me {
+      id
+      name
+      email
+      createdAt
+      updatedAt
+    }
+  }
+`
+
+export function useMeQuery(
+  options?: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'>,
+) {
+  return Urql.useQuery<MeQuery>({ query: MeDocument, ...options })
 }

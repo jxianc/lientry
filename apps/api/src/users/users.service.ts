@@ -70,6 +70,18 @@ export class UsersService {
       where: {
         id,
       },
+      include: {
+        provider: {
+          include: {
+            user: true,
+          },
+        },
+        trees: {
+          include: {
+            user: true,
+          },
+        },
+      },
     })
   }
 }

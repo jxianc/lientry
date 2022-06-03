@@ -7,11 +7,13 @@ import { InputField } from '../components/InputField'
 import { Form, Formik } from 'formik'
 import { useLoginMutation } from '../generated/graphql'
 import { setAccessToken } from '../lib/acess-token-operation'
+import { useRouter } from 'next/router'
 
 interface SignInProps {}
 
 const SignIn: NextPage<SignInProps> = ({}) => {
   const [_, execLogin] = useLoginMutation()
+  const router = useRouter()
 
   return (
     <AuthLayout>
@@ -34,10 +36,8 @@ const SignIn: NextPage<SignInProps> = ({}) => {
               console.log('error', error)
             }
             if (data && data.login.success && data.login.accessToken) {
-              console.log('response', data.login)
-              console.log('accessToken', data.login.accessToken)
               setAccessToken(data.login.accessToken)
-              // TODO route to homepage/last page
+              router.push('/')
             }
           }}
         >
