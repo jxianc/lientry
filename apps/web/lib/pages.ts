@@ -6,4 +6,5 @@ interface Page {
 export const pages: Page[] = [
   { name: 'Sign In', url: '/sign-in' },
   { name: 'Sign Up', url: '/sign-up' },
+  { name: 'Feed', url: '/feed' },
 ]
