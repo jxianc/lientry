@@ -1,13 +1,14 @@
+import { Field, Form, Formik } from 'formik'
 import { NextPage } from 'next'
-import { OAuthButtonsGroup } from '../components/OAuthButtonsGroup'
-import { AuthLayout } from '../layouts/AuthLayout'
 import NextLink from 'next/link'
-import { signInInputs } from '../lib/inputs'
-import { InputField } from '../components/InputField'
-import { Form, Formik } from 'formik'
-import { useLoginMutation } from '../generated/graphql'
-import { setAccessToken } from '../lib/acess-token-operation'
 import { useRouter } from 'next/router'
+import { InputField } from '../components/InputField'
+import { OAuthButtonsGroup } from '../components/OAuthButtonsGroup'
+import { useLoginMutation } from '../generated/graphql'
+import { AuthLayout } from '../layouts/AuthLayout'
+import { setAccessToken } from '../lib/acess-token-operation'
+import { SignInSchema } from '../lib/input-validation'
+import { signInInputs } from '../lib/inputs'
 
 interface SignInProps {}
 
@@ -27,6 +28,7 @@ const SignIn: NextPage<SignInProps> = ({}) => {
             email: '',
             password: '',
           }}
+          validationSchema={SignInSchema}
           onSubmit={async ({ email, password }) => {
             const { data, error } = await execLogin({
               loginUserInput: { email, password },
@@ -43,10 +45,10 @@ const SignIn: NextPage<SignInProps> = ({}) => {
         >
           {() => (
             <Form className="space-y-4">
-              <div className="rounded-md -space-y-px">
-                {signInInputs.map((input, idx) => (
-                  <InputField key={idx} {...input} />
-                ))}
+              <div className="rounded-md space-y-4 text-left">
+                {signInInputs.map((input, idx) => {
+                  return <Field key={idx} {...input} component={InputField} />
+                })}
               </div>
               <div className="flex items-end justify-between text-xs md:text-sm font-medium">
                 <div className="flex items-center">

@@ -1,15 +1,16 @@
 import { InputFieldProps } from '../components/InputField'
 
+const emailInput: InputFieldProps = {
+  label: 'Email address',
+  name: 'email',
+  type: 'email',
+  autoComplete: 'email',
+  required: true,
+  placeholder: 'Email address',
+}
+
 const signUpInputs: InputFieldProps[] = [
-  {
-    label: 'Email address',
-    name: 'email',
-    type: 'email',
-    autoComplete: 'email',
-    required: true,
-    placeholder: 'Email address',
-    isEdge: 'top',
-  },
+  emailInput,
   {
     label: 'Display name',
     name: 'displayName',
@@ -24,20 +25,17 @@ const signUpInputs: InputFieldProps[] = [
     autoComplete: 'current-password',
     required: true,
     placeholder: 'Password',
-    isEdge: 'bottom',
+    helperText: [
+      'Length should be at least 8 characters',
+      'Should contains at least 1 uppercase letters',
+      'Should contains at least 1 special character',
+      'Should contains at least 1 number',
+    ],
   },
 ]
 
 const signInInputs: InputFieldProps[] = [
-  {
-    label: 'Email address',
-    name: 'email',
-    type: 'email',
-    autoComplete: 'email',
-    required: true,
-    placeholder: 'Email address',
-    isEdge: 'top',
-  },
+  emailInput,
   {
     label: 'Password',
     name: 'password',
@@ -45,7 +43,6 @@ const signInInputs: InputFieldProps[] = [
     autoComplete: 'current-password',
     required: true,
     placeholder: 'Password',
-    isEdge: 'bottom',
   },
 ]
 

@@ -1,9 +1,10 @@
-import { Form, Formik } from 'formik'
+import { Field, Form, Formik } from 'formik'
 import { NextPage } from 'next'
 import NextLink from 'next/link'
 import { InputField } from '../components/InputField'
 import { OAuthButtonsGroup } from '../components/OAuthButtonsGroup'
 import { AuthLayout } from '../layouts/AuthLayout'
+import { SignUpSchema } from '../lib/input-validation'
 import { signUpInputs } from '../lib/inputs'
 
 interface SignUpProps {}
@@ -22,6 +23,7 @@ const SignUp: NextPage<SignUpProps> = ({}) => {
             displayName: '',
             password: '',
           }}
+          validationSchema={SignUpSchema}
           onSubmit={({ email, displayName, password }) => {
             console.log('submitted')
             console.log('email', email)
@@ -31,9 +33,9 @@ const SignUp: NextPage<SignUpProps> = ({}) => {
         >
           {() => (
             <Form className="space-y-4">
-              <div className="rounded-md -space-y-px">
+              <div className="rounded-md space-y-4 text-left">
                 {signUpInputs.map((input, idx) => (
-                  <InputField key={idx} {...input} />
+                  <Field key={idx} {...input} component={InputField} />
                 ))}
               </div>
               <div>

@@ -1,6 +1,5 @@
 import { useField } from 'formik'
 import React, { HTMLInputTypeAttribute } from 'react'
-import { cn } from '../lib/classname'
 
 export interface InputFieldProps {
   label: string
@@ -9,29 +8,50 @@ export interface InputFieldProps {
   placeholder: string
   required: boolean
   autoComplete?: string
-  isEdge?: 'top' | 'bottom'
+  helperText?: string | string[]
 }
 
-export const InputField: React.FC<InputFieldProps> = ({
+// these are from Formik
+interface FieldAndForm {
+  field?: any
+  form?: any
+}
+
+export const InputField: React.FC<InputFieldProps & FieldAndForm> = ({
+  field: fieldFromProps,
+  form,
   label,
-  isEdge,
+  helperText,
   ...props
 }) => {
-  const [field] = useField(props)
+  const [field, meta] = useField({ ...fieldFromProps, ...props })
 
   return (
-    <div>
-      <label htmlFor="email-address" className="sr-only">
+    <div className="">
+      <label htmlFor="email-address" className="px-2">
         {label}
       </label>
       <input
         {...field}
         {...props}
-        className={cn(
-          'relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 focus:outline-none focus:border-teal-500 focus:z-10 text-xs md:text-sm',
-          isEdge ? (isEdge === 'top' ? 'rounded-t-md' : 'rounded-b-md') : '',
-        )}
+        className="my-1 w-full px-3 py-2 border border-gray-300 placeholder-gray-500 focus:outline-none focus:border-teal-500 focus:z-10 text-xs md:text-sm rounded-md"
       />
+      <div className="px-2 text-gray-600">
+        {helperText && Array.isArray(helperText) ? (
+          <ul className="list-disc list-inside">
+            {helperText.map((t, idx) => (
+              <li key={idx}>{t}</li>
+            ))}
+          </ul>
+        ) : (
+          <>
+            <div>{helperText}</div>
+          </>
+        )}
+        {meta.error && meta.touched && (
+          <div className="py-1 font-semibold text-red-500">{meta.error}</div>
+        )}
+      </div>
     </div>
   )
 }
