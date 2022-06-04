@@ -41,7 +41,7 @@ const SignUp: NextPage<SignUpProps> = ({}) => {
               <div>
                 <button
                   type="submit"
-                  className="w-full py-2 px-4 border border-transparent font-medium rounded-md text-white bg-teal-700 hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                  className="mt-12 w-full py-2 px-4 border border-transparent font-medium rounded-md text-white bg-teal-700 hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
                 >
                   Sign up
                 </button>
