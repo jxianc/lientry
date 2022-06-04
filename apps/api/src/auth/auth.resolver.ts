@@ -62,4 +62,13 @@ export class AuthResolver {
   refreshToken(@Context() ctx: any): Promise<AuthResponse> {
     return this.authService.refreshToken(ctx.req, ctx.res)
   }
+
+  @UseGuards(JwtGqlAuthGuard)
+  @Mutation(() => Boolean)
+  async logout(
+    @CurrentUser() user: User,
+    @Context() ctx: any,
+  ): Promise<boolean> {
+    return await this.authService.logout(user.id, ctx.res)
+  }
 }

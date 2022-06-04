@@ -66,6 +66,7 @@ type Mutation {
   EditLinks(CURLinksInput: EditLinksInput!, treeId: String!): EditLinksResponse!
   createTree(createTreeInput: CreateTreeInput!): CreateTreeResponse!
   login(loginUserInput: LoginUserInput!): AuthResponse!
+  logout: Boolean!
   refreshToken: AuthResponse!
   register(registerUserInput: RegisterUserInput!): AuthResponse!
   removeTree(treeId: String!): BaseResponse!

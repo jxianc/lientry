@@ -40,7 +40,7 @@ export class AuthService {
       userId: user.id,
     })
 
-    this.updateRefreshToken(refreshToken, user.id)
+    this.updateRefreshToken(refreshToken, user.id, true)
     this.sendRefreshToken(refreshToken, res)
 
     return accessToken
@@ -141,6 +141,17 @@ export class AuthService {
     }
   }
 
+  async logout(userId: string, res: Response): Promise<boolean> {
+    // clear cookie and remove refreshtoken
+    res.clearCookie(process.env.REFRESH_TOKEN_COOKIE_KEY, {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+    })
+    await this.updateRefreshToken('', userId, false)
+    return true
+  }
+
   async refreshToken(req: Request, res: Response): Promise<AuthResponse> {
     // get refreshtoken from cookie
     // verify refreshtoken
@@ -193,7 +204,7 @@ export class AuthService {
       userId: user.id,
     })
 
-    this.updateRefreshToken(newRefreshToken, tokenPayload.userId)
+    this.updateRefreshToken(newRefreshToken, tokenPayload.userId, true)
     this.sendRefreshToken(newRefreshToken, res)
 
     return {
@@ -218,8 +229,15 @@ export class AuthService {
   }
 
   // update refreshtoken in db
-  async updateRefreshToken(refreshToken: string, userId: string) {
-    const hashedRefreshToken = await hash(refreshToken, 11)
+  async updateRefreshToken(
+    refreshToken: string,
+    userId: string,
+    requireHash: boolean,
+  ) {
+    let hashedRefreshToken = refreshToken
+    if (requireHash) {
+      hashedRefreshToken = await hash(refreshToken, 11)
+    }
     await this.prisma.user.update({
       where: {
         id: userId,
