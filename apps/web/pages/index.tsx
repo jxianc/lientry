@@ -1,32 +1,54 @@
 import { NextPage } from 'next'
 import NextLink from 'next/link'
 import { useEffect, useState } from 'react'
-import { useMeQuery, User } from '../generated/graphql'
+import { useLogoutMutation, useMeQuery, User } from '../generated/graphql'
 import { BaseLayout } from '../layouts/BaseLayout'
+import { removeAccessToken } from '../lib/acess-token-operation'
 import { pages } from '../lib/pages'
 
 interface HomeProps {}
 
 const Home: NextPage<HomeProps> = ({}) => {
-  const [{ data, fetching, error }] = useMeQuery()
-  const [currentUser, setCurrentUser] = useState<User>()
+  const [{ data: meData, fetching }] = useMeQuery()
+  const [loading, setLoading] = useState(false)
+  const [_, execLogout] = useLogoutMutation()
+  const [currentUser, setCurrentUser] = useState<User | null>()
 
   useEffect(() => {
-    if (data && data.me) {
-      setCurrentUser(data.me)
+    if (meData && meData.me) {
+      setCurrentUser(meData.me)
+    } else {
+      setCurrentUser(null)
     }
-  }, [data])
+
+    if (fetching) {
+      setLoading(true)
+    } else {
+      setLoading(false)
+    }
+  }, [meData, fetching])
 
   return (
     <BaseLayout>
       <div className="max-w-xl mx-auto min-h-screen py-10 space-y-4">
         <div className="text-xl font-bold">Lientry dev page</div>
-        {fetching && <div className="text-gray-600">loading ...</div>}
+        {loading && <div className="text-gray-600">loading ...</div>}
         {currentUser ? (
-          <div>
-            <span className="font-semibold">current user: </span>
-            {currentUser.name ? currentUser.name : `usr-${currentUser.id}`}
-          </div>
+          <>
+            <div>
+              <span className="font-semibold">current user: </span>
+              {currentUser.name ? currentUser.name : `usr-${currentUser.id}`}
+            </div>
+            <button
+              className="px-2 py-1 rounded-md bg-red-500 hover:bg-red-600 text-white"
+              onClick={async () => {
+                removeAccessToken()
+                await execLogout()
+              }}
+            >
+              logout
+            </button>
+          </>
         ) : (
           <div className="text-red-500 font-semibold">no user</div>
         )}

@@ -53,7 +53,7 @@ export class AuthResolver {
   }
 
   @UseGuards(JwtGqlAuthGuard)
-  @Query(() => User)
+  @Query(() => User, { nullable: true })
   me(@CurrentUser() user: User): User {
     return user
   }

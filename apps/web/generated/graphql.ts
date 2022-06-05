@@ -88,6 +88,7 @@ export type Mutation = {
   EditLinks: EditLinksResponse
   createTree: CreateTreeResponse
   login: AuthResponse
+  logout: Scalars['Boolean']
   refreshToken: AuthResponse
   register: AuthResponse
   removeTree: BaseResponse
@@ -134,7 +135,7 @@ export type Query = {
   getTreeById: Tree
   getTrendingTrees: Array<Tree>
   greeting: Scalars['String']
-  me: User
+  me?: Maybe<User>
 }
 
 export type QueryGetRecentTreesArgs = {
@@ -216,6 +217,10 @@ export type LoginMutation = {
   }
 }
 
+export type LogoutMutationVariables = Exact<{ [key: string]: never }>
+
+export type LogoutMutation = { __typename?: 'Mutation'; logout: boolean }
+
 export type RefreshTokenMutationVariables = Exact<{ [key: string]: never }>
 
 export type RefreshTokenMutation = {
@@ -236,14 +241,14 @@ export type MeQueryVariables = Exact<{ [key: string]: never }>
 
 export type MeQuery = {
   __typename?: 'Query'
-  me: {
+  me?: {
     __typename?: 'User'
     id: string
     name?: string | null
     email?: string | null
     createdAt: any
     updatedAt: any
-  }
+  } | null
 }
 
 export const LoginDocument = gql`
@@ -258,6 +263,17 @@ export const LoginDocument = gql`
 
 export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument)
+}
+export const LogoutDocument = gql`
+  mutation Logout {
+    logout
+  }
+`
+
+export function useLogoutMutation() {
+  return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(
+    LogoutDocument,
+  )
 }
 export const RefreshTokenDocument = gql`
   mutation RefreshToken {

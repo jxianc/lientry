@@ -2,8 +2,14 @@ import { AuthConfig } from '@urql/exchange-auth'
 import { makeOperation } from '@urql/core'
 import jwtDecode from 'jwt-decode'
 import { isServer } from '../is-server'
-import { getAccessToken, setAccessToken } from '../acess-token-operation'
 import {
+  getAccessToken,
+  removeAccessToken,
+  setAccessToken,
+} from '../acess-token-operation'
+import {
+  LogoutDocument,
+  LogoutMutation,
   RefreshTokenDocument,
   RefreshTokenMutation,
 } from '../../generated/graphql'
@@ -97,7 +103,10 @@ export const authExchangeConfig: AuthConfig<AuthState> = {
        */
       const response = await mutate<RefreshTokenMutation>(RefreshTokenDocument)
 
-      if (response.data?.refreshToken.accessToken) {
+      if (
+        response.data?.refreshToken.success &&
+        response.data?.refreshToken.accessToken
+      ) {
         // save the new tokens in storage for next restart
         setAccessToken(response.data.refreshToken.accessToken)
         // return the new tokens
@@ -107,7 +116,7 @@ export const authExchangeConfig: AuthConfig<AuthState> = {
       }
 
       // otherwise, if refresh fails, clear local storage and log out
-      localStorage.clear()
+      removeAccessToken()
 
       // urql: your app logout logic should trigger here
       // logout();

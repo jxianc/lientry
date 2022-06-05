@@ -85,7 +85,7 @@ type Query {
   getTreeById(treeId: String!): Tree!
   getTrendingTrees(cursorId: String): [Tree!]!
   greeting: String!
-  me: User!
+  me: User
 }
 
 input RegisterUserInput {

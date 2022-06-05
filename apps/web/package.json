@@ -14,6 +14,7 @@
     "@urql/core": "^2.5.0",
     "@urql/devtools": "^2.0.3",
     "@urql/exchange-auth": "^0.1.7",
+    "@urql/exchange-graphcache": "^4.4.2",
     "formik": "^2.2.9",
     "graphql": "^16.5.0",
     "graphql-tag": "^2.12.6",
