@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { BaseResponse } from '../base/base.response'
 import { PrismaService } from '../prisma.service'
 import { CreateTreeInput } from './dto/create-tree.input'
@@ -12,7 +12,7 @@ export class TreesService {
   constructor(private readonly prisma: PrismaService) {}
 
   async createTree(
-    { name, description }: CreateTreeInput,
+    { name, description, isPublic }: CreateTreeInput,
     userId: string,
   ): Promise<CreateTreeResponse> {
     try {
@@ -20,6 +20,7 @@ export class TreesService {
         data: {
           name,
           description: description || undefined,
+          isPublic: isPublic || undefined,
           userId,
         },
         include: {
@@ -39,7 +40,7 @@ export class TreesService {
     }
   }
 
-  async getTreeById(treeId: string) {
+  async getTreeById(treeId: string, fromGuard = false) {
     const tree = await this.prisma.tree.findUnique({
       where: {
         id: treeId,
@@ -49,7 +50,11 @@ export class TreesService {
         links: true,
       },
     })
-    if (tree) {
+    if (!tree) {
+      throw new NotFoundException('tree is not found')
+    }
+
+    if (tree && !fromGuard) {
       // increment viewed count
       const updatedTree = await this.prisma.tree.update({
         where: {
@@ -64,12 +69,16 @@ export class TreesService {
         },
       })
       return updatedTree
+    } else {
+      return tree
     }
-    return tree
   }
 
   async getRecentTree(cursorId: string): Promise<Tree[]> {
     const trees = await this.prisma.tree.findMany({
+      where: {
+        isPublic: true,
+      },
       include: {
         user: true,
       },
@@ -89,6 +98,9 @@ export class TreesService {
 
   async getTrendingTrees(cursorId: string): Promise<Tree[]> {
     const trendingTrees = await this.prisma.tree.findMany({
+      where: {
+        isPublic: true,
+      },
       include: {
         user: true,
       },
@@ -105,7 +117,7 @@ export class TreesService {
   }
 
   async updateTree(
-    { name, description }: UpdateTreeInput,
+    { name, description, isPublic }: UpdateTreeInput,
     treeId: string,
   ): Promise<UpdateTreeResponse> {
     const tree = await this.getTreeById(treeId)
@@ -118,7 +130,8 @@ export class TreesService {
         },
         data: {
           name: name ? name : undefined,
-          description: description ? description : undefined,
+          description: description || undefined,
+          isPublic: typeof isPublic === 'boolean' ? isPublic : undefined,
         },
         include: {
           user: true,

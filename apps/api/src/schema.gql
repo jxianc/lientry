@@ -21,6 +21,7 @@ input CreateLinkInput {
 
 input CreateTreeInput {
   description: String
+  isPublic: Boolean
   name: String!
 }
 
@@ -102,6 +103,7 @@ type Tree {
   createdAt: DateTime!
   description: String
   id: String!
+  isPublic: Boolean!
   links: [Link!]
   name: String!
   updatedAt: DateTime!
@@ -118,6 +120,7 @@ input UpdateLinkInput {
 
 input UpdateTreeInput {
   description: String
+  isPublic: Boolean
   name: String
 }
 

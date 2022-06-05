@@ -1,9 +1,9 @@
 import {
-  Injectable,
   CanActivate,
   ExecutionContext,
-  UnauthorizedException,
+  Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common'
 import { GqlExecutionContext } from '@nestjs/graphql'
 import { User } from '../../users/entities/user.entity'
@@ -18,21 +18,30 @@ export class TreeAuthorGuard implements CanActivate {
     // for graphql resolver
     const ctx = GqlExecutionContext.create(context)
 
+    // get user from context
     const user = ctx.getContext().req.user as User
-    const { treeId } = ctx.getArgs()
 
+    // get treeId from arguments and find the tree
+    const { treeId } = ctx.getArgs()
     if (treeId) {
-      const tree = await this.treesService.getTreeById(treeId)
+      const tree = await this.treesService.getTreeById(treeId, true)
       if (!tree) {
         // tree not found
-        throw new NotFoundException()
+        throw new NotFoundException('tree is not found')
       }
-      if (tree && tree.userId === user.id) {
+
+      // TODO maybe there is another way to do this
+      // get tree by id
+      if (ctx.getInfo().fieldName === 'getTreeById' && tree.isPublic) {
+        return true
+      } else if (tree && tree.userId === user.id) {
         // tree is authorzied
         return true
       }
     }
 
-    throw new UnauthorizedException()
+    throw new UnauthorizedException(
+      'your are not authorized to access this tree',
+    )
   }
 }

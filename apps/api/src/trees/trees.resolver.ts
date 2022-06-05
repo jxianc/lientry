@@ -25,6 +25,7 @@ export class TreesResolver {
     return await this.treesService.createTree(createTreeInput, user.id)
   }
 
+  @UseGuards(JwtGqlAuthGuard, TreeAuthorGuard)
   @Query(() => Tree)
   async getTreeById(@Args({ name: 'treeId' }) treeId: string) {
     return await this.treesService.getTreeById(treeId)

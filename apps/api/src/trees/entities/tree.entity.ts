@@ -17,6 +17,9 @@ export class Tree extends BaseEntity {
   @Field()
   viewed!: number
 
+  @Field()
+  isPublic!: boolean
+
   @Field(() => User)
   user!: User
 

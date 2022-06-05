@@ -7,4 +7,7 @@ export class UpdateTreeInput {
 
   @Field(() => String, { nullable: true })
   description?: string | null
+
+  @Field(() => Boolean, { nullable: true })
+  isPublic?: boolean | null
 }
