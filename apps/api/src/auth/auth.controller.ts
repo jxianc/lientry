@@ -20,7 +20,7 @@ export class AuthController {
   async googleRedirect(@Req() req: Request, @Res() res: Response) {
     const user = req.user as OAuthUser
     const response = await this.authService.oauthLogin(user, res)
-    res.status(200).send(response)
+    res.redirect(process.env.CLIENT_ORIGIN)
     return response
   }
 
@@ -35,7 +35,7 @@ export class AuthController {
   async githubRedirect(@Req() req: Request, @Res() res: Response) {
     const user = req.user as OAuthUser
     const response = await this.authService.oauthLogin(user, res)
-    res.status(200).send(response)
+    res.redirect(process.env.CLIENT_ORIGIN)
     return response
   }
 }
