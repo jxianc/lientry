@@ -85,6 +85,7 @@ type Query {
   getRecentTrees(cursorId: String): [TreeEntity!]!
   getTreeById(treeId: String!): TreeEntity!
   getTrendingTrees(cursorId: String): [TreeEntity!]!
+  getUserById(userId: String!): UserEntity
   greeting: String!
   me: UserEntity
 }
