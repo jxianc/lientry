@@ -41,7 +41,7 @@ export class TreeAuthorGuard implements CanActivate {
     }
 
     throw new UnauthorizedException(
-      'your are not authorized to access this tree',
+      'you are not authorized to access this tree',
     )
   }
 }

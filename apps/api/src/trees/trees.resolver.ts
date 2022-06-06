@@ -9,6 +9,7 @@ import { CreateTreeResponse } from './dto/create-tree.response'
 import { UpdateTreeInput } from './dto/update-tree.input'
 import { UpdateTreeResponse } from './dto/update-tree.response'
 import { TreeEntity } from './entities/tree.entity'
+import { ReadTreeAuthorGuard } from './guards/read-tree-author.guard'
 import { TreeAuthorGuard } from './guards/tree-author.guard'
 import { TreesService } from './trees.service'
 
@@ -25,7 +26,7 @@ export class TreesResolver {
     return await this.treesService.createTree(createTreeInput, user.id)
   }
 
-  @UseGuards(JwtGqlAuthGuard, TreeAuthorGuard)
+  @UseGuards(ReadTreeAuthorGuard)
   @Query(() => TreeEntity)
   async getTreeById(@Args({ name: 'treeId' }) treeId: string) {
     return await this.treesService.getTreeById(treeId)

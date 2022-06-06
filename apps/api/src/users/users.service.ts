@@ -64,7 +64,7 @@ export class UsersService {
     })
   }
 
-  async getUserById(id: string) {
+  async getUserById(id: string, isAuthor?: boolean) {
     return await this.prisma.user.findUnique({
       where: {
         id,
@@ -76,6 +76,10 @@ export class UsersService {
           },
         },
         trees: {
+          where: {
+            isPublic:
+              typeof isAuthor === 'boolean' && isAuthor ? undefined : true,
+          },
           include: {
             user: true,
           },

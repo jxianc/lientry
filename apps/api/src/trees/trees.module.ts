@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common'
-import { TreesService } from './trees.service'
-import { TreesResolver } from './trees.resolver'
+import { JwtModule } from '@nestjs/jwt'
+import { UsersService } from '../users/users.service'
 import { PrismaService } from '../prisma.service'
+import { TreesResolver } from './trees.resolver'
+import { TreesService } from './trees.service'
 
 @Module({
-  providers: [TreesResolver, TreesService, PrismaService],
+  imports: [JwtModule.register({})],
+  providers: [TreesResolver, TreesService, PrismaService, UsersService],
 })
 export class TreesModule {}
