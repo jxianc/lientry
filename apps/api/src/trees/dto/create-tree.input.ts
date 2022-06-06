@@ -6,8 +6,8 @@ export class CreateTreeInput {
   name!: string
 
   @Field(() => String, { nullable: true })
-  description?: string | null
+  description?: string
 
   @Field(() => Boolean, { nullable: true })
-  isPublic?: boolean | null
+  isPublic?: boolean
 }

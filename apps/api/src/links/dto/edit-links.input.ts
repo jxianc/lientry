@@ -6,7 +6,7 @@ export class CreateLinkInput {
   title!: string
 
   @Field(() => String, { nullable: true })
-  description?: string | null
+  description?: string
 
   @Field()
   url!: string
@@ -18,13 +18,13 @@ export class UpdateLinkInput {
   linkId!: string
 
   @Field(() => String, { nullable: true })
-  title?: string | null
+  title?: string
 
   @Field(() => String, { nullable: true })
-  description?: string | null
+  description?: string
 
   @Field(() => String, { nullable: true })
-  url?: string | null
+  url?: string
 }
 
 @InputType()
@@ -36,11 +36,11 @@ export class RemoveLinkInput {
 @InputType()
 export class EditLinksInput {
   @Field(() => [CreateLinkInput], { nullable: true })
-  creates?: CreateLinkInput[] | null
+  creates?: CreateLinkInput[]
 
   @Field(() => [UpdateLinkInput], { nullable: true })
-  updates?: UpdateLinkInput[] | null
+  updates?: UpdateLinkInput[]
 
   @Field(() => [RemoveLinkInput], { nullable: true })
-  removes?: RemoveLinkInput[] | null
+  removes?: RemoveLinkInput[]
 }

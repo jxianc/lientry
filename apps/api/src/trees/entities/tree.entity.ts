@@ -1,10 +1,11 @@
 import { ObjectType, Field } from '@nestjs/graphql'
+import { User } from '@prisma/client'
 import { BaseEntity } from '../../base/base.entity'
-import { Link } from '../../links/entities/link.entity'
-import { User } from '../../users/entities/user.entity'
+import { LinkEntity } from '../../links/entities/link.entity'
+import { UserEntity } from '../../users/entities/user.entity'
 
 @ObjectType()
-export class Tree extends BaseEntity {
+export class TreeEntity extends BaseEntity {
   @Field()
   id!: string
 
@@ -20,9 +21,9 @@ export class Tree extends BaseEntity {
   @Field()
   isPublic!: boolean
 
-  @Field(() => User)
+  @Field(() => UserEntity)
   user!: User
 
-  @Field(() => [Link], { nullable: true })
-  links?: Link[] | null
+  @Field(() => [LinkEntity], { nullable: true })
+  links?: LinkEntity[] | null
 }

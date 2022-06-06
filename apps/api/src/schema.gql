@@ -28,7 +28,7 @@ input CreateTreeInput {
 type CreateTreeResponse {
   errMsg: String
   success: Boolean!
-  tree: Tree
+  tree: TreeEntity
 }
 
 """
@@ -44,16 +44,16 @@ input EditLinksInput {
 
 type EditLinksResponse {
   errMsg: String
-  links: [Link!]
+  links: [LinkEntity!]
   success: Boolean!
 }
 
-type Link {
+type LinkEntity {
   createdAt: DateTime!
   description: String
   id: String!
   title: String!
-  tree: Tree!
+  tree: TreeEntity!
   updatedAt: DateTime!
   url: String!
 }
@@ -74,19 +74,19 @@ type Mutation {
   updateTree(treeId: String!, updateTreeInput: UpdateTreeInput!): UpdateTreeResponse!
 }
 
-type Provider {
+type ProviderEntity {
   id: String!
   providerId: String!
   providerName: String!
-  user: User!
+  user: UserEntity!
 }
 
 type Query {
-  getRecentTrees(cursorId: String): [Tree!]!
-  getTreeById(treeId: String!): Tree!
-  getTrendingTrees(cursorId: String): [Tree!]!
+  getRecentTrees(cursorId: String): [TreeEntity!]!
+  getTreeById(treeId: String!): TreeEntity!
+  getTrendingTrees(cursorId: String): [TreeEntity!]!
   greeting: String!
-  me: User
+  me: UserEntity
 }
 
 input RegisterUserInput {
@@ -99,15 +99,15 @@ input RemoveLinkInput {
   linkId: String!
 }
 
-type Tree {
+type TreeEntity {
   createdAt: DateTime!
   description: String
   id: String!
   isPublic: Boolean!
-  links: [Link!]
+  links: [LinkEntity!]
   name: String!
   updatedAt: DateTime!
-  user: User!
+  user: UserEntity!
   viewed: Float!
 }
 
@@ -127,16 +127,16 @@ input UpdateTreeInput {
 type UpdateTreeResponse {
   errMsg: String
   success: Boolean!
-  tree: Tree
+  tree: TreeEntity
 }
 
-type User {
+type UserEntity {
   createdAt: DateTime!
   email: String
   id: String!
   image: String
   name: String
-  provider: Provider
-  trees: [Tree!]
+  provider: ProviderEntity
+  trees: [TreeEntity!]
   updatedAt: DateTime!
 }

@@ -6,7 +6,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common'
 import { GqlExecutionContext } from '@nestjs/graphql'
-import { User } from '../../users/entities/user.entity'
+import { User } from '@prisma/client'
 import { TreesService } from '../trees.service'
 
 // NOTE make sure the resolvers using this guard should provide `treeId` as argument

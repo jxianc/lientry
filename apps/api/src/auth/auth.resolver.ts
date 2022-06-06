@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common'
 import { Args, Context, Mutation, Resolver, Query } from '@nestjs/graphql'
-import { User } from '../users/entities/user.entity'
+import { User } from '@prisma/client'
+import { UserEntity } from '../users/entities/user.entity'
 import { UsersService } from '../users/users.service'
 import { AuthService } from './auth.service'
 import { CurrentUser } from './decorators/current-user.decorator'
@@ -53,7 +54,7 @@ export class AuthResolver {
   }
 
   @UseGuards(JwtGqlAuthGuard)
-  @Query(() => User, { nullable: true })
+  @Query(() => UserEntity, { nullable: true })
   me(@CurrentUser() user: User): User {
     return user
   }

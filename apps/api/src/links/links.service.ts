@@ -1,26 +1,22 @@
 import { Injectable } from '@nestjs/common'
-import { TreesService } from '../trees/trees.service'
+import { Link } from '@prisma/client'
+import { BaseResponse } from '../base/base.response'
 import { PrismaService } from '../prisma.service'
 import {
   CreateLinkInput,
   RemoveLinkInput,
   UpdateLinkInput,
 } from './dto/edit-links.input'
-import { Link } from './entities/link.entity'
 import {
   CreateLinkResponse,
   CreateManyLinksResponse,
   UpdateLinkResponse,
   UpdateManyLinksResponse,
 } from './dto/edit-links.response'
-import { BaseResponse } from '../base/base.response'
 
 @Injectable()
 export class LinksService {
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly treesService: TreesService,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async createManyLinks(
     createLinksInput: CreateLinkInput[],
@@ -72,7 +68,7 @@ export class LinksService {
     for (const input of removeLinkInput) {
       const response = await this.removeLink(input)
       if (!response.success) {
-        // failed to update link
+        // failed to remove link
         return {
           success: false,
           errMsg: response.errMsg,
@@ -99,7 +95,7 @@ export class LinksService {
       const link = await this.prisma.link.create({
         data: {
           title,
-          description: description || undefined,
+          description,
           url,
           treeId,
         },
@@ -136,9 +132,9 @@ export class LinksService {
           id: linkId,
         },
         data: {
-          title: title || undefined,
-          description: description || undefined,
-          url: url || undefined,
+          title,
+          description,
+          url,
         },
         include: {
           tree: {

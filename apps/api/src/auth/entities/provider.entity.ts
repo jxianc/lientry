@@ -1,8 +1,9 @@
 import { Field, ObjectType } from '@nestjs/graphql'
-import { User } from '../../users/entities/user.entity'
+import { User } from '@prisma/client'
+import { UserEntity } from '../../users/entities/user.entity'
 
 @ObjectType()
-export class Provider {
+export class ProviderEntity {
   @Field()
   id!: string
 
@@ -12,6 +13,6 @@ export class Provider {
   @Field()
   providerName!: string
 
-  @Field(() => User)
+  @Field(() => UserEntity)
   user!: User
 }

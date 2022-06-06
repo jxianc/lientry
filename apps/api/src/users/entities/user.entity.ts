@@ -1,29 +1,30 @@
 import { Field, ObjectType } from '@nestjs/graphql'
-import { Tree } from '../../trees/entities/tree.entity'
-import { Provider } from '../../auth/entities/provider.entity'
+import { TreeEntity } from '../../trees/entities/tree.entity'
+import { ProviderEntity } from '../../auth/entities/provider.entity'
 import { BaseEntity } from '../../base/base.entity'
+import { Provider, Tree } from '@prisma/client'
 
 @ObjectType()
-export class User extends BaseEntity {
+export class UserEntity extends BaseEntity {
   @Field()
   id!: string
 
   @Field(() => String, { nullable: true })
-  name?: string | null
+  name?: string
 
   @Field(() => String, { nullable: true })
-  email?: string | null
+  email?: string
 
-  password?: string | null
+  password?: string
 
   @Field(() => String, { nullable: true })
-  image?: string | null
+  image?: string
 
-  refreshToken?: string | null
+  refreshToken?: string
 
-  @Field(() => Provider, { nullable: true })
-  provider?: Provider | null
+  @Field(() => ProviderEntity, { nullable: true })
+  provider?: Provider
 
-  @Field(() => [Tree], { nullable: true })
-  trees?: Tree[] | null
+  @Field(() => [TreeEntity], { nullable: true })
+  trees?: Tree[]
 }

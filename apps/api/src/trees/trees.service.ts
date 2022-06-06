@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
+import { Tree } from '@prisma/client'
 import { BaseResponse } from '../base/base.response'
 import { PrismaService } from '../prisma.service'
 import { CreateTreeInput } from './dto/create-tree.input'
 import { CreateTreeResponse } from './dto/create-tree.response'
 import { UpdateTreeInput } from './dto/update-tree.input'
 import { UpdateTreeResponse } from './dto/update-tree.response'
-import { Tree } from './entities/tree.entity'
 
 @Injectable()
 export class TreesService {
@@ -19,8 +19,8 @@ export class TreesService {
       const tree = await this.prisma.tree.create({
         data: {
           name,
-          description: description || undefined,
-          isPublic: isPublic || undefined,
+          description,
+          isPublic,
           userId,
         },
         include: {
@@ -40,7 +40,7 @@ export class TreesService {
     }
   }
 
-  async getTreeById(treeId: string, fromGuard = false) {
+  async getTreeById(treeId: string, isInternal = false) {
     const tree = await this.prisma.tree.findUnique({
       where: {
         id: treeId,
@@ -54,7 +54,7 @@ export class TreesService {
       throw new NotFoundException('tree is not found')
     }
 
-    if (tree && !fromGuard) {
+    if (tree && !isInternal) {
       // increment viewed count
       const updatedTree = await this.prisma.tree.update({
         where: {
@@ -120,7 +120,7 @@ export class TreesService {
     { name, description, isPublic }: UpdateTreeInput,
     treeId: string,
   ): Promise<UpdateTreeResponse> {
-    const tree = await this.getTreeById(treeId)
+    const tree = await this.getTreeById(treeId, true)
 
     try {
       const updatedTree = await this.prisma.tree.update({
@@ -129,9 +129,9 @@ export class TreesService {
           id: tree?.id,
         },
         data: {
-          name: name ? name : undefined,
-          description: description || undefined,
-          isPublic: typeof isPublic === 'boolean' ? isPublic : undefined,
+          name,
+          description,
+          isPublic,
         },
         include: {
           user: true,

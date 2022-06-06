@@ -1,10 +1,10 @@
 import { UseGuards } from '@nestjs/common'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
+import { Link } from '@prisma/client'
 import { TreeAuthorGuard } from 'src/trees/guards/tree-author.guard'
 import { JwtGqlAuthGuard } from '../auth/guards/jwt.guard'
 import { EditLinksInput } from './dto/edit-links.input'
 import { EditLinksResponse } from './dto/edit-links.response'
-import { Link } from './entities/link.entity'
 import { LinksService } from './links.service'
 
 @Resolver()

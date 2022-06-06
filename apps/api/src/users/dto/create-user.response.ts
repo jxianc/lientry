@@ -1,11 +1,12 @@
 import { Field, ObjectType } from '@nestjs/graphql'
+import { User } from '@prisma/client'
 import { BaseResponse } from '../../base/base.response'
-import { User } from '../entities/user.entity'
+import { UserEntity } from '../entities/user.entity'
 
 @ObjectType()
 export class CreateUserResponse extends BaseResponse {
-  @Field(() => User, { nullable: true })
-  user?: User | null
+  @Field(() => UserEntity, { nullable: true })
+  user?: User
 
   @Field()
   success!: boolean

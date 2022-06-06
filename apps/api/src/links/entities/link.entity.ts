@@ -1,9 +1,10 @@
 import { Field, ObjectType } from '@nestjs/graphql'
-import { Tree } from '../../trees/entities/tree.entity'
+import { TreeEntity } from '../../trees/entities/tree.entity'
 import { BaseEntity } from '../../base/base.entity'
+import { Tree } from '@prisma/client'
 
 @ObjectType()
-export class Link extends BaseEntity {
+export class LinkEntity extends BaseEntity {
   @Field()
   id!: string
 
@@ -16,6 +17,6 @@ export class Link extends BaseEntity {
   @Field()
   url!: string
 
-  @Field(() => Tree)
+  @Field(() => TreeEntity)
   tree!: Tree
 }

@@ -1,11 +1,12 @@
 import { Field, ObjectType } from '@nestjs/graphql'
+import { Link } from '@prisma/client'
 import { BaseResponse } from '../../base/base.response'
-import { Link } from '../entities/link.entity'
+import { LinkEntity } from '../entities/link.entity'
 
 @ObjectType()
 export class CreateLinkResponse extends BaseResponse {
-  @Field(() => Link, { nullable: true })
-  link?: Link | null
+  @Field(() => LinkEntity, { nullable: true })
+  link?: Link
 }
 
 @ObjectType()
@@ -13,8 +14,8 @@ export class UpdateLinkResponse extends CreateLinkResponse {}
 
 @ObjectType()
 export class EditLinksResponse extends BaseResponse {
-  @Field(() => [Link], { nullable: true })
-  links?: Link[] | null
+  @Field(() => [LinkEntity], { nullable: true })
+  links?: Link[]
 }
 
 @ObjectType()

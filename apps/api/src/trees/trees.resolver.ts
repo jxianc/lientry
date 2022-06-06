@@ -1,18 +1,18 @@
 import { UseGuards } from '@nestjs/common'
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { User } from '@prisma/client'
 import { CurrentUser } from '../auth/decorators/current-user.decorator'
 import { JwtGqlAuthGuard } from '../auth/guards/jwt.guard'
 import { BaseResponse } from '../base/base.response'
-import { User } from '../users/entities/user.entity'
 import { CreateTreeInput } from './dto/create-tree.input'
 import { CreateTreeResponse } from './dto/create-tree.response'
 import { UpdateTreeInput } from './dto/update-tree.input'
 import { UpdateTreeResponse } from './dto/update-tree.response'
-import { Tree } from './entities/tree.entity'
+import { TreeEntity } from './entities/tree.entity'
 import { TreeAuthorGuard } from './guards/tree-author.guard'
 import { TreesService } from './trees.service'
 
-@Resolver(() => Tree)
+@Resolver(() => TreeEntity)
 export class TreesResolver {
   constructor(private readonly treesService: TreesService) {}
 
@@ -26,7 +26,7 @@ export class TreesResolver {
   }
 
   @UseGuards(JwtGqlAuthGuard, TreeAuthorGuard)
-  @Query(() => Tree)
+  @Query(() => TreeEntity)
   async getTreeById(@Args({ name: 'treeId' }) treeId: string) {
     return await this.treesService.getTreeById(treeId)
   }
@@ -46,7 +46,7 @@ export class TreesResolver {
     return await this.treesService.removeTree(treeId)
   }
 
-  @Query(() => [Tree])
+  @Query(() => [TreeEntity])
   async getRecentTrees(
     @Args({ name: 'cursorId', nullable: true, type: () => String })
     cursorId: string,
@@ -54,7 +54,7 @@ export class TreesResolver {
     return await this.treesService.getRecentTree(cursorId)
   }
 
-  @Query(() => [Tree])
+  @Query(() => [TreeEntity])
   async getTrendingTrees(
     @Args({ name: 'cursorId', nullable: true, type: () => String })
     cursorId: string,

@@ -3,7 +3,6 @@ import { PrismaService } from '../prisma.service'
 import { CreateUserInput } from './dto/create-user.input'
 import { CreateUserResponse } from './dto/create-user.response'
 import { hash } from 'bcrypt'
-import { User } from './entities/user.entity'
 
 @Injectable()
 export class UsersService {
@@ -57,7 +56,7 @@ export class UsersService {
     }
   }
 
-  async getUserByEmail(email: string): Promise<User | null> {
+  async getUserByEmail(email: string) {
     return await this.prisma.user.findUnique({
       where: {
         email,
@@ -65,7 +64,7 @@ export class UsersService {
     })
   }
 
-  async getUserById(id: string): Promise<User | null> {
+  async getUserById(id: string) {
     return await this.prisma.user.findUnique({
       where: {
         id,

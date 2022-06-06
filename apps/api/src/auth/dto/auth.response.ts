@@ -1,13 +1,8 @@
 import { Field, ObjectType } from '@nestjs/graphql'
+import { BaseResponse } from '../../base/base.response'
 
 @ObjectType()
-export class AuthResponse {
-  @Field()
-  success!: boolean
-
+export class AuthResponse extends BaseResponse {
   @Field(() => String, { nullable: true })
-  errMsg?: string | undefined
-
-  @Field(() => String, { nullable: true })
-  accessToken?: string | null
+  accessToken?: string
 }
