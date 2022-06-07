@@ -5,7 +5,7 @@ interface FeedProps {}
 
 const Feed: NextPage<FeedProps> = ({}) => {
   return (
-    <BaseLayout>
+    <BaseLayout isMain={true}>
       <div>feed page</div>
     </BaseLayout>
   )
