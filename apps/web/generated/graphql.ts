@@ -44,6 +44,7 @@ export type CreateLinkInput = {
 
 export type CreateTreeInput = {
   description?: InputMaybe<Scalars['String']>
+  isPublic?: InputMaybe<Scalars['Boolean']>
   name: Scalars['String']
 }
 
@@ -51,7 +52,7 @@ export type CreateTreeResponse = {
   __typename?: 'CreateTreeResponse'
   errMsg?: Maybe<Scalars['String']>
   success: Scalars['Boolean']
-  tree?: Maybe<Tree>
+  tree?: Maybe<TreeEntity>
 }
 
 export type EditLinksInput = {
@@ -63,17 +64,17 @@ export type EditLinksInput = {
 export type EditLinksResponse = {
   __typename?: 'EditLinksResponse'
   errMsg?: Maybe<Scalars['String']>
-  links?: Maybe<Array<Link>>
+  links?: Maybe<Array<LinkEntity>>
   success: Scalars['Boolean']
 }
 
-export type Link = {
-  __typename?: 'Link'
+export type LinkEntity = {
+  __typename?: 'LinkEntity'
   createdAt: Scalars['DateTime']
   description?: Maybe<Scalars['String']>
   id: Scalars['String']
   title: Scalars['String']
-  tree: Tree
+  tree: TreeEntity
   updatedAt: Scalars['DateTime']
   url: Scalars['String']
 }
@@ -121,21 +122,22 @@ export type MutationUpdateTreeArgs = {
   updateTreeInput: UpdateTreeInput
 }
 
-export type Provider = {
-  __typename?: 'Provider'
+export type ProviderEntity = {
+  __typename?: 'ProviderEntity'
   id: Scalars['String']
   providerId: Scalars['String']
   providerName: Scalars['String']
-  user: User
+  user: UserEntity
 }
 
 export type Query = {
   __typename?: 'Query'
-  getRecentTrees: Array<Tree>
-  getTreeById: Tree
-  getTrendingTrees: Array<Tree>
+  getRecentTrees: Array<TreeEntity>
+  getTreeById: TreeEntity
+  getTrendingTrees: Array<TreeEntity>
+  getUserById?: Maybe<UserEntity>
   greeting: Scalars['String']
-  me?: Maybe<User>
+  me?: Maybe<UserEntity>
 }
 
 export type QueryGetRecentTreesArgs = {
@@ -150,6 +152,10 @@ export type QueryGetTrendingTreesArgs = {
   cursorId?: InputMaybe<Scalars['String']>
 }
 
+export type QueryGetUserByIdArgs = {
+  userId: Scalars['String']
+}
+
 export type RegisterUserInput = {
   email: Scalars['String']
   name?: InputMaybe<Scalars['String']>
@@ -160,15 +166,16 @@ export type RemoveLinkInput = {
   linkId: Scalars['String']
 }
 
-export type Tree = {
-  __typename?: 'Tree'
+export type TreeEntity = {
+  __typename?: 'TreeEntity'
   createdAt: Scalars['DateTime']
   description?: Maybe<Scalars['String']>
   id: Scalars['String']
-  links?: Maybe<Array<Link>>
+  isPublic: Scalars['Boolean']
+  links?: Maybe<Array<LinkEntity>>
   name: Scalars['String']
   updatedAt: Scalars['DateTime']
-  user: User
+  user: UserEntity
   viewed: Scalars['Float']
 }
 
@@ -181,6 +188,7 @@ export type UpdateLinkInput = {
 
 export type UpdateTreeInput = {
   description?: InputMaybe<Scalars['String']>
+  isPublic?: InputMaybe<Scalars['Boolean']>
   name?: InputMaybe<Scalars['String']>
 }
 
@@ -188,18 +196,18 @@ export type UpdateTreeResponse = {
   __typename?: 'UpdateTreeResponse'
   errMsg?: Maybe<Scalars['String']>
   success: Scalars['Boolean']
-  tree?: Maybe<Tree>
+  tree?: Maybe<TreeEntity>
 }
 
-export type User = {
-  __typename?: 'User'
+export type UserEntity = {
+  __typename?: 'UserEntity'
   createdAt: Scalars['DateTime']
   email?: Maybe<Scalars['String']>
   id: Scalars['String']
   image?: Maybe<Scalars['String']>
   name?: Maybe<Scalars['String']>
-  provider?: Maybe<Provider>
-  trees?: Maybe<Array<Tree>>
+  provider?: Maybe<ProviderEntity>
+  trees?: Maybe<Array<TreeEntity>>
   updatedAt: Scalars['DateTime']
 }
 
@@ -242,7 +250,7 @@ export type MeQueryVariables = Exact<{ [key: string]: never }>
 export type MeQuery = {
   __typename?: 'Query'
   me?: {
-    __typename?: 'User'
+    __typename?: 'UserEntity'
     id: string
     name?: string | null
     email?: string | null
