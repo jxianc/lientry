@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import { useAtom } from 'jotai'
 import NextLink from 'next/link'
-import { useLogoutMutation, useMeQuery, UserEntity } from '../generated/graphql'
+import React, { useEffect } from 'react'
+import { useLogoutMutation, useMeQuery } from '../generated/graphql'
 import { removeAccessToken } from '../lib/acess-token-operation'
+import { setCurrUserAtom } from '../lib/atom'
 
 interface NavbarProps {
   children?: React.ReactNode
@@ -26,7 +28,7 @@ const navbarLinks: NavbarLink[] = [
 export const Navbar: React.FC<NavbarProps> = ({}) => {
   const [{ data }] = useMeQuery()
   const [_, execLogout] = useLogoutMutation()
-  const [currUser, setCurrUser] = useState<UserEntity | null>()
+  const [currUser, setCurrUser] = useAtom(setCurrUserAtom)
 
   useEffect(() => {
     if (data && data.me) {
@@ -34,7 +36,7 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
     } else {
       setCurrUser(null)
     }
-  }, [data])
+  }, [data, setCurrUser])
 
   return (
     <nav className="bg-white py-2 px-96 mt-0 sticky w-full z-10 top-0 backdrop-filter backdrop-blur-lg bg-opacity-30 border-b border-gray-200">
