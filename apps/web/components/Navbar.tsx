@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import NextLink from 'next/link'
+import { useLogoutMutation, useMeQuery, UserEntity } from '../generated/graphql'
+import { removeAccessToken } from '../lib/acess-token-operation'
 
 interface NavbarProps {
   children?: React.ReactNode
@@ -22,19 +24,46 @@ const navbarLinks: NavbarLink[] = [
 ]
 
 export const Navbar: React.FC<NavbarProps> = ({}) => {
+  const [{ data }] = useMeQuery()
+  const [_, execLogout] = useLogoutMutation()
+  const [currUser, setCurrUser] = useState<UserEntity | null>()
+
+  useEffect(() => {
+    if (data && data.me) {
+      setCurrUser(data.me)
+    } else {
+      setCurrUser(null)
+    }
+  }, [data])
+
   return (
     <nav className="bg-white py-2 px-96 mt-0 sticky w-full z-10 top-0 backdrop-filter backdrop-blur-lg bg-opacity-30 border-b border-gray-200">
       <div className="flex justify-between items-center">
         <NextLink href="/" passHref>
           <a className="text-base md:text-lg lg:text-2xl font-bold">Lientry</a>
         </NextLink>
-        <div className="space-x-4">
-          {navbarLinks.map(({ href, title }, idx) => (
-            <NextLink key={idx} href={href} passHref>
-              <a className="text-gray-500 hover:text-black px-2">{title}</a>
-            </NextLink>
-          ))}
-        </div>
+        {currUser ? (
+          <div className="flex space-x-4 items-center">
+            <div>{currUser.name}</div>
+            <button
+              className="px-4 py-1 bg-red-500 text-white rounded-md"
+              onClick={async () => {
+                removeAccessToken()
+                await execLogout()
+              }}
+            >
+              Sign out
+            </button>
+          </div>
+        ) : (
+          <div className="space-x-4">
+            {navbarLinks.map(({ href, title }, idx) => (
+              <NextLink key={idx} href={href} passHref>
+                <a className="text-gray-500 hover:text-black px-2">{title}</a>
+              </NextLink>
+            ))}
+          </div>
+        )}
       </div>
     </nav>
   )
