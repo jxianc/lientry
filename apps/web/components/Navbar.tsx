@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import { useLogoutMutation, useMeQuery } from '../generated/graphql'
 import { removeAccessToken } from '../lib/acess-token-operation'
 import { setCurrUserAtom } from '../lib/atom'
-import { Dropdown } from './Dropdown'
+import { Dropdown, DropdownAction, DropdownComponent } from './Dropdown'
 
 interface NavbarProps {
   children?: React.ReactNode
@@ -61,18 +61,19 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
               <div className="flex space-x-4 items-center">
                 <NavbarLink href="/dashboard" title="Dashboard" />
                 <Dropdown
-                  component={'avatar'}
+                  component={DropdownComponent.AVATAR}
+                  imgSrc="https://avatars.githubusercontent.com/u/62977699?v=4"
                   dropdownItems={[
                     {
                       title: 'Theme',
-                      action: 'button',
+                      action: DropdownAction.BUTTON,
                       clickHandler: () => {
                         console.log('theme changed')
                       },
                     },
                     {
                       title: 'Sign out',
-                      action: 'button',
+                      action: DropdownAction.BUTTON,
                       clickHandler: async () => {
                         removeAccessToken()
                         await execLogout()

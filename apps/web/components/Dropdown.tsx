@@ -4,35 +4,58 @@ import { FiChevronDown } from 'react-icons/fi'
 import { cn } from '../lib/classname'
 import Image from 'next/image'
 
-interface DropdownItem {
-  title: string
-  action: 'button' | 'externalLink'
-  clickHandler?: MouseEventHandler<HTMLButtonElement>
-  href?: string
+export enum DropdownAction {
+  BUTTON = 'button',
+  EXTERNAL_LINK = 'external link',
 }
 
-interface DropdownProps {
-  component: 'button' | 'avatar'
-  title?: string
-  imgSrc?: string
+interface BaseDropdownItem {
+  title: string
+  action: DropdownAction
+}
+
+interface ButtonDropdownItem extends BaseDropdownItem {
+  action: DropdownAction.BUTTON
+  clickHandler: MouseEventHandler<HTMLButtonElement>
+}
+
+interface ExternalLinkDropdownItem extends BaseDropdownItem {
+  action: DropdownAction.EXTERNAL_LINK
+  href: string
+}
+
+type DropdownItem = ExternalLinkDropdownItem | ButtonDropdownItem
+
+export enum DropdownComponent {
+  BUTTON = 'button',
+  AVATAR = 'avatar',
+}
+
+interface BaseDropdown {
+  component: DropdownComponent
   dropdownItems: DropdownItem[]
 }
 
-export const Dropdown: React.FC<DropdownProps> = ({
-  component,
-  title,
-  imgSrc,
-  dropdownItems,
-}) => {
+interface ButtonDropdown extends BaseDropdown {
+  component: DropdownComponent.BUTTON
+  title: string
+}
+
+interface AvatarDropdown extends BaseDropdown {
+  component: DropdownComponent.AVATAR
+  imgSrc: string
+}
+
+type DropdownProps = ButtonDropdown | AvatarDropdown
+
+export const Dropdown: React.FC<DropdownProps> = (p) => {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        {component === 'avatar' ? (
+        {p.component === DropdownComponent.AVATAR ? (
           <Menu.Button className="">
             <Image
-              src={
-                imgSrc || 'https://avatars.githubusercontent.com/u/62977699?v=4'
-              }
+              src={p.imgSrc}
               height={26}
               width={26}
               className="rounded-full"
@@ -40,7 +63,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
           </Menu.Button>
         ) : (
           <Menu.Button className="inline-flex items-center justify-center border border-gray-300 px-2 py-1 text-sm rounded-[0.3rem]">
-            <span>{title || 'Options'}</span>
+            <span>{p.title}</span>
             <FiChevronDown className="ml-2" />
           </Menu.Button>
         )}
@@ -56,7 +79,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
       >
         <Menu.Items className="origin-top-right absolute right-0 mt-2 w-52 rounded-[0.3rem] shadow-md bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
-            {dropdownItems.map((d, idx) => (
+            {p.dropdownItems.map((d, idx) => (
               <Menu.Item key={idx}>
                 {({ active }) => (
                   <div
