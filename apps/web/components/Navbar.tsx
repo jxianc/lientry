@@ -39,8 +39,8 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
   }, [data, setCurrUser])
 
   return (
-    <div className="bg-white mt-0 sticky w-full z-10 top-0 backdrop-filter backdrop-blur-lg bg-opacity-30">
-      <nav className=" max-w-7xl mx-auto p-2">
+    <div className="bg-white mt-0 sticky z-10 top-0 backdrop-filter backdrop-blur-lg bg-opacity-30">
+      <nav className="max-w-5xl mx-auto w-full p-2">
         <div className="flex justify-between items-center">
           <NextLink href="/" passHref>
             <a className="text-base md:text-lg lg:text-2xl font-bold">

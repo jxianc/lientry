@@ -1,13 +1,13 @@
 import { NextPage } from 'next'
-import { BaseLayout } from '../layouts/BaseLayout'
+import { MainLayout } from '../layouts/MainLayout'
 
 interface FeedProps {}
 
 const Feed: NextPage<FeedProps> = ({}) => {
   return (
-    <BaseLayout>
+    <MainLayout>
       <div>feed page</div>
-    </BaseLayout>
+    </MainLayout>
   )
 }
 
