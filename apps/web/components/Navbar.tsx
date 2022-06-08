@@ -4,17 +4,18 @@ import React, { useEffect } from 'react'
 import { useLogoutMutation, useMeQuery } from '../generated/graphql'
 import { removeAccessToken } from '../lib/acess-token-operation'
 import { setCurrUserAtom } from '../lib/atom'
+import { Dropdown } from './Dropdown'
 
 interface NavbarProps {
   children?: React.ReactNode
 }
 
-interface NavbarLink {
+interface NavbarLinkProps {
   href: string
   title: string
 }
 
-const navbarLinks: NavbarLink[] = [
+const navbarLinks: NavbarLinkProps[] = [
   {
     href: '/sign-in',
     title: 'Sign in',
@@ -24,6 +25,14 @@ const navbarLinks: NavbarLink[] = [
     title: 'Sign up',
   },
 ]
+
+export const NavbarLink: React.FC<NavbarLinkProps> = ({ href, title }) => {
+  return (
+    <NextLink href={href} passHref>
+      <a className="text-gray-500 hover:text-black px-2 text-sm">{title}</a>
+    </NextLink>
+  )
+}
 
 export const Navbar: React.FC<NavbarProps> = ({}) => {
   const [{ data }] = useMeQuery()
@@ -50,25 +59,32 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
           <div className="hidden sm:block">
             {currUser ? (
               <div className="flex space-x-4 items-center">
-                <div>{currUser.name}</div>
-                <button
-                  className="px-4 py-1 bg-red-500 text-white rounded-md"
-                  onClick={async () => {
-                    removeAccessToken()
-                    await execLogout()
-                  }}
-                >
-                  Sign out
-                </button>
+                <NavbarLink href="/dashboard" title="Dashboard" />
+                <Dropdown
+                  component={'avatar'}
+                  dropdownItems={[
+                    {
+                      title: 'Theme',
+                      action: 'button',
+                      clickHandler: () => {
+                        console.log('theme changed')
+                      },
+                    },
+                    {
+                      title: 'Sign out',
+                      action: 'button',
+                      clickHandler: async () => {
+                        removeAccessToken()
+                        await execLogout()
+                      },
+                    },
+                  ]}
+                />
               </div>
             ) : (
-              <div className="space-x-4">
-                {navbarLinks.map(({ href, title }, idx) => (
-                  <NextLink key={idx} href={href} passHref>
-                    <a className="text-gray-500 hover:text-black px-2">
-                      {title}
-                    </a>
-                  </NextLink>
+              <div className="flex items-center justify-center space-x-4">
+                {navbarLinks.map((link, idx) => (
+                  <NavbarLink key={idx} {...link} />
                 ))}
               </div>
             )}
