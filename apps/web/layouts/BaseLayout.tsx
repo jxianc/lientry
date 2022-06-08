@@ -1,22 +1,15 @@
 import React from 'react'
 import { Navbar } from '../components/Navbar'
-import { cn } from '../lib/classname'
 
 interface BaseLayoutProps {
   children?: React.ReactNode
-  isMain?: boolean
 }
 
-export const BaseLayout: React.FC<BaseLayoutProps> = ({ children, isMain }) => {
+export const BaseLayout: React.FC<BaseLayoutProps> = ({ children }) => {
   return (
     <div className="bg-white">
-      {isMain && <Navbar />}
-      <div
-        className={cn(
-          isMain ? 'max-w-5xl' : 'max-w-7xl',
-          'mx-auto w-full min-h-screen',
-        )}
-      >
+      <Navbar />
+      <div className="max-w-7xl mx-auto w-full min-h-screen">
         <div className="flex flex-col justify-center">
           <main>{children}</main>
         </div>

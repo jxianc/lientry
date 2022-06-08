@@ -39,34 +39,43 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
   }, [data, setCurrUser])
 
   return (
-    <nav className="bg-white py-2 px-96 mt-0 sticky w-full z-10 top-0 backdrop-filter backdrop-blur-lg bg-opacity-30 border-b border-gray-200">
-      <div className="flex justify-between items-center">
-        <NextLink href="/" passHref>
-          <a className="text-base md:text-lg lg:text-2xl font-bold">Lientry</a>
-        </NextLink>
-        {currUser ? (
-          <div className="flex space-x-4 items-center">
-            <div>{currUser.name}</div>
-            <button
-              className="px-4 py-1 bg-red-500 text-white rounded-md"
-              onClick={async () => {
-                removeAccessToken()
-                await execLogout()
-              }}
-            >
-              Sign out
-            </button>
+    <div className="bg-white mt-0 sticky w-full z-10 top-0 backdrop-filter backdrop-blur-lg bg-opacity-30">
+      <nav className=" max-w-7xl mx-auto p-2">
+        <div className="flex justify-between items-center">
+          <NextLink href="/" passHref>
+            <a className="text-base md:text-lg lg:text-2xl font-bold">
+              Lientry
+            </a>
+          </NextLink>
+          <div className="hidden sm:block">
+            {currUser ? (
+              <div className="flex space-x-4 items-center">
+                <div>{currUser.name}</div>
+                <button
+                  className="px-4 py-1 bg-red-500 text-white rounded-md"
+                  onClick={async () => {
+                    removeAccessToken()
+                    await execLogout()
+                  }}
+                >
+                  Sign out
+                </button>
+              </div>
+            ) : (
+              <div className="space-x-4">
+                {navbarLinks.map(({ href, title }, idx) => (
+                  <NextLink key={idx} href={href} passHref>
+                    <a className="text-gray-500 hover:text-black px-2">
+                      {title}
+                    </a>
+                  </NextLink>
+                ))}
+              </div>
+            )}
           </div>
-        ) : (
-          <div className="space-x-4">
-            {navbarLinks.map(({ href, title }, idx) => (
-              <NextLink key={idx} href={href} passHref>
-                <a className="text-gray-500 hover:text-black px-2">{title}</a>
-              </NextLink>
-            ))}
-          </div>
-        )}
-      </div>
-    </nav>
+        </div>
+      </nav>
+      <hr />
+    </div>
   )
 }
