@@ -55,6 +55,7 @@ export const Dropdown: React.FC<DropdownProps> = (p) => {
         {p.component === DropdownComponent.AVATAR ? (
           <Menu.Button className="">
             <Image
+              alt="profile pic"
               src={p.imgSrc}
               height={26}
               width={26}
