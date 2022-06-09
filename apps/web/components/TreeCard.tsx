@@ -17,7 +17,7 @@ export const TreeCard: React.FC<TreeCardProps> = ({}) => {
           >
             {isSaved ? <BsBookmarkFill /> : <BsBookmark />}
           </div>
-          <NextLink href="#" passHref>
+          <NextLink href={`/tree/${'cl42mzxxe0009radfgeoqd6h3'}`} passHref>
             <a className="hover:underline hover:text-teal-800">
               <h2 className="font-semibold hover:font-bold text-base">
                 First treeeee
@@ -28,7 +28,10 @@ export const TreeCard: React.FC<TreeCardProps> = ({}) => {
         <h3 className="text-sm">This is the first tree in the world!</h3>
       </div>
       <div className="flex flex-row justify-between">
-        <NextLink href="#" passHref>
+        <NextLink
+          href={`/user/${'9a31f334-b7d9-4362-8ab6-f8d667378f45'}`}
+          passHref
+        >
           <button className="bg-zinc-200 hover:bg-zinc-300 px-2 py-0.5 shadow-sm shadow-gray-400 rounded-[0.2rem] text-sm font-medium">
             usr991476720845679
           </button>
