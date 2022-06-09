@@ -36,7 +36,7 @@ export const NavbarLink: React.FC<NavbarLinkProps> = ({ href, title }) => {
       <a
         className={cn(
           router.pathname === href
-            ? 'text-black'
+            ? 'text-black font-semibold'
             : 'text-gray-500 hover:text-black',
           'px-2 text-sm',
         )}
