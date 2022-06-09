@@ -19,13 +19,13 @@ export const TreeCard: React.FC<TreeCardProps> = ({}) => {
           </div>
           <NextLink href="#" passHref>
             <a className="hover:underline hover:text-teal-800">
-              <h3 className="font-semibold hover:font-bold text-base">
+              <h2 className="font-semibold hover:font-bold text-base">
                 First treeeee
-              </h3>
+              </h2>
             </a>
           </NextLink>
         </div>
-        <h4 className="text-sm">This is the first tree in the world!</h4>
+        <h3 className="text-sm">This is the first tree in the world!</h3>
       </div>
       <div className="flex flex-row justify-between">
         <NextLink href="#" passHref>
