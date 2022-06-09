@@ -9,9 +9,9 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
     <div className="bg-white">
       <Navbar />
-      <div className="max-w-5xl mx-auto w-full min-h-screen">
+      <div className="max-w-3xl mx-auto w-full min-h-screen">
         <div className="flex flex-col justify-center">
-          <main>{children}</main>
+          <main className="p-2">{children}</main>
         </div>
       </div>
     </div>
