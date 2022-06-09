@@ -1,9 +1,11 @@
 import { useAtom } from 'jotai'
 import NextLink from 'next/link'
+import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { useLogoutMutation, useMeQuery } from '../generated/graphql'
 import { removeAccessToken } from '../lib/acess-token-operation'
 import { setCurrUserAtom } from '../lib/atom'
+import { cn } from '../lib/classname'
 import { Dropdown, DropdownAction, DropdownComponent } from './Dropdown'
 
 interface NavbarProps {
@@ -27,9 +29,20 @@ const navbarLinks: NavbarLinkProps[] = [
 ]
 
 export const NavbarLink: React.FC<NavbarLinkProps> = ({ href, title }) => {
+  const router = useRouter()
+
   return (
     <NextLink href={href} passHref>
-      <a className="text-gray-500 hover:text-black px-2 text-sm">{title}</a>
+      <a
+        className={cn(
+          router.pathname === href
+            ? 'text-black'
+            : 'text-gray-500 hover:text-black',
+          'px-2 text-sm',
+        )}
+      >
+        {title}
+      </a>
     </NextLink>
   )
 }
@@ -59,6 +72,7 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
           <div className="hidden sm:block">
             {currUser ? (
               <div className="flex space-x-4 items-center">
+                <NavbarLink href="/" title="Home" />
                 <NavbarLink href="/dashboard" title="Dashboard" />
                 <Dropdown
                   component={DropdownComponent.AVATAR}
@@ -84,6 +98,7 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
               </div>
             ) : (
               <div className="flex items-center justify-center space-x-4">
+                <NavbarLink href="/" title="Home" />
                 {navbarLinks.map((link, idx) => (
                   <NavbarLink key={idx} {...link} />
                 ))}
