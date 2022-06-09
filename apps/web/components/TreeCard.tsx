@@ -32,9 +32,10 @@ export const TreeCard: React.FC<TreeCardProps> = ({}) => {
           href={`/user/${'9a31f334-b7d9-4362-8ab6-f8d667378f45'}`}
           passHref
         >
-          <button className="bg-zinc-200 hover:bg-zinc-300 px-2 py-0.5 shadow-sm shadow-gray-400 rounded-[0.2rem] text-sm font-medium">
+          {/* <button className="bg-zinc-200 hover:bg-zinc-300 px-1 shadow-sm shadow-gray-400 rounded-[0.2rem] text-xs font-medium">
             usr991476720845679
-          </button>
+          </button> */}
+          <a className="text-sm font-semibold">usr991476720845679</a>
         </NextLink>
         <div className="flex flex-row text-sm space-x-4 text-gray-600">
           <div>69427 viewed</div>

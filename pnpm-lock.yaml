@@ -138,6 +138,7 @@ importers:
       '@li/tsconfig': workspace:*
       '@types/node': ^17.0.12
       '@types/react': 17.0.37
+      '@types/react-copy-to-clipboard': ^5.0.2
       '@urql/core': ^2.5.0
       '@urql/devtools': ^2.0.3
       '@urql/exchange-auth': ^0.1.7
@@ -153,6 +154,7 @@ importers:
       next-transpile-modules: 9.0.0
       postcss: ^8.4.14
       react: 17.0.2
+      react-copy-to-clipboard: ^5.1.0
       react-dom: 17.0.2
       react-icons: ^4.4.0
       tailwindcss: ^3.0.24
@@ -174,6 +176,7 @@ importers:
       jwt-decode: 3.1.2
       next: 12.0.8_sfoxds7t5ydpegc3knd667wn6m
       react: 17.0.2
+      react-copy-to-clipboard: 5.1.0_react@17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-icons: 4.4.0_react@17.0.2
       urql: 2.2.0_mnlteiidv5se4zpyvopwg4rohq
@@ -187,6 +190,7 @@ importers:
       '@li/tsconfig': link:../../packages/tsconfig
       '@types/node': 17.0.33
       '@types/react': 17.0.37
+      '@types/react-copy-to-clipboard': 5.0.2
       autoprefixer: 10.4.7_postcss@8.4.14
       eslint: 7.32.0
       next-transpile-modules: 9.0.0
@@ -3016,6 +3020,12 @@ packages:
   /@types/range-parser/1.2.4:
     resolution: {integrity: sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==}
 
+  /@types/react-copy-to-clipboard/5.0.2:
+    resolution: {integrity: sha512-O29AThfxrkUFRsZXjfSWR2yaWo0ppB1yLEnHA+Oh24oNetjBAwTDu1PmolIqdJKzsZiO4J1jn6R6TmO96uBvGg==}
+    dependencies:
+      '@types/react': 17.0.37
+    dev: true
+
   /@types/react/17.0.37:
     resolution: {integrity: sha512-2FS1oTqBGcH/s0E+CjrCCR9+JMpsu9b69RTFO+40ua43ZqP5MmQ4iUde/dMjWR909KxZwmOQIFq6AV6NjEG5xg==}
     dependencies:
@@ -4616,6 +4626,12 @@ packages:
   /cookiejar/2.1.3:
     resolution: {integrity: sha512-JxbCBUdrfr6AQjOXrxoTvAMJO4HBTUIlBzslcJPAz+/KT8yk53fXun51u+RenNYvad/+Vc2DIz5o9UxlCDymFQ==}
     dev: true
+
+  /copy-to-clipboard/3.3.1:
+    resolution: {integrity: sha512-i13qo6kIHTTpCm8/Wup+0b1mVWETvu2kIMzKoK8FpkLkFxlt0znUAHcMzox+T8sPlqtZXq3CulEjQHsYiGFJUw==}
+    dependencies:
+      toggle-selection: 1.0.6
+    dev: false
 
   /core-js-pure/3.22.5:
     resolution: {integrity: sha512-8xo9R00iYD7TcV7OrC98GwxiUEAabVWO3dix+uyWjnYrx9fyASLlIX+f/3p5dW5qByaP2bcZ8X/T47s55et/tA==}
@@ -8761,6 +8777,16 @@ packages:
       strip-json-comments: 2.0.1
     dev: false
 
+  /react-copy-to-clipboard/5.1.0_react@17.0.2:
+    resolution: {integrity: sha512-k61RsNgAayIJNoy9yDsYzDe/yAZAzEbEgcz3DZMhF686LEyukcE1hzurxe85JandPUG+yTfGVFzuEw3xt8WP/A==}
+    peerDependencies:
+      react: ^15.3.0 || 16 || 17 || 18
+    dependencies:
+      copy-to-clipboard: 3.3.1
+      prop-types: 15.8.1
+      react: 17.0.2
+    dev: false
+
   /react-dom/17.0.2_react@17.0.2:
     resolution: {integrity: sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==}
     peerDependencies:
@@ -9790,6 +9816,10 @@ packages:
     engines: {node: '>=8.0'}
     dependencies:
       is-number: 7.0.0
+
+  /toggle-selection/1.0.6:
+    resolution: {integrity: sha1-bkWxJj8gF/oKzH2J14sVuL932jI=}
+    dev: false
 
   /toidentifier/1.0.1:
     resolution: {integrity: sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==}
