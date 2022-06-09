@@ -8,7 +8,7 @@ export const TreeCard: React.FC<TreeCardProps> = ({}) => {
   const [isSaved, setIsSaved] = useState(false)
 
   return (
-    <div className="space-y-6 px-6 py-4 rounded-sm bg-gray-100 shadow-md">
+    <div className="space-y-6 px-6 py-4 rounded-[0.3rem] shadow-md bg-white">
       <div>
         <div className="flex flex-row space-x-2 items-center">
           <div
