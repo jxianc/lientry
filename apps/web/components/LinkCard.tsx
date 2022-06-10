@@ -9,30 +9,34 @@ interface LinkCardProps {}
 export const LinkCard: React.FC<LinkCardProps> = ({}) => {
   return (
     <div className="space-y-2 px-6 py-4 w-[96%] ml-auto rounded-[0.3rem] bg-white border border-gray-200 shadow-sm">
-      <div>
-        <div className="flex flex-row space-x-2 items-center">
+      <div className="flex flex-row justify-between space-x-2">
+        <div className="flex flex-row space-x-2 items-start">
           <VscLink size={20} />
-          <NextLink href={`/tree/${'cl42mzxxe0009radfgeoqd6h3'}`} passHref>
-            <a className="hover:underline hover:text-teal-800">
-              <h5 className="font-semibold hover:font-bold text-base">
-                My GitHub profile
-              </h5>
-            </a>
-          </NextLink>
+          <div className="">
+            <NextLink href={`/tree/${'cl42mzxxe0009radfgeoqd6h3'}`} passHref>
+              <a
+                className="hover:underline hover:text-teal-800"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <h5 className="font-semibold text-base leading-tight">
+                  Lorem ipsum dolor sit amet.
+                </h5>
+              </a>
+            </NextLink>
+            <h3 className="text-sm">
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus
+            </h3>
+          </div>
         </div>
-        <h3 className="text-sm">This is the first link in the world!</h3>
-      </div>
-      <div className="flex flex-row space-x-2 justify-end">
-        <NextLink href="#" passHref>
-          <a target="_blank" className={iconButtonStyles}>
-            <VscLinkExternal size={18} className="hover:cursor-pointer" />
-          </a>
-        </NextLink>
-        <CopyToClipboard text="asd">
-          <button className={iconButtonStyles}>
-            <VscCopy size={18} className="hover:cursor-pointer" />
-          </button>
-        </CopyToClipboard>
+        <div>
+          <CopyToClipboard text="asd">
+            <button className="bg-white hover:bg-gray-200 text-sm px-1 rounded-md text-gray-500 hover:text-gray-600 border border-gray-300 hover:border-gray-600 inline-flex items-center">
+              <VscCopy size={14} className="hover:cursor-pointer" />
+              <span>copy</span>
+            </button>
+          </CopyToClipboard>
+        </div>
       </div>
     </div>
   )
