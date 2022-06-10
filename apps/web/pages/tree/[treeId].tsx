@@ -12,12 +12,14 @@ const Tree: NextPage<TreeProps> = ({}) => {
 
   return (
     <MainLayout>
-      <div className="mt-2 space-y-4">
+      <div className="mt-4 space-y-6">
         <TreeCard />
-        <LinkCard />
-        <LinkCard />
-        <LinkCard />
-        <LinkCard />
+        <div className="space-y-4">
+          <LinkCard />
+          <LinkCard />
+          <LinkCard />
+          <LinkCard />
+        </div>
       </div>
     </MainLayout>
   )

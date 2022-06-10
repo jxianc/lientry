@@ -8,7 +8,7 @@ interface LinkCardProps {}
 
 export const LinkCard: React.FC<LinkCardProps> = ({}) => {
   return (
-    <div className="space-y-2 px-6 py-4 rounded-[0.3rem] shadow-md bg-white">
+    <div className="space-y-2 px-6 py-4 w-[96%] ml-auto rounded-[0.3rem] bg-white border border-gray-200 shadow-sm">
       <div>
         <div className="flex flex-row space-x-2 items-center">
           <VscLink size={20} />
@@ -20,7 +20,7 @@ export const LinkCard: React.FC<LinkCardProps> = ({}) => {
             </a>
           </NextLink>
         </div>
-        <h3 className="text-sm">This is the first tree in the world!</h3>
+        <h3 className="text-sm">This is the first link in the world!</h3>
       </div>
       <div className="flex flex-row space-x-2 justify-end">
         <NextLink href="#" passHref>
