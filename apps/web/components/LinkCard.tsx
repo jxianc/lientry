@@ -1,7 +1,8 @@
-import React from 'react'
 import NextLink from 'next/link'
-import { VscCopy, VscLink, VscLinkExternal } from 'react-icons/vsc'
+import React from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { VscCopy, VscLink, VscLinkExternal } from 'react-icons/vsc'
+import { iconButtonStyles } from './IconButton'
 
 interface LinkCardProps {}
 
@@ -21,14 +22,16 @@ export const LinkCard: React.FC<LinkCardProps> = ({}) => {
         </div>
         <h3 className="text-sm">This is the first tree in the world!</h3>
       </div>
-      <div className="flex flex-row space-x-4 justify-end">
+      <div className="flex flex-row space-x-2 justify-end">
         <NextLink href="#" passHref>
-          <a target="_blank">
-            <VscLinkExternal size={20} className="hover:cursor-pointer" />
+          <a target="_blank" className={iconButtonStyles}>
+            <VscLinkExternal size={18} className="hover:cursor-pointer" />
           </a>
         </NextLink>
         <CopyToClipboard text="asd">
-          <VscCopy size={20} className="hover:cursor-pointer" />
+          <button className={iconButtonStyles}>
+            <VscCopy size={18} className="hover:cursor-pointer" />
+          </button>
         </CopyToClipboard>
       </div>
     </div>
