@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
 import NextLink from 'next/link'
+import Image from 'next/image'
 
 interface TreeCardProps {}
 
@@ -32,10 +33,16 @@ export const TreeCard: React.FC<TreeCardProps> = ({}) => {
           href={`/user/${'9a31f334-b7d9-4362-8ab6-f8d667378f45'}`}
           passHref
         >
-          {/* <button className="bg-zinc-200 hover:bg-zinc-300 px-1 shadow-sm shadow-gray-400 rounded-[0.2rem] text-xs font-medium">
-            usr991476720845679
-          </button> */}
-          <a className="text-sm font-semibold">usr991476720845679</a>
+          <a className="inline-flex items-center space-x-1">
+            <Image
+              alt="profile pic"
+              src="https://avatars.githubusercontent.com/u/62977699?v=4"
+              height={20}
+              width={20}
+              className="rounded-full"
+            />
+            <span className="text-sm font-semibold">usr991476720845679</span>
+          </a>
         </NextLink>
         <div className="flex flex-row text-sm space-x-4 text-gray-600">
           <div>69427 viewed</div>
