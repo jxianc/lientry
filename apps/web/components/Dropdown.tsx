@@ -3,6 +3,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { FiChevronDown } from 'react-icons/fi'
 import { cn } from '../lib/classname'
 import Image from 'next/image'
+import { IconType } from 'react-icons/lib'
 
 export enum DropdownAction {
   BUTTON = 'button',
@@ -29,6 +30,7 @@ type DropdownItem = ExternalLinkDropdownItem | ButtonDropdownItem
 export enum DropdownComponent {
   BUTTON = 'button',
   AVATAR = 'avatar',
+  ICON = 'icon',
 }
 
 interface BaseDropdown {
@@ -46,7 +48,12 @@ interface AvatarDropdown extends BaseDropdown {
   imgSrc: string
 }
 
-type DropdownProps = ButtonDropdown | AvatarDropdown
+interface IconDropdown extends BaseDropdown {
+  component: DropdownComponent.ICON
+  Icon: IconType
+}
+
+type DropdownProps = ButtonDropdown | AvatarDropdown | IconDropdown
 
 export const Dropdown: React.FC<DropdownProps> = (p) => {
   return (
@@ -62,10 +69,14 @@ export const Dropdown: React.FC<DropdownProps> = (p) => {
               className="rounded-full"
             />
           </Menu.Button>
-        ) : (
+        ) : p.component === DropdownComponent.BUTTON ? (
           <Menu.Button className="inline-flex items-center justify-center border border-gray-300 px-2 py-1 text-sm rounded-[0.3rem]">
             <span>{p.title}</span>
             <FiChevronDown className="ml-2" />
+          </Menu.Button>
+        ) : (
+          <Menu.Button className="">
+            <p.Icon size={18} />
           </Menu.Button>
         )}
       </div>
