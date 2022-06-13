@@ -64,27 +64,32 @@ export class UsersService {
     })
   }
 
-  async getUserById(id: string, isAuthor?: boolean) {
+  async getUserById(
+    id: string,
+    { includeTree, isAuthor }: { includeTree?: boolean; isAuthor?: boolean },
+  ) {
     return await this.prisma.user.findUnique({
       where: {
         id,
       },
-      include: {
-        provider: {
-          include: {
-            user: true,
-          },
-        },
-        trees: {
-          where: {
-            isPublic:
-              typeof isAuthor === 'boolean' && isAuthor ? undefined : true,
-          },
-          include: {
-            user: true,
-          },
-        },
-      },
+      include: includeTree
+        ? {
+            provider: {
+              include: {
+                user: true,
+              },
+            },
+            trees: {
+              where: {
+                isPublic:
+                  typeof isAuthor === 'boolean' && isAuthor ? undefined : true,
+              },
+              include: {
+                user: true,
+              },
+            },
+          }
+        : undefined,
     })
   }
 }

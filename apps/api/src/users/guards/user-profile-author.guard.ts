@@ -33,10 +33,10 @@ export class UserProfileAuthor extends AuthGuard('jwt') {
         },
       )
 
-      const user = await this.usersService.getUserById(
-        userIdFromArgs,
-        userIdFromToken === userIdFromArgs,
-      )
+      const user = await this.usersService.getUserById(userIdFromArgs, {
+        includeTree: true,
+        isAuthor: userIdFromToken === userIdFromArgs,
+      })
 
       if (!user) {
         throw new NotFoundException('user not found')
@@ -49,7 +49,9 @@ export class UserProfileAuthor extends AuthGuard('jwt') {
     }
 
     // no accesstoken so just fetch user profile with only public trees
-    const user = await this.usersService.getUserById(userIdFromArgs, false)
+    const user = await this.usersService.getUserById(userIdFromArgs, {
+      isAuthor: false,
+    })
     ctx.getContext().req.user = user
     return true
   }

@@ -16,6 +16,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(verifiedPayload: TokenPayload) {
     // attach user in request
-    return await this.usersService.getUserById(verifiedPayload.userId)
+    return await this.usersService.getUserById(verifiedPayload.userId, {
+      includeTree: false,
+    })
   }
 }

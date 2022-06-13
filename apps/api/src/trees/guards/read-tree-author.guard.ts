@@ -47,7 +47,9 @@ export class ReadTreeAuthorGuard implements CanActivate {
           secret: process.env.ACCESS_TOKEN_SECRET,
         })
 
-        const user = await this.usersService.getUserById(userId)
+        const user = await this.usersService.getUserById(userId, {
+          includeTree: false,
+        })
         if (user && user.id === tree.userId) {
           return true
         } else {

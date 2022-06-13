@@ -74,10 +74,17 @@ export class TreesService {
     }
   }
 
-  async getRecentTree(cursorId: string): Promise<Tree[]> {
+  async getRecentTree(cursorId: string, userId?: string): Promise<Tree[]> {
     const trees = await this.prisma.tree.findMany({
       where: {
-        isPublic: true,
+        OR: [
+          {
+            userId: userId || undefined,
+          },
+          {
+            isPublic: true,
+          },
+        ],
       },
       include: {
         user: true,
@@ -96,10 +103,17 @@ export class TreesService {
     return trees
   }
 
-  async getTrendingTrees(cursorId: string): Promise<Tree[]> {
+  async getTrendingTrees(cursorId: string, userId: string): Promise<Tree[]> {
     const trendingTrees = await this.prisma.tree.findMany({
       where: {
-        isPublic: true,
+        OR: [
+          {
+            userId: userId || undefined,
+          },
+          {
+            isPublic: true,
+          },
+        ],
       },
       include: {
         user: true,
