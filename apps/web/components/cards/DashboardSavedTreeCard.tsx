@@ -2,6 +2,7 @@ import React from 'react'
 import { BsThreeDots } from 'react-icons/bs'
 import { Dropdown, DropdownComponent, DropdownAction } from '../Dropdown'
 import NextLink from 'next/link'
+import Image from 'next/image'
 
 interface DashboardSavedTreeCardProps {}
 
@@ -35,12 +36,22 @@ export const DashboardSavedTreeCard: React.FC<
           ]}
         />
       </div>
-      <div className="text-sm">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus
-        explicabo quas, unde veniam error neque exercitationem voluptate optio
-        debitis nam?
-      </div>
-      <div className="flex space-x-4 text-sm mt-4">
+      <div className="flex space-x-4 text-sm mt-2">
+        <NextLink
+          href={`/user/${'9a31f334-b7d9-4362-8ab6-f8d667378f45'}`}
+          passHref
+        >
+          <a className="inline-flex items-center space-x-1">
+            <Image
+              alt="profile pic"
+              src="https://avatars.githubusercontent.com/u/62977699?v=4"
+              height={20}
+              width={20}
+              className="rounded-full"
+            />
+            <span className="text-sm font-semibold">usr991476720845679</span>
+          </a>
+        </NextLink>
         <div>11 links</div>
         <div>18590 views</div>
         <div className="flex space-x-1">

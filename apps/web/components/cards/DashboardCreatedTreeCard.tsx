@@ -40,11 +40,6 @@ export const DashboardCreatedTreeCard: React.FC<
           ]}
         />
       </div>
-      <div className="text-sm">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus
-        explicabo quas, unde veniam error neque exercitationem voluptate optio
-        debitis nam?
-      </div>
       <div className="flex space-x-4 text-sm mt-4">
         <div>11 links</div>
         <div>18590 views</div>
