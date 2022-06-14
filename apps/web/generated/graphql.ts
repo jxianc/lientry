@@ -265,6 +265,31 @@ export type GetRecentTreesQuery = {
   }>
 }
 
+export type GetTrendingTreesQueryVariables = Exact<{
+  cursorId?: InputMaybe<Scalars['String']>
+}>
+
+export type GetTrendingTreesQuery = {
+  __typename?: 'Query'
+  getTrendingTrees: Array<{
+    __typename?: 'TreeEntity'
+    id: string
+    name: string
+    description?: string | null
+    isPublic: boolean
+    viewed: number
+    createdAt: any
+    updatedAt: any
+    user: {
+      __typename?: 'UserEntity'
+      id: string
+      name?: string | null
+      image?: string | null
+    }
+    links?: Array<{ __typename?: 'LinkEntity'; id: string }> | null
+  }>
+}
+
 export type GreetingQueryVariables = Exact<{ [key: string]: never }>
 
 export type GreetingQuery = { __typename?: 'Query'; greeting: string }
@@ -348,6 +373,36 @@ export function useGetRecentTreesQuery(
 ) {
   return Urql.useQuery<GetRecentTreesQuery>({
     query: GetRecentTreesDocument,
+    ...options,
+  })
+}
+export const GetTrendingTreesDocument = gql`
+  query GetTrendingTrees($cursorId: String) {
+    getTrendingTrees(cursorId: $cursorId) {
+      id
+      name
+      description
+      isPublic
+      viewed
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        image
+      }
+      links {
+        id
+      }
+    }
+  }
+`
+
+export function useGetTrendingTreesQuery(
+  options?: Omit<Urql.UseQueryArgs<GetTrendingTreesQueryVariables>, 'query'>,
+) {
+  return Urql.useQuery<GetTrendingTreesQuery>({
+    query: GetTrendingTreesDocument,
     ...options,
   })
 }

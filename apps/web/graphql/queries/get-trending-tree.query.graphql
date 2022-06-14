@@ -1,0 +1,19 @@
+query GetTrendingTrees($cursorId: String) {
+  getTrendingTrees(cursorId: $cursorId) {
+    id
+    name
+    description
+    isPublic
+    viewed
+    createdAt
+    updatedAt
+    user {
+      id
+      name
+      image
+    }
+    links {
+      id
+    }
+  }
+}

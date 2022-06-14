@@ -2,7 +2,10 @@ import { useAtom } from 'jotai'
 import { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import { TreeCard } from '../components/TreeCard'
-import { useGetRecentTreesQuery } from '../generated/graphql'
+import {
+  useGetRecentTreesQuery,
+  useGetTrendingTreesQuery,
+} from '../generated/graphql'
 import { MainLayout } from '../layouts/MainLayout'
 import { OrderBy, setOrderByAtom } from '../lib/atom'
 import { cn } from '../lib/classname'
@@ -36,28 +39,50 @@ export const OrderByButton: React.FC<OrderByButtonProps> = ({
 }
 
 const Home: NextPage<HomeProps> = ({}) => {
-  const [{ data, fetching }] = useGetRecentTreesQuery()
+  const [{ data: getRecentTreesData }] = useGetRecentTreesQuery()
+  const [{ data: getTrendingTreesData }] = useGetTrendingTreesQuery()
   const [treeElements, setTreeElements] = useState<JSX.Element[]>()
+  const [orderBy, _setOrderBy] = useAtom(setOrderByAtom)
 
   useEffect(() => {
-    if (data && data.getRecentTrees) {
-      const trees = data.getRecentTrees.map((t) => (
-        <TreeCard
-          key={`tr-${t.id}`}
-          treeId={t.id}
-          treeName={t.name}
-          description={t.description}
-          userId={t.user.id}
-          userName={t.user.name}
-          userImage={t.user.image}
-          viewed={t.viewed}
-          numOfLinks={t.links?.length || 0}
-          createdAt={t.createdAt}
-        />
-      ))
-      setTreeElements(trees)
+    if (orderBy === 'recent') {
+      if (getRecentTreesData && getRecentTreesData.getRecentTrees) {
+        const trees = getRecentTreesData.getRecentTrees.map((t) => (
+          <TreeCard
+            key={`tr-${t.id}`}
+            treeId={t.id}
+            treeName={t.name}
+            description={t.description}
+            userId={t.user.id}
+            userName={t.user.name}
+            userImage={t.user.image}
+            viewed={t.viewed}
+            numOfLinks={t.links?.length || 0}
+            createdAt={t.createdAt}
+          />
+        ))
+        setTreeElements(trees)
+      }
+    } else {
+      if (getTrendingTreesData && getTrendingTreesData.getTrendingTrees) {
+        const trees = getTrendingTreesData.getTrendingTrees.map((t) => (
+          <TreeCard
+            key={`tr-${t.id}`}
+            treeId={t.id}
+            treeName={t.name}
+            description={t.description}
+            userId={t.user.id}
+            userName={t.user.name}
+            userImage={t.user.image}
+            viewed={t.viewed}
+            numOfLinks={t.links?.length || 0}
+            createdAt={t.createdAt}
+          />
+        ))
+        setTreeElements(trees)
+      }
     }
-  }, [data])
+  }, [orderBy, getRecentTreesData, getTrendingTreesData])
 
   return (
     <MainLayout>
