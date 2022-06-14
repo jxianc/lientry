@@ -1,0 +1,23 @@
+query GetTreeById($treeId: String!) {
+  getTreeById(treeId: $treeId) {
+    id
+    name
+    description
+    isPublic
+    viewed
+    createdAt
+    updatedAt
+    user {
+      id
+      name
+      image
+    }
+    links {
+      id
+      title
+      description
+      url
+      createdAt
+    }
+  }
+}

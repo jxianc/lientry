@@ -265,6 +265,38 @@ export type GetRecentTreesQuery = {
   }>
 }
 
+export type GetTreeByIdQueryVariables = Exact<{
+  treeId: Scalars['String']
+}>
+
+export type GetTreeByIdQuery = {
+  __typename?: 'Query'
+  getTreeById: {
+    __typename?: 'TreeEntity'
+    id: string
+    name: string
+    description?: string | null
+    isPublic: boolean
+    viewed: number
+    createdAt: any
+    updatedAt: any
+    user: {
+      __typename?: 'UserEntity'
+      id: string
+      name?: string | null
+      image?: string | null
+    }
+    links?: Array<{
+      __typename?: 'LinkEntity'
+      id: string
+      title: string
+      description?: string | null
+      url: string
+      createdAt: any
+    }> | null
+  }
+}
+
 export type GetTrendingTreesQueryVariables = Exact<{
   cursorId?: InputMaybe<Scalars['String']>
 }>
@@ -373,6 +405,40 @@ export function useGetRecentTreesQuery(
 ) {
   return Urql.useQuery<GetRecentTreesQuery>({
     query: GetRecentTreesDocument,
+    ...options,
+  })
+}
+export const GetTreeByIdDocument = gql`
+  query GetTreeById($treeId: String!) {
+    getTreeById(treeId: $treeId) {
+      id
+      name
+      description
+      isPublic
+      viewed
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        image
+      }
+      links {
+        id
+        title
+        description
+        url
+        createdAt
+      }
+    }
+  }
+`
+
+export function useGetTreeByIdQuery(
+  options: Omit<Urql.UseQueryArgs<GetTreeByIdQueryVariables>, 'query'>,
+) {
+  return Urql.useQuery<GetTreeByIdQuery>({
+    query: GetTreeByIdDocument,
     ...options,
   })
 }
