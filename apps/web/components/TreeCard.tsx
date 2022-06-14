@@ -3,6 +3,7 @@ import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
 import NextLink from 'next/link'
 import Image from 'next/image'
 import { FaUser } from 'react-icons/fa'
+import { formatDate } from '../lib/data'
 
 interface TreeCardProps {
   treeId: string
@@ -75,7 +76,7 @@ export const TreeCard: React.FC<TreeCardProps> = ({
         <div className="flex flex-row text-sm space-x-4 text-gray-600">
           <div>{`${viewed} viewed`}</div>
           <div>{`${numOfLinks} links`}</div>
-          <div>{createdAt}</div>
+          <div>{formatDate(createdAt)}</div>
         </div>
       </div>
     </div>
