@@ -241,6 +241,30 @@ export type RefreshTokenMutation = {
   }
 }
 
+export type GetRecentTreesQueryVariables = Exact<{
+  cursorId?: InputMaybe<Scalars['String']>
+}>
+
+export type GetRecentTreesQuery = {
+  __typename?: 'Query'
+  getRecentTrees: Array<{
+    __typename?: 'TreeEntity'
+    id: string
+    name: string
+    description?: string | null
+    isPublic: boolean
+    viewed: number
+    createdAt: any
+    user: {
+      __typename?: 'UserEntity'
+      id: string
+      name?: string | null
+      image?: string | null
+    }
+    links?: Array<{ __typename?: 'LinkEntity'; id: string }> | null
+  }>
+}
+
 export type GreetingQueryVariables = Exact<{ [key: string]: never }>
 
 export type GreetingQuery = { __typename?: 'Query'; greeting: string }
@@ -297,6 +321,35 @@ export function useRefreshTokenMutation() {
   return Urql.useMutation<RefreshTokenMutation, RefreshTokenMutationVariables>(
     RefreshTokenDocument,
   )
+}
+export const GetRecentTreesDocument = gql`
+  query GetRecentTrees($cursorId: String) {
+    getRecentTrees(cursorId: $cursorId) {
+      id
+      name
+      description
+      isPublic
+      viewed
+      createdAt
+      user {
+        id
+        name
+        image
+      }
+      links {
+        id
+      }
+    }
+  }
+`
+
+export function useGetRecentTreesQuery(
+  options?: Omit<Urql.UseQueryArgs<GetRecentTreesQueryVariables>, 'query'>,
+) {
+  return Urql.useQuery<GetRecentTreesQuery>({
+    query: GetRecentTreesDocument,
+    ...options,
+  })
 }
 export const GreetingDocument = gql`
   query Greeting {

@@ -1,0 +1,18 @@
+query GetRecentTrees($cursorId: String) {
+  getRecentTrees(cursorId: $cursorId) {
+    id
+    name
+    description
+    isPublic
+    viewed
+    createdAt
+    user {
+      id
+      name
+      image
+    }
+    links {
+      id
+    }
+  }
+}

@@ -4,9 +4,29 @@ import NextLink from 'next/link'
 import Image from 'next/image'
 import { FaUser } from 'react-icons/fa'
 
-interface TreeCardProps {}
+interface TreeCardProps {
+  treeId: string
+  treeName: string
+  description?: string | null
+  userId: string
+  userName?: string | null
+  userImage?: string | null
+  viewed: number
+  numOfLinks: number
+  createdAt: string
+}
 
-export const TreeCard: React.FC<TreeCardProps> = ({}) => {
+export const TreeCard: React.FC<TreeCardProps> = ({
+  treeId,
+  treeName,
+  description,
+  userId,
+  userName,
+  userImage,
+  viewed,
+  numOfLinks,
+  createdAt,
+}) => {
   const [isSaved, setIsSaved] = useState(false)
 
   return (
@@ -19,15 +39,15 @@ export const TreeCard: React.FC<TreeCardProps> = ({}) => {
           >
             {isSaved ? <BsBookmarkFill /> : <BsBookmark />}
           </div>
-          <NextLink href={`/tree/${'cl42mzxxe0009radfgeoqd6h3'}`} passHref>
+          <NextLink href={`/tree/${treeId}`} passHref>
             <a className="hover:underline hover:text-teal-800">
               <h2 className="font-semibold hover:font-bold text-base">
-                First treeeee
+                {treeName}
               </h2>
             </a>
           </NextLink>
         </div>
-        <h3 className="text-sm">This is the first tree in the world!</h3>
+        <h3 className="text-sm">{description}</h3>
       </div>
       <div className="flex flex-row justify-between">
         <NextLink
@@ -35,21 +55,27 @@ export const TreeCard: React.FC<TreeCardProps> = ({}) => {
           passHref
         >
           <a className="inline-flex items-center space-x-1">
-            <Image
-              alt="profile pic"
-              src="https://avatars.githubusercontent.com/u/62977699?v=4"
-              height={20}
-              width={20}
-              className="rounded-full"
-            />
-            {/* <FaUser /> */}
-            <span className="text-sm font-semibold">usr991476720845679</span>
+            {userImage ? (
+              <Image
+                alt="profile pic"
+                src={userImage}
+                height={20}
+                width={20}
+                className="rounded-full"
+              />
+            ) : (
+              <FaUser />
+            )}
+
+            <span className="text-sm font-semibold">
+              {userName || `usr${userId}`}
+            </span>
           </a>
         </NextLink>
         <div className="flex flex-row text-sm space-x-4 text-gray-600">
-          <div>69427 viewed</div>
-          <div>7 links</div>
-          <div>Jun 8, 2022</div>
+          <div>{`${viewed} viewed`}</div>
+          <div>{`${numOfLinks} links`}</div>
+          <div>{createdAt}</div>
         </div>
       </div>
     </div>

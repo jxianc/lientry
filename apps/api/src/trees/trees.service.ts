@@ -88,8 +88,9 @@ export class TreesService {
       },
       include: {
         user: true,
+        links: true,
       },
-      take: 2,
+      take: 10,
       skip: cursorId ? 1 : undefined,
       cursor: cursorId
         ? {
