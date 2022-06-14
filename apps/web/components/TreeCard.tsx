@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
 import NextLink from 'next/link'
 import Image from 'next/image'
+import { FaUser } from 'react-icons/fa'
 
 interface TreeCardProps {}
 
@@ -41,6 +42,7 @@ export const TreeCard: React.FC<TreeCardProps> = ({}) => {
               width={20}
               className="rounded-full"
             />
+            {/* <FaUser /> */}
             <span className="text-sm font-semibold">usr991476720845679</span>
           </a>
         </NextLink>
