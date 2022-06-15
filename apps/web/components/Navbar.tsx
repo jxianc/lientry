@@ -91,6 +91,7 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
                       clickHandler: async () => {
                         removeAccessToken()
                         await execLogout()
+                        location.reload()
                       },
                     },
                   ]}

@@ -1,15 +1,9 @@
-import { createClient, dedupExchange, fetchExchange } from 'urql'
 import { devtoolsExchange } from '@urql/devtools'
 import { authExchange } from '@urql/exchange-auth'
-import { cacheExchange, QueryInput, Cache } from '@urql/exchange-graphcache'
+import { Cache, cacheExchange, QueryInput } from '@urql/exchange-graphcache'
+import { createClient, dedupExchange, fetchExchange } from 'urql'
+// import { LogoutMutation, MeDocument, MeQuery } from '../../generated/graphql'
 import { authExchangeConfig } from './auth-exchange.config'
-import {
-  LoginMutation,
-  LogoutMutation,
-  MeDocument,
-  MeQuery,
-  useMeQuery,
-} from '../../generated/graphql'
 
 function customUpdateQuery<Result, Query>(
   cache: Cache,
@@ -33,18 +27,22 @@ export const client = createClient({
         Mutation: {
           login(_result, _args, cache, _info) {
             cache.invalidate('Query', 'me')
+            cache.invalidate('Query', 'getRecentTrees')
+            cache.invalidate('Query', 'getTrendingTrees')
           },
           logout(_result, _args, cache, _info) {
-            customUpdateQuery<LogoutMutation, MeQuery>(
-              cache,
-              { query: MeDocument },
-              _result,
-              (_res, _q) => {
-                return {
-                  me: null,
-                }
-              },
-            )
+            // customUpdateQuery<LogoutMutation, MeQuery>(
+            //   cache,
+            //   { query: MeDocument },
+            //   _result,
+            //   (_res, _q) => {
+            //     return {
+            //       me: null,
+            //     }
+            //   },
+            // )
+            // cache.invalidate('Query', 'getRecentTrees')
+            // cache.invalidate('Query', 'getTrendingTrees')
           },
         },
       },
