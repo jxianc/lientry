@@ -48,6 +48,12 @@ const Tree: NextPage<TreeProps> = ({}) => {
           />
         ))
         setLinkElements(links)
+      } else {
+        setLinkElements([
+          <div key={'no-links'} className="text-sm text-center py-4">
+            There are currently no links in this tree
+          </div>,
+        ])
       }
     }
   }, [data])
