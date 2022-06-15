@@ -292,7 +292,6 @@ export type GetTreeByIdQuery = {
       title: string
       description?: string | null
       url: string
-      createdAt: any
     }> | null
   }
 }
@@ -428,7 +427,6 @@ export const GetTreeByIdDocument = gql`
         title
         description
         url
-        createdAt
       }
     }
   }

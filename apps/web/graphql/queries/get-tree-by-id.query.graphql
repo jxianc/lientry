@@ -17,7 +17,6 @@ query GetTreeById($treeId: String!) {
       title
       description
       url
-      createdAt
     }
   }
 }

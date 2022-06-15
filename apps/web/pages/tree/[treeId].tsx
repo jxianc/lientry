@@ -18,6 +18,7 @@ const Tree: NextPage<TreeProps> = ({}) => {
     pause: !treeId,
   })
   const [treeElement, setTreeElement] = useState<JSX.Element>()
+  const [linkElements, setLinkElements] = useState<JSX.Element[]>()
 
   useEffect(() => {
     if (data && data.getTreeById) {
@@ -36,6 +37,18 @@ const Tree: NextPage<TreeProps> = ({}) => {
         />
       )
       setTreeElement(tree)
+
+      if (t.links && t.links.length > 0) {
+        const links = t.links.map((l) => (
+          <LinkCard
+            key={`lk-${l.id}`}
+            title={l.title}
+            description={l.description}
+            url={l.url}
+          />
+        ))
+        setLinkElements(links)
+      }
     }
   }, [data])
 
@@ -43,12 +56,7 @@ const Tree: NextPage<TreeProps> = ({}) => {
     <MainLayout>
       <div className="mt-4 space-y-6">
         {treeElement}
-        <div className="space-y-4">
-          <LinkCard />
-          <LinkCard />
-          <LinkCard />
-          <LinkCard />
-        </div>
+        <div className="space-y-4">{linkElements}</div>
       </div>
     </MainLayout>
   )
