@@ -1,6 +1,7 @@
 import { useAtom } from 'jotai'
 import { NextPage } from 'next'
 import { useEffect, useState } from 'react'
+import { BsFillCaretLeftFill, BsFillCaretRightFill } from 'react-icons/bs'
 import { TreeCard } from '../components/TreeCard'
 import {
   useGetRecentTreesQuery,
@@ -86,12 +87,20 @@ const Home: NextPage<HomeProps> = ({}) => {
 
   return (
     <MainLayout>
-      <div className="mt-2 space-y-4">
+      <div className="mt-2 mb-10 space-y-4">
         <div className="flex space-x-4">
           <OrderByButton title="Most Recent" type="recent" />
           <OrderByButton title="Trending" type="trend" />
         </div>
         <div className="flex flex-col space-y-6">{treeElements}</div>
+        <div className="flex space-x-4 text-center justify-center text-sm py-4">
+          <button className="flex items-center space-x-1 shadow-sm px-2 py-2 border border-gray-300 rounded-[0.3rem] bg-white hover:bg-gray-200">
+            <BsFillCaretLeftFill />
+          </button>
+          <button className="flex items-center space-x-1 shadow-sm px-2 py-2 border border-gray-300 rounded-[0.3rem] bg-white hover:bg-gray-200">
+            <BsFillCaretRightFill />
+          </button>
+        </div>
       </div>
     </MainLayout>
   )
