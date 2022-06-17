@@ -7,7 +7,7 @@ interface MainLayoutProps {
 
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
-    <div className="bg-gray-50">
+    <div className="bg-gray-50 dark:bg-black">
       <Navbar />
       <div className="max-w-3xl mx-auto w-full min-h-screen">
         <div className="flex flex-col justify-center">

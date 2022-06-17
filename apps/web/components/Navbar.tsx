@@ -1,7 +1,9 @@
 import { useAtom } from 'jotai'
+import { useTheme } from 'next-themes'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { FaRegMoon, FaRegSun } from 'react-icons/fa'
 import { useLogoutMutation, useMeQuery } from '../generated/graphql'
 import { removeAccessToken } from '../lib/acess-token-operation'
 import { setCurrUserAtom } from '../lib/atom'
@@ -28,7 +30,8 @@ const navbarLinks: NavbarLinkProps[] = [
   },
 ]
 
-export const NavbarLink: React.FC<NavbarLinkProps> = ({ href, title }) => {
+// links on navbar
+const NavbarLink: React.FC<NavbarLinkProps> = ({ href, title }) => {
   const router = useRouter()
 
   return (
@@ -47,6 +50,39 @@ export const NavbarLink: React.FC<NavbarLinkProps> = ({ href, title }) => {
   )
 }
 
+// theme toggle button
+interface ThemeToggleButtonProps {}
+
+const ThemeToggleButton: React.FC<ThemeToggleButtonProps> = ({}) => {
+  const [mounted, setMounted] = useState(false)
+  const { resolvedTheme, setTheme } = useTheme()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  return (
+    <>
+      {mounted && (
+        <button
+          aria-label="Toggle Dark Mode"
+          type="button"
+          className="highlight w-9 h-9 bg-gray-100 dark:bg-gray-900 rounded-md flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-800 hover:ring-2 ring-gray-300 dark:ring-gray-500 transition-all"
+          onClick={() => {
+            setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
+          }}
+        >
+          {resolvedTheme === 'dark' ? (
+            <FaRegSun size={16} />
+          ) : (
+            <FaRegMoon size={16} />
+          )}
+        </button>
+      )}
+    </>
+  )
+}
+
 export const Navbar: React.FC<NavbarProps> = ({}) => {
   const [{ data }] = useMeQuery()
   const [_, execLogout] = useLogoutMutation()
@@ -61,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
   }, [data, setCurrUser])
 
   return (
-    <div className="bg-white mt-0 sticky z-10 top-0 backdrop-filter backdrop-blur-lg bg-opacity-30">
+    <div className="bg-white dark:bg-black mt-0 sticky z-10 top-0 backdrop-filter backdrop-blur-lg bg-opacity-30">
       <nav className="max-w-3xl mx-auto w-full p-2">
         <div className="flex justify-between items-center">
           <NextLink href="/" passHref>
@@ -96,6 +132,7 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
                     },
                   ]}
                 />
+                <ThemeToggleButton />
               </div>
             ) : (
               <div className="flex items-center justify-center space-x-4">
@@ -103,6 +140,7 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
                 {navbarLinks.map((link, idx) => (
                   <NavbarLink key={idx} {...link} />
                 ))}
+                <ThemeToggleButton />
               </div>
             )}
           </div>
@@ -112,3 +150,8 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
     </div>
   )
 }
+
+/**
+ * not auth -> Home Sign In Sign Out
+ * auth -> Home Dashboard User
+ */
