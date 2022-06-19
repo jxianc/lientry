@@ -31,7 +31,7 @@ export const TreeCard: React.FC<TreeCardProps> = ({
   const [isSaved, setIsSaved] = useState(false)
 
   return (
-    <div className="space-y-6 px-6 py-4 rounded-[0.3rem] bg-white border border-gray-200 shadow-sm">
+    <div className="space-y-6 px-6 py-4 rounded-[0.3rem] bg-li-gray-100 dark:bg-li-gray-1400">
       <div>
         <div className="flex flex-row space-x-2 items-center">
           <div
@@ -41,39 +41,41 @@ export const TreeCard: React.FC<TreeCardProps> = ({
             {isSaved ? <BsBookmarkFill /> : <BsBookmark />}
           </div>
           <NextLink href={`/tree/${treeId}`} passHref>
-            <a className="hover:underline hover:text-teal-800">
-              <h2 className="font-semibold hover:font-bold text-base">
-                {treeName}
-              </h2>
+            <a className="hover:underline">
+              <h2 className="font-semibold text-base">{treeName}</h2>
             </a>
           </NextLink>
         </div>
-        <h3 className="text-sm">{description}</h3>
+        <h3 className="text-sm text-li-gray-1100 dark:text-li-gray-700">
+          {description}
+        </h3>
       </div>
       <div className="flex flex-row justify-between">
         <NextLink
           href={`/user/${'9a31f334-b7d9-4362-8ab6-f8d667378f45'}`}
           passHref
         >
-          <a className="inline-flex items-center space-x-1">
-            {userImage ? (
-              <Image
-                alt="profile pic"
-                src={userImage}
-                height={20}
-                width={20}
-                className="rounded-full"
-              />
-            ) : (
+          <a className="inline-flex items-center space-x-2">
+            {/* {userImage ? ( */}
+            <Image
+              alt="profile pic"
+              src={
+                userImage ||
+                'https://avatars.githubusercontent.com/u/62977699?v=4'
+              }
+              height={20}
+              width={20}
+              className="rounded-full"
+            />
+            {/* ) : (
               <FaUser />
-            )}
-
+            )} */}
             <span className="text-sm font-semibold">
               {userName || `usr${userId}`}
             </span>
           </a>
         </NextLink>
-        <div className="flex flex-row text-sm space-x-4 text-gray-600">
+        <div className="flex flex-row text-sm space-x-4 text-li-gray-1100 dark:text-li-gray-700">
           <div>{`${viewed} viewed`}</div>
           <div>{`${numOfLinks} links`}</div>
           <div>{formatDate(createdAt)}</div>

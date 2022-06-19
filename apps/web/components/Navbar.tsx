@@ -39,8 +39,8 @@ const NavbarLink: React.FC<NavbarLinkProps> = ({ href, title }) => {
       <a
         className={cn(
           router.pathname === href
-            ? 'text-black font-semibold'
-            : 'text-gray-500 hover:text-black',
+            ? 'text-black dark:text-white font-semibold'
+            : 'text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white',
           'px-2 text-sm',
         )}
       >
@@ -67,7 +67,11 @@ const ThemeToggleButton: React.FC<ThemeToggleButtonProps> = ({}) => {
         <button
           aria-label="Toggle Dark Mode"
           type="button"
-          className="highlight w-9 h-9 bg-gray-100 dark:bg-gray-900 rounded-md flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-800 hover:ring-2 ring-gray-300 dark:ring-gray-500 transition-all"
+          className={cn(
+            'w-9 h-9 rounded-md flex items-center justify-center hover:ring-2 dark:ring-gray-500 transition-all',
+            'bg-gray-50 hover:bg-gray-100 ring-gray-300',
+            'dark:bg-li-gray-1300 dark:hover:bg-li-gray-1200 dark:ring-li-gray-800',
+          )}
           onClick={() => {
             setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
           }}
@@ -97,8 +101,8 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
   }, [data, setCurrUser])
 
   return (
-    <div className="bg-white dark:bg-black mt-0 sticky z-10 top-0 backdrop-filter backdrop-blur-lg bg-opacity-30">
-      <nav className="max-w-3xl mx-auto w-full p-2">
+    <div className="bg-white dark:bg-li-gray-1500 dark:bg-opacity-30 bg-opacity-30 mt-0 sticky z-10 top-0 backdrop-filter backdrop-blur-lg">
+      <nav className="max-w-3xl mx-auto w-full p-4">
         <div className="flex justify-between items-center">
           <NextLink href="/" passHref>
             <a className="text-base md:text-lg lg:text-2xl font-bold">
@@ -146,7 +150,6 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
           </div>
         </div>
       </nav>
-      <hr />
     </div>
   )
 }

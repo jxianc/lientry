@@ -60,12 +60,12 @@ export const Dropdown: React.FC<DropdownProps> = (p) => {
     <Menu as="div" className="relative inline-block text-left">
       <div>
         {p.component === DropdownComponent.AVATAR ? (
-          <Menu.Button className="">
+          <Menu.Button className="flex px-2">
             <Image
               alt="profile pic"
               src={p.imgSrc}
-              height={26}
-              width={26}
+              height={28}
+              width={28}
               className="rounded-full"
             />
           </Menu.Button>

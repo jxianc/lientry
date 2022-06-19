@@ -62,7 +62,7 @@ const Tree: NextPage<TreeProps> = ({}) => {
     <MainLayout>
       <div className="mt-4 space-y-6">
         {treeElement}
-        <div className="space-y-4">{linkElements}</div>
+        <div className="grid grid-cols-2 gap-4">{linkElements}</div>
       </div>
     </MainLayout>
   )
