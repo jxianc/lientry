@@ -28,9 +28,9 @@ export const OrderByButton: React.FC<OrderByButtonProps> = ({
     <button
       className={cn(
         orderBy === type
-          ? 'bg-white dark:bg-li-gray-1400 font-medium text-black dark:text-white border-[1.5px] dark:border-li-gray-1200'
-          : 'text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 hover:bg-white dark:hover:bg-li-gray-1300 hover:border-[1.5px] dark:hover:border-li-gray-1200',
-        'px-3 py-1.5 rounded-[0.3rem] border-gray-100 dark:border-gray-700 ',
+          ? 'bg-li-gray-100 dark:bg-li-gray-1400 font-medium text-black dark:text-white'
+          : 'text-li-gray-1100 dark:text-li-gray-700 hover:bg-li-gray-100/70 dark:hover:bg-li-gray-1300 ',
+        'px-3 py-1.5 rounded-[0.3rem]',
       )}
       onClick={() => setOrderBy(type)}
     >
