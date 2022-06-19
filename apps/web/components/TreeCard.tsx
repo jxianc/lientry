@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
 import NextLink from 'next/link'
 import Image from 'next/image'
-import { FaUser } from 'react-icons/fa'
 import { formatDate } from '../lib/data'
+import { useRouter } from 'next/router'
 
 interface TreeCardProps {
   treeId: string
@@ -29,6 +29,11 @@ export const TreeCard: React.FC<TreeCardProps> = ({
   createdAt,
 }) => {
   const [isSaved, setIsSaved] = useState(false)
+  const router = useRouter()
+
+  const isTreePage = () => {
+    return router.pathname.includes('tree')
+  }
 
   return (
     <div className="space-y-6 px-6 py-4 rounded-[0.3rem] bg-li-gray-100 dark:bg-li-gray-1400">
@@ -40,11 +45,15 @@ export const TreeCard: React.FC<TreeCardProps> = ({
           >
             {isSaved ? <BsBookmarkFill /> : <BsBookmark />}
           </div>
-          <NextLink href={`/tree/${treeId}`} passHref>
-            <a className="hover:underline">
-              <h2 className="font-semibold text-base">{treeName}</h2>
-            </a>
-          </NextLink>
+          {isTreePage() ? (
+            <h2 className="font-semibold text-base">{treeName}</h2>
+          ) : (
+            <NextLink href={`/tree/${treeId}`} passHref>
+              <a className="hover:underline">
+                <h2 className="font-semibold text-base">{treeName}</h2>
+              </a>
+            </NextLink>
+          )}
         </div>
         <h3 className="text-sm text-li-gray-1100 dark:text-li-gray-700">
           {description}
@@ -56,20 +65,17 @@ export const TreeCard: React.FC<TreeCardProps> = ({
           passHref
         >
           <a className="inline-flex items-center space-x-2">
-            {/* {userImage ? ( */}
             <Image
               alt="profile pic"
               src={
                 userImage ||
                 'https://avatars.githubusercontent.com/u/62977699?v=4'
+                // TODO replace default profile picture
               }
               height={20}
               width={20}
               className="rounded-full"
             />
-            {/* ) : (
-              <FaUser />
-            )} */}
             <span className="text-sm font-semibold">
               {userName || `usr${userId}`}
             </span>
