@@ -49,7 +49,7 @@ export const TreeCard: React.FC<TreeCardProps> = ({
             <h2 className="font-semibold text-base">{treeName}</h2>
           ) : (
             <NextLink href={`/tree/${treeId}`} passHref>
-              <a className="hover:underline">
+              <a className="hover:underline hover:text-li-green-main">
                 <h2 className="font-semibold text-base">{treeName}</h2>
               </a>
             </NextLink>
