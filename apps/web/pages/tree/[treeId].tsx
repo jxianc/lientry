@@ -48,12 +48,6 @@ const Tree: NextPage<TreeProps> = ({}) => {
           />
         ))
         setLinkElements(links)
-      } else {
-        setLinkElements([
-          <div key={'no-links'} className="text-sm text-center py-4">
-            There are currently no links in this tree
-          </div>,
-        ])
       }
     }
   }, [data])
@@ -62,7 +56,13 @@ const Tree: NextPage<TreeProps> = ({}) => {
     <MainLayout>
       <div className="mt-4 space-y-6">
         {treeElement}
-        <div className="grid grid-cols-2 gap-4">{linkElements}</div>
+        {linkElements && linkElements.length > 0 ? (
+          <div className="grid grid-cols-2 gap-4">{linkElements}</div>
+        ) : (
+          <div className="text-sm text-center py-4 dark:text-li-gray-700">
+            There are currently no links in this tree
+          </div>
+        )}
       </div>
     </MainLayout>
   )
