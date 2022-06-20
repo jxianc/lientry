@@ -9,7 +9,9 @@ import {
   setDashboardDisplayAtom,
 } from '../lib/atom'
 import { cn } from '../lib/classname'
+import NextLink from 'next/link'
 
+// dashboard tab component
 interface DashboardTabProps {
   title: string
   type: DashboardDisplay
@@ -35,6 +37,26 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({ title, type }) => {
   )
 }
 
+interface DashboardActionProps {}
+
+export const DashboardAction: React.FC<DashboardActionProps> = ({}) => {
+  const [dashboardDisplay] = useAtom(dashboardDisplayAtom)
+
+  return (
+    // TODO replace real route
+    <NextLink href={dashboardDisplay === 'created' ? '/#' : '/'} passHref>
+      <a className="px-3 text-sm hover:underline hover:text-li-green-main">
+        {dashboardDisplay === 'created' ? (
+          <span>create a new tree</span>
+        ) : (
+          <span>browse trees</span>
+        )}
+      </a>
+    </NextLink>
+  )
+}
+
+// dashboard page
 interface DashboardProps {}
 
 const Dashboard: NextPage<DashboardProps> = ({}) => {
@@ -43,10 +65,13 @@ const Dashboard: NextPage<DashboardProps> = ({}) => {
   return (
     <MainLayout>
       <div className="mt-2 mb-10 space-y-4">
-        <div className="flex space-x-4">
-          {/* TODO display real data here */}
-          <DashboardTab title="69 created trees" type="created" />
-          <DashboardTab title="87 saved trees" type="saved" />
+        <div className="flex justify-between items-baseline">
+          <div className="flex space-x-4">
+            {/* TODO display real data here */}
+            <DashboardTab title="69 created trees" type="created" />
+            <DashboardTab title="87 saved trees" type="saved" />
+          </div>
+          <DashboardAction />
         </div>
         {dashboardDisplay === 'created' ? (
           <>
