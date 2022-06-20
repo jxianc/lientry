@@ -1,19 +1,23 @@
 import React from 'react'
-import { BsThreeDots } from 'react-icons/bs'
-import { Dropdown, DropdownAction, DropdownComponent } from '../Dropdown'
+import { TreeCardLayout } from './TreeCardLayout'
 import NextLink from 'next/link'
+import { Dropdown, DropdownAction, DropdownComponent } from '../Dropdown'
+import { BsThreeDots } from 'react-icons/bs'
 
 interface DashboardCreatedTreeCardProps {}
 
 export const DashboardCreatedTreeCard: React.FC<
   DashboardCreatedTreeCardProps
-> = ({}) => {
+> = () => {
   return (
-    <div className="p-4 bg-white border border-gray-300 rounded-[0.3rem] shadow-sm">
+    <TreeCardLayout>
       <div className="flex justify-between">
         <NextLink href="/#" passHref>
-          <a className="font-medium hover:underline">
-            Lorem ipsum dolor sit amet.
+          <a className="hover:underline hover:text-li-green-main">
+            <h2 className="font-semibold text-base">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus,
+              ad.
+            </h2>
           </a>
         </NextLink>
         <Dropdown
@@ -21,7 +25,7 @@ export const DashboardCreatedTreeCard: React.FC<
           Icon={BsThreeDots}
           dropdownItems={[
             {
-              title: 'Go',
+              title: 'Visit',
               action: DropdownAction.EXTERNAL_LINK,
               href: '/#',
             },
@@ -40,18 +44,11 @@ export const DashboardCreatedTreeCard: React.FC<
           ]}
         />
       </div>
-      <div className="flex space-x-4 text-sm mt-4">
+      <div className="flex space-x-4 text-sm">
         <div>11 links</div>
         <div>18590 views</div>
-        <div className="flex space-x-1">
-          <span className="italic text-gray-600">created at</span>
-          <span className="font-semibold">Jun 12, 2022</span>
-        </div>
-        <div className="flex space-x-1">
-          <span className="italic text-gray-600">updated at</span>
-          <span className="font-semibold">Jun 12, 2022</span>
-        </div>
+        <div>Jun 20, 2022</div>
       </div>
-    </div>
+    </TreeCardLayout>
   )
 }

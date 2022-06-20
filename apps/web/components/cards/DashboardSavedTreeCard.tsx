@@ -3,6 +3,7 @@ import { BsThreeDots } from 'react-icons/bs'
 import { Dropdown, DropdownComponent, DropdownAction } from '../Dropdown'
 import NextLink from 'next/link'
 import Image from 'next/image'
+import { TreeCardLayout } from './TreeCardLayout'
 
 interface DashboardSavedTreeCardProps {}
 
@@ -10,11 +11,14 @@ export const DashboardSavedTreeCard: React.FC<
   DashboardSavedTreeCardProps
 > = ({}) => {
   return (
-    <div className="p-4 bg-white border border-gray-300 rounded-[0.3rem] shadow-sm">
+    <TreeCardLayout>
       <div className="flex justify-between">
         <NextLink href="/#" passHref>
-          <a className="font-medium hover:underline">
-            Lorem ipsum dolor sit amet.
+          <a className="hover:underline hover:text-li-green-main">
+            <h2 className="font-semibold text-base">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus,
+              ad.
+            </h2>
           </a>
         </NextLink>
         <Dropdown
@@ -22,12 +26,12 @@ export const DashboardSavedTreeCard: React.FC<
           Icon={BsThreeDots}
           dropdownItems={[
             {
-              title: 'Go',
+              title: 'Visit',
               action: DropdownAction.EXTERNAL_LINK,
               href: '/#',
             },
             {
-              title: 'Unsave',
+              title: 'Remove',
               action: DropdownAction.BUTTON,
               clickHandler: async () => {
                 console.log('clicked dropdown')
@@ -54,11 +58,8 @@ export const DashboardSavedTreeCard: React.FC<
         </NextLink>
         <div>11 links</div>
         <div>18590 views</div>
-        <div className="flex space-x-1">
-          <span className="italic text-gray-600">created at</span>
-          <span className="font-semibold">Jun 12, 2022</span>
-        </div>
+        <div>Jun 12, 2022</div>
       </div>
-    </div>
+    </TreeCardLayout>
   )
 }

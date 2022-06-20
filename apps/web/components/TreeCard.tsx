@@ -4,6 +4,7 @@ import NextLink from 'next/link'
 import Image from 'next/image'
 import { formatDate } from '../lib/data'
 import { useRouter } from 'next/router'
+import { TreeCardLayout } from './cards/TreeCardLayout'
 
 interface TreeCardProps {
   treeId: string
@@ -36,7 +37,7 @@ export const TreeCard: React.FC<TreeCardProps> = ({
   }
 
   return (
-    <div className="space-y-6 px-6 py-4 rounded-[0.3rem] bg-li-gray-100 dark:bg-li-gray-1400">
+    <TreeCardLayout>
       <div>
         <div className="flex flex-row space-x-2 items-center">
           <div
@@ -87,6 +88,6 @@ export const TreeCard: React.FC<TreeCardProps> = ({
           <div>{formatDate(createdAt)}</div>
         </div>
       </div>
-    </div>
+    </TreeCardLayout>
   )
 }

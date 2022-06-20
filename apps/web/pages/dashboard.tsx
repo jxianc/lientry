@@ -1,5 +1,7 @@
 import { useAtom } from 'jotai'
 import { NextPage } from 'next'
+import { DashboardCreatedTreeCard } from '../components/cards/DashboardCreatedTreeCard'
+import { DashboardSavedTreeCard } from '../components/cards/DashboardSavedTreeCard'
 import { MainLayout } from '../layouts/MainLayout'
 import {
   DashboardDisplay,
@@ -44,12 +46,22 @@ const Dashboard: NextPage<DashboardProps> = ({}) => {
         <div className="flex space-x-4">
           {/* TODO display real data here */}
           <DashboardTab title="69 created trees" type="created" />
-          <DashboardTab title="87 saves trees" type="saved" />
+          <DashboardTab title="87 saved trees" type="saved" />
         </div>
         {dashboardDisplay === 'created' ? (
-          <div>display created trees</div>
+          <>
+            <DashboardCreatedTreeCard />
+            <DashboardCreatedTreeCard />
+            <DashboardCreatedTreeCard />
+            <DashboardCreatedTreeCard />
+          </>
         ) : (
-          <div>display saved trees</div>
+          <>
+            <DashboardSavedTreeCard />
+            <DashboardSavedTreeCard />
+            <DashboardSavedTreeCard />
+            <DashboardSavedTreeCard />
+          </>
         )}
       </div>
     </MainLayout>
