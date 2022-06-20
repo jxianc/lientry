@@ -26,7 +26,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({ title, type }) => {
         dashboardDisplay === type
           ? 'bg-li-gray-100 dark:bg-li-gray-1400 font-medium text-black dark:text-white'
           : 'text-li-gray-1100 dark:text-li-gray-700 hover:bg-li-gray-100/70 dark:hover:bg-li-gray-1300 ',
-        'px-3 py-1.5 rounded-[0.3rem]',
+        'px-3 py-2 rounded-[0.3rem] text-sm',
       )}
       onClick={() => setDashboardDisplay(type)}
     >
