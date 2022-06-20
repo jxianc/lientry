@@ -19,5 +19,22 @@ const setOrderByAtom = atom(
   (_get, set, orderBy: OrderBy) => set(orderByAtom, orderBy),
 )
 
-export type { OrderBy }
-export { currUserAtom, setCurrUserAtom, orderByAtom, setOrderByAtom }
+// dashboard tab
+type DashboardDisplay = 'created' | 'saved'
+
+const dashboardDisplayAtom = atom<DashboardDisplay>('created')
+
+const setDashboardDisplayAtom = atom(
+  (get) => get(dashboardDisplayAtom),
+  (_get, set, display: DashboardDisplay) => set(dashboardDisplayAtom, display),
+)
+
+export type { OrderBy, DashboardDisplay }
+export {
+  currUserAtom,
+  setCurrUserAtom,
+  orderByAtom,
+  setOrderByAtom,
+  dashboardDisplayAtom,
+  setDashboardDisplayAtom,
+}
