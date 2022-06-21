@@ -21,7 +21,7 @@ export const CreateTreeFormModal: React.FC<CreateTreeFormModalProps> = ({
         className="fixed z-20 inset-20 overflow-y-auto"
         onClose={setModalIsOpen}
       >
-        <div className="flex items-end justify-center min-h-screen text-center sm:block sm:p-0">
+        <div className="flex items-end justify-center text-center sm:block sm:p-0">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -48,7 +48,7 @@ export const CreateTreeFormModal: React.FC<CreateTreeFormModalProps> = ({
                   <Dialog.Title as="h3" className="text-lg leading-6 font-bold">
                     Create a new tree
                   </Dialog.Title>
-                  <div className="text-base px-2">
+                  <div className="text-base">
                     <Formik
                       initialValues={{
                         name: '',
