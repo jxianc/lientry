@@ -10,6 +10,9 @@ import {
 } from '../lib/atom'
 import { cn } from '../lib/classname'
 import NextLink from 'next/link'
+import { useState } from 'react'
+import { Dialog } from '@headlessui/react'
+import { CreateTreeFormModal } from '../components/CreateTreeFormModal'
 
 // dashboard tab component
 interface DashboardTabProps {
@@ -37,22 +40,31 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({ title, type }) => {
   )
 }
 
+// dashboard action component
 interface DashboardActionProps {}
 
 export const DashboardAction: React.FC<DashboardActionProps> = ({}) => {
   const [dashboardDisplay] = useAtom(dashboardDisplayAtom)
+  const [modalIsOpen, setModalIsOpen] = useState(false)
 
   return (
-    // TODO replace real route
-    <NextLink href={dashboardDisplay === 'created' ? '/#' : '/'} passHref>
-      <a className="px-3 text-sm hover:underline hover:text-li-green-main">
+    <>
+      <CreateTreeFormModal
+        modalIsOpen={modalIsOpen}
+        setModalIsOpen={setModalIsOpen}
+      />
+      <div className="px-3 text-sm hover:cursor-pointer hover:underline hover:text-li-green-main">
         {dashboardDisplay === 'created' ? (
-          <span>create a new tree</span>
+          <div onClick={() => setModalIsOpen(true)}>create a new tree</div>
         ) : (
-          <span>browse trees</span>
+          <NextLink href="/" passHref>
+            <a>
+              <span>browse trees</span>
+            </a>
+          </NextLink>
         )}
-      </a>
-    </NextLink>
+      </div>
+    </>
   )
 }
 
@@ -61,6 +73,7 @@ interface DashboardProps {}
 
 const Dashboard: NextPage<DashboardProps> = ({}) => {
   const [dashboardDisplay] = useAtom(dashboardDisplayAtom)
+  const [modalIsOpen, setModalIsOpen] = useState(false)
 
   return (
     <MainLayout>

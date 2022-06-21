@@ -153,8 +153,3 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
     </div>
   )
 }
-
-/**
- * not auth -> Home Sign In Sign Out
- * auth -> Home Dashboard User
- */
