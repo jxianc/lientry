@@ -28,13 +28,13 @@ export const InputField: React.FC<InputFieldProps & FieldAndForm> = ({
 
   return (
     <div className="">
-      <label htmlFor="email-address" className="px-2">
+      <label htmlFor="email-address" className="px-2 text-sm">
         {label}
       </label>
       <input
         {...field}
         {...props}
-        className="my-1 w-full px-3 py-2 border border-gray-300 placeholder-gray-500 focus:outline-none focus:border-teal-500 focus:z-10 text-xs md:text-sm rounded-md"
+        className="my-1 w-full px-3 py-2 border border-li-gray-400 placeholder-li-gray-700 focus:outline-none focus:border-teal-500 focus:z-10 text-xs md:text-sm rounded-[0.3rem]"
       />
       <div className="px-2 text-gray-600">
         {helperText && Array.isArray(helperText) ? (

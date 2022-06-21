@@ -1,5 +1,9 @@
-import { Transition, Dialog } from '@headlessui/react'
+import { Dialog, Transition } from '@headlessui/react'
+import { Field, Form, Formik } from 'formik'
 import React, { Fragment } from 'react'
+import { SignInSchema } from '../lib/input-validation'
+import { createTreeInputs } from '../lib/inputs'
+import { InputField } from './InputField'
 
 interface CreateTreeFormModalProps {
   modalIsOpen: boolean
@@ -39,17 +43,54 @@ export const CreateTreeFormModal: React.FC<CreateTreeFormModalProps> = ({
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div className="inline-block rounded-[0.3rem] overflow-hidden transform transition-all w-full max-w-2xl">
-              <div className="bg-white dark:bg-li-gray-1500 p-4">
-                <div className="text-left">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-base leading-6 font-bold"
-                  >
+              <div className="bg-white dark:bg-li-gray-1500 p-6">
+                <div className="text-left space-y-4">
+                  <Dialog.Title as="h3" className="text-lg leading-6 font-bold">
                     Create a new tree
                   </Dialog.Title>
-                  <Dialog.Description className="text-base">
-                    create tree form go here
-                  </Dialog.Description>
+                  <div className="text-base px-2">
+                    <Formik
+                      initialValues={{
+                        name: '',
+                        description: '',
+                      }}
+                      validationSchema={SignInSchema}
+                      onSubmit={async ({ name, description }) => {
+                        console.log('submitted')
+                      }}
+                    >
+                      {() => (
+                        <Form className="space-y-4">
+                          <div className="rounded-md space-y-4 text-left mb-20">
+                            {createTreeInputs.map((input, idx) => {
+                              return (
+                                <Field
+                                  key={idx}
+                                  {...input}
+                                  component={InputField}
+                                />
+                              )
+                            })}
+                          </div>
+                          <div className="flex space-x-4 justify-end">
+                            <button
+                              type="button"
+                              className="py-1.5 px-4 rounded-[0.3rem] hover:bg-li-gray-200"
+                              onClick={() => setModalIsOpen(false)}
+                            >
+                              cancel
+                            </button>
+                            <button
+                              type="submit"
+                              className="bg-li-green-main text-white py-1.5 px-4 rounded-[0.3rem]"
+                            >
+                              create
+                            </button>
+                          </div>
+                        </Form>
+                      )}
+                    </Formik>
+                  </div>
                 </div>
               </div>
             </div>
