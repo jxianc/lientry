@@ -31,7 +31,7 @@ export const CreateTreeFormModal: React.FC<CreateTreeFormModalProps> = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-li-gray-1100/50 dark:bg-li-gray-1300/50 backdrop-filter backdrop-blur-sm transition-opacity" />
+            <Dialog.Overlay className="fixed inset-0 bg-li-gray-1100/50 dark:bg-li-gray-1200/50 backdrop-filter backdrop-blur-sm transition-opacity" />
           </Transition.Child>
           <Transition.Child
             as={Fragment}
