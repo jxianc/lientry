@@ -43,7 +43,7 @@ export const CreateTreeFormModal: React.FC<CreateTreeFormModalProps> = ({
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div className="inline-block rounded-[0.3rem] overflow-hidden transform transition-all w-full max-w-2xl">
-              <div className="bg-white dark:bg-li-gray-1500 p-6">
+              <div className="bg-white dark:bg-li-gray-1400 p-6">
                 <div className="text-left space-y-4">
                   <Dialog.Title as="h3" className="text-lg leading-6 font-bold">
                     Create a new tree
