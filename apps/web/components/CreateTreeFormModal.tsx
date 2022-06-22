@@ -75,14 +75,14 @@ export const CreateTreeFormModal: React.FC<CreateTreeFormModalProps> = ({
                           <div className="flex space-x-4 justify-end">
                             <button
                               type="button"
-                              className="py-1.5 px-4 rounded-[0.3rem] hover:bg-li-gray-200"
+                              className="py-1.5 px-4 rounded-[0.3rem] hover:bg-li-gray-200 dark:hover:bg-li-gray-1300"
                               onClick={() => setModalIsOpen(false)}
                             >
                               cancel
                             </button>
                             <button
                               type="submit"
-                              className="bg-li-green-main text-white py-1.5 px-4 rounded-[0.3rem]"
+                              className="bg-li-green-btn hover:bg-li-green-btn-hov dark:bg-li-green-btn-hov dark:hover:bg-li-green-btn text-white py-1.5 px-4 rounded-[0.3rem]"
                             >
                               create
                             </button>

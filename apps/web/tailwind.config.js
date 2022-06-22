@@ -28,6 +28,8 @@ module.exports = {
         },
         'li-green': {
           main: '#1e855e',
+          btn: '#136645',
+          'btn-hov': '#0b4a31',
         },
       },
     },
