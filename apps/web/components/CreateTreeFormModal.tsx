@@ -83,7 +83,7 @@ export const CreateTreeFormModal: React.FC<CreateTreeFormModalProps> = ({
                       }}
                     >
                       {() => (
-                        <Form className="space-y-4">
+                        <Form>
                           <div className="rounded-md space-y-4 text-left">
                             {createTreeInputs.map((input, idx) => {
                               return (
