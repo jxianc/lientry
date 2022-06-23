@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Field, Form, Formik } from 'formik'
 import { useRouter } from 'next/router'
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useRef, useState } from 'react'
 import { useCreateTreeMutation } from '../generated/graphql'
 import { gqlErrorHandler } from '../lib/error-handler'
 import { CreateTreeSchema, SignInSchema } from '../lib/input-validation'
@@ -20,10 +20,12 @@ export const CreateTreeFormModal: React.FC<CreateTreeFormModalProps> = ({
   const [bottomErrors, setBottomErrors] = useState<string[]>()
   const [_, execCreateTree] = useCreateTreeMutation()
   const router = useRouter()
+  const cancelButtonRef = useRef(null)
 
   return (
     <Transition.Root show={modalIsOpen} as={Fragment}>
       <Dialog
+        initialFocus={cancelButtonRef}
         as="div"
         className="fixed z-20 inset-20 overflow-y-auto"
         onClose={setModalIsOpen}
@@ -103,6 +105,7 @@ export const CreateTreeFormModal: React.FC<CreateTreeFormModalProps> = ({
                           <div className="flex space-x-4 justify-end mt-20">
                             <button
                               type="button"
+                              ref={cancelButtonRef}
                               className="py-1.5 px-4 rounded-[0.3rem] hover:bg-li-gray-200 dark:hover:bg-li-gray-1300"
                               onClick={() => setModalIsOpen(false)}
                             >
