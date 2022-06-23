@@ -1,7 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Field, Form, Formik } from 'formik'
-import React, { Fragment } from 'react'
-import { SignInSchema } from '../lib/input-validation'
+import { useRouter } from 'next/router'
+import React, { Fragment, useState } from 'react'
+import { useCreateTreeMutation } from '../generated/graphql'
+import { gqlErrorHandler } from '../lib/error-handler'
+import { CreateTreeSchema, SignInSchema } from '../lib/input-validation'
 import { createTreeInputs } from '../lib/inputs'
 import { InputField } from './InputField'
 
@@ -14,6 +17,10 @@ export const CreateTreeFormModal: React.FC<CreateTreeFormModalProps> = ({
   modalIsOpen,
   setModalIsOpen,
 }) => {
+  const [bottomErrors, setBottomErrors] = useState<string[]>()
+  const [_, execCreateTree] = useCreateTreeMutation()
+  const router = useRouter()
+
   return (
     <Transition.Root show={modalIsOpen} as={Fragment}>
       <Dialog
@@ -51,17 +58,31 @@ export const CreateTreeFormModal: React.FC<CreateTreeFormModalProps> = ({
                   <div className="text-base">
                     <Formik
                       initialValues={{
-                        name: '',
+                        title: '',
                         description: '',
                       }}
-                      validationSchema={SignInSchema}
-                      onSubmit={async ({ name, description }) => {
-                        console.log('submitted')
+                      validationSchema={CreateTreeSchema}
+                      onSubmit={async ({ title, description }) => {
+                        const { data, error } = await execCreateTree({
+                          createTreeInput: {
+                            name: title,
+                            description,
+                          },
+                        })
+
+                        if (error) {
+                          setBottomErrors(gqlErrorHandler(error.graphQLErrors))
+                        } else if (data && data.createTree.success) {
+                          // NOTE if the success field is true, there should be a treeId
+                          router.push(
+                            `/create-tree/${data.createTree.tree!.id}`,
+                          )
+                        }
                       }}
                     >
                       {() => (
                         <Form className="space-y-4">
-                          <div className="rounded-md space-y-4 text-left mb-20">
+                          <div className="rounded-md space-y-4 text-left">
                             {createTreeInputs.map((input, idx) => {
                               return (
                                 <Field
@@ -72,7 +93,14 @@ export const CreateTreeFormModal: React.FC<CreateTreeFormModalProps> = ({
                               )
                             })}
                           </div>
-                          <div className="flex space-x-4 justify-end">
+                          {bottomErrors && (
+                            <ul className="px-2 list-disc list-inside text-left text-red-500 font-semibold">
+                              {bottomErrors.map((err, idx) => (
+                                <li key={idx}>{err}</li>
+                              ))}
+                            </ul>
+                          )}
+                          <div className="flex space-x-4 justify-end mt-20">
                             <button
                               type="button"
                               className="py-1.5 px-4 rounded-[0.3rem] hover:bg-li-gray-200 dark:hover:bg-li-gray-1300"

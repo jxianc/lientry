@@ -47,7 +47,9 @@ export const InputField: React.FC<InputFieldProps & FieldAndForm> = ({
           <div>{helperText}</div>
         )}
         {meta.error && meta.touched && (
-          <div className="py-1 font-semibold text-red-500">{meta.error}</div>
+          <div className="text-sm py-1 font-semibold text-red-500">
+            {meta.error}
+          </div>
         )}
       </div>
     </div>

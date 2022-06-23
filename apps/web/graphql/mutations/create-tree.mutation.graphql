@@ -1,0 +1,16 @@
+mutation CreateTree($createTreeInput: CreateTreeInput!) {
+  createTree(createTreeInput: $createTreeInput) {
+    success
+    errMsg
+    tree {
+      id
+      name
+      description
+      isPublic
+      createdAt
+      user {
+        id
+      }
+    }
+  }
+}
