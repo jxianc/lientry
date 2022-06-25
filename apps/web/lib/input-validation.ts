@@ -18,4 +18,10 @@ const SignInSchema = Yup.object().shape({
   password: Yup.string().required('Password is required'),
 })
 
-export { SignUpSchema, SignInSchema }
+// TODO add validation for createTree
+const CreateTreeSchema = Yup.object().shape({
+  title: Yup.string().required('Title is required'),
+  description: Yup.string(),
+})
+
+export { SignUpSchema, SignInSchema, CreateTreeSchema }

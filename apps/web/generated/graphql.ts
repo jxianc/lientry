@@ -211,6 +211,28 @@ export type UserEntity = {
   updatedAt: Scalars['DateTime']
 }
 
+export type CreateTreeMutationVariables = Exact<{
+  createTreeInput: CreateTreeInput
+}>
+
+export type CreateTreeMutation = {
+  __typename?: 'Mutation'
+  createTree: {
+    __typename?: 'CreateTreeResponse'
+    success: boolean
+    errMsg?: string | null
+    tree?: {
+      __typename?: 'TreeEntity'
+      id: string
+      name: string
+      description?: string | null
+      isPublic: boolean
+      createdAt: any
+      user: { __typename?: 'UserEntity'; id: string }
+    } | null
+  }
+}
+
 export type LoginMutationVariables = Exact<{
   loginUserInput: LoginUserInput
 }>
@@ -339,6 +361,30 @@ export type MeQuery = {
   } | null
 }
 
+export const CreateTreeDocument = gql`
+  mutation CreateTree($createTreeInput: CreateTreeInput!) {
+    createTree(createTreeInput: $createTreeInput) {
+      success
+      errMsg
+      tree {
+        id
+        name
+        description
+        isPublic
+        createdAt
+        user {
+          id
+        }
+      }
+    }
+  }
+`
+
+export function useCreateTreeMutation() {
+  return Urql.useMutation<CreateTreeMutation, CreateTreeMutationVariables>(
+    CreateTreeDocument,
+  )
+}
 export const LoginDocument = gql`
   mutation Login($loginUserInput: LoginUserInput!) {
     login(loginUserInput: $loginUserInput) {

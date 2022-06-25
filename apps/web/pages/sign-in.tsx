@@ -76,7 +76,7 @@ const SignIn: NextPage<SignInProps> = ({}) => {
               {bottomErrors && (
                 <ul className="px-2 list-disc list-inside text-left text-red-500 font-semibold">
                   {bottomErrors.map((err, idx) => (
-                    <li key="idx">{err}</li>
+                    <li key={idx}>{err}</li>
                   ))}
                 </ul>
               )}
