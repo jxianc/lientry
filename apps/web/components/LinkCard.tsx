@@ -16,33 +16,36 @@ export const LinkCard: React.FC<LinkCardProps> = ({
   url,
 }) => {
   return (
-    <div className="space-y-6 p-4 w-full ml-auto rounded-[0.3rem] bg-li-gray-100 dark:bg-li-gray-1400 shadow-sm relative">
-      <div className="flex space-x-2 items-start mb-10">
-        <div className="space-y-2">
-          <NextLink href={url} passHref>
-            <a
-              className="hover:underline hover:text-li-green-main"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <h5 className="font-semibold text-base leading-tight">
-                <span>{title}</span>
-              </h5>
-            </a>
-          </NextLink>
-          {description && (
-            <h3 className="text-sm text-li-gray-1100 dark:text-li-gray-700">
-              {description}
-            </h3>
-          )}
-        </div>
-      </div>
-      <div className="absolute bottom-4 right-4">
+    <div className="relative">
+      <NextLink href={url} passHref>
+        <a target="_blank" rel="noopener noreferrer">
+          <div className="space-y-6 p-4 w-full ml-auto rounded-[0.3rem] bg-li-gray-100 dark:bg-li-gray-1400 shadow-sm hover:bg-li-gray-200 dark:hover:bg-li-gray-1300">
+            <div className="flex space-x-2 items-start mb-10">
+              <div className="space-y-2">
+                <h5 className="font-semibold text-base leading-tight">
+                  <span>{title}</span>
+                </h5>
+                {description && (
+                  <h3 className="text-sm text-li-gray-1100 dark:text-li-gray-700">
+                    {description}
+                  </h3>
+                )}
+              </div>
+            </div>
+          </div>
+        </a>
+      </NextLink>
+      <div
+        className="absolute bottom-4 right-4"
+        onClick={(e) => {
+          e.preventDefault()
+        }}
+      >
         <CopyToClipboard text={url}>
           <button
             className={cn(
-              'text-li-gray-1100 bg-li-gray-100 border-li-gray-400 hover:border-li-green-main hover:text-li-green-main',
-              'dark:text-li-gray-700 dark:bg-li-gray-1400 dark:border-li-gray-1100 dark:hover:border-li-green-main dark:hover:text-li-green-main',
+              'text-li-gray-1100 border-li-gray-400 hover:border-li-green-main hover:text-li-green-main',
+              'dark:text-li-gray-700 dark:border-li-gray-1100 dark:hover:border-li-green-main dark:hover:text-li-green-main',
               'text-sm px-1 rounded-md border inline-flex items-center space-x-0.5',
             )}
           >
