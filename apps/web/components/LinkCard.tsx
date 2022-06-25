@@ -19,7 +19,7 @@ export const LinkCard: React.FC<LinkCardProps> = ({
     <div className="relative">
       <NextLink href={url} passHref>
         <a target="_blank" rel="noopener noreferrer">
-          <div className="space-y-6 p-4 w-full ml-auto rounded-[0.3rem] bg-li-gray-100 dark:bg-li-gray-1400 shadow-sm hover:bg-li-gray-200 dark:hover:bg-li-gray-1300">
+          <div className="h-full space-y-6 p-4 w-full ml-auto rounded-[0.3rem] bg-li-gray-100 dark:bg-li-gray-1400 shadow-sm hover:bg-li-gray-200 dark:hover:bg-li-gray-1300">
             <div className="flex space-x-2 items-start mb-10">
               <div className="space-y-2">
                 <h5 className="font-semibold text-base leading-tight">
