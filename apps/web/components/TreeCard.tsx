@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
 import NextLink from 'next/link'
 import Image from 'next/image'
-import { formatDate } from '../lib/data'
+import { formatDate } from '../lib/date'
 import { useRouter } from 'next/router'
 import { TreeCardLayout } from './cards/TreeCardLayout'
 
