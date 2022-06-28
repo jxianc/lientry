@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { FiMoreVertical } from 'react-icons/fi'
 import { TreeCardLayout } from '../../components/cards/TreeCardLayout'
+import { CreateLinkFormModal } from '../../components/CreateLinkFormModal'
 import { LinkDraftCard } from '../../components/draft/LinkDraftCard'
 import {
   Dropdown,
@@ -77,6 +78,7 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
   })
   const [treeInfo, setTreeInfo] = useState<JSX.Element>()
   const [linkElements, setLinkElements] = useState<JSX.Element[]>()
+  const [modalIsOpen, setModalIsOpen] = useState(false)
 
   useEffect(() => {
     if (data && data.getTreeById) {
@@ -107,20 +109,33 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
 
   return (
     <MainLayout>
-      <div className="mt-4 space-y-6">
+      <div className="mt-4 space-y-8">
         {treeInfo}
-        {linkElements && linkElements.length > 0 ? (
-          <div className="grid grid-cols-2 gap-4">{linkElements}</div>
-        ) : (
-          <div className="text-sm text-center py-4 dark:text-li-gray-700">
-            There are currently no links in this tree
-          </div>
-        )}
-        <div className="flex justify-center w-full h-40 rounded-[0.3rem] border-8 border-dashed border-li-gray-100 dark:border-li-gray-1300 hover:cursor-pointer">
+        <div className="space-y-4">
+          <button
+            className="bg-li-gray-100 dark:bg-li-gray-1400 hover:bg-li-gray-200 dark:hover:bg-li-gray-1300 px-4 py-1.5 rounded-[0.3rem] text-sm font-semibold"
+            onClick={() => setModalIsOpen(true)}
+          >
+            Add Link
+          </button>
+          <CreateLinkFormModal
+            modalIsOpen={modalIsOpen}
+            setModalIsOpen={setModalIsOpen}
+          />
+          {linkElements && linkElements.length > 0 ? (
+            <div className="grid grid-cols-2 gap-4">{linkElements}</div>
+          ) : (
+            <div className="text-sm text-center py-4 dark:text-li-gray-700">
+              There are currently no links in this tree
+            </div>
+          )}
+        </div>
+
+        {/* <div className="flex justify-center w-full h-40 rounded-[0.3rem] border-8 border-dashed border-li-gray-100 dark:border-li-gray-1300 hover:cursor-pointer">
           <div className="text-4xl font-bold text-li-gray-100 dark:text-li-gray-1300 inline-flex justify-center items-center">
             +
           </div>
-        </div>
+        </div> */}
       </div>
     </MainLayout>
   )
