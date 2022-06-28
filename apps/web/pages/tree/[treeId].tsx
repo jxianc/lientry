@@ -1,8 +1,8 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { LinkCard } from '../../components/LinkCard'
-import { TreeCard } from '../../components/TreeCard'
+import { LinkCard } from '../../components/cards/LinkCard'
+import { TreeCard } from '../../components/cards/TreeCard'
 import { useGetTreeByIdQuery } from '../../generated/graphql'
 import { MainLayout } from '../../layouts/MainLayout'
 

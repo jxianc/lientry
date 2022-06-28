@@ -2,7 +2,7 @@ import { useAtom } from 'jotai'
 import { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import { BsFillCaretLeftFill, BsFillCaretRightFill } from 'react-icons/bs'
-import { TreeCard } from '../components/TreeCard'
+import { TreeCard } from '../components/cards/TreeCard'
 import {
   useGetRecentTreesQuery,
   useGetTrendingTreesQuery,

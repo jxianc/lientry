@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { FiMoreVertical } from 'react-icons/fi'
 import { TreeCardLayout } from '../../components/cards/TreeCardLayout'
-import { CreateLinkFormModal } from '../../components/CreateLinkFormModal'
+import { CreateLinkFormModal } from '../../components/modals/CreateLinkFormModal'
 import { LinkDraftCard } from '../../components/draft/LinkDraftCard'
 import {
   Dropdown,

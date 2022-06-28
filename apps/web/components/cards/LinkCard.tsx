@@ -1,8 +1,8 @@
 import NextLink from 'next/link'
 import React from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { VscCopy, VscLink } from 'react-icons/vsc'
-import { cn } from '../lib/classname'
+import { VscCopy } from 'react-icons/vsc'
+import { cn } from '../../lib/classname'
 
 interface LinkCardProps {
   title: string

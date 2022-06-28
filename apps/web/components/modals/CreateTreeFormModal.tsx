@@ -2,11 +2,11 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Field, Form, Formik } from 'formik'
 import { useRouter } from 'next/router'
 import React, { Fragment, useRef, useState } from 'react'
-import { useCreateTreeMutation } from '../generated/graphql'
-import { gqlErrorHandler } from '../lib/error-handler'
-import { CreateTreeSchema, SignInSchema } from '../lib/input-validation'
-import { createTreeInputs } from '../lib/inputs'
-import { InputField } from './InputField'
+import { useCreateTreeMutation } from '../../generated/graphql'
+import { gqlErrorHandler } from '../../lib/error-handler'
+import { CreateTreeSchema } from '../../lib/input-validation'
+import { createTreeInputs } from '../../lib/inputs'
+import { InputField } from '../InputField'
 
 interface CreateTreeFormModalProps {
   modalIsOpen: boolean

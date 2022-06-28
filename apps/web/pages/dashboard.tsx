@@ -1,7 +1,10 @@
 import { useAtom } from 'jotai'
 import { NextPage } from 'next'
+import NextLink from 'next/link'
+import { useState } from 'react'
 import { DashboardCreatedTreeCard } from '../components/cards/DashboardCreatedTreeCard'
 import { DashboardSavedTreeCard } from '../components/cards/DashboardSavedTreeCard'
+import { CreateTreeFormModal } from '../components/modals/CreateTreeFormModal'
 import { MainLayout } from '../layouts/MainLayout'
 import {
   DashboardDisplay,
@@ -9,10 +12,6 @@ import {
   setDashboardDisplayAtom,
 } from '../lib/atom'
 import { cn } from '../lib/classname'
-import NextLink from 'next/link'
-import { useState } from 'react'
-import { Dialog } from '@headlessui/react'
-import { CreateTreeFormModal } from '../components/CreateTreeFormModal'
 
 // dashboard tab component
 interface DashboardTabProps {
@@ -73,7 +72,6 @@ interface DashboardProps {}
 
 const Dashboard: NextPage<DashboardProps> = ({}) => {
   const [dashboardDisplay] = useAtom(dashboardDisplayAtom)
-  const [modalIsOpen, setModalIsOpen] = useState(false)
 
   return (
     <MainLayout>
