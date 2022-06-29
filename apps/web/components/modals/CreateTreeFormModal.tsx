@@ -7,6 +7,7 @@ import { gqlErrorHandler } from '../../lib/error-handler'
 import { CreateTreeSchema } from '../../lib/input-validation'
 import { createTreeInputs } from '../../lib/inputs'
 import { InputField } from '../InputField'
+import { ModalBackground } from './ModalBackground'
 
 interface CreateTreeFormModalProps {
   modalIsOpen: boolean
@@ -31,17 +32,7 @@ export const CreateTreeFormModal: React.FC<CreateTreeFormModalProps> = ({
         onClose={setModalIsOpen}
       >
         <div className="flex items-end justify-center text-center sm:block sm:p-0">
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <Dialog.Overlay className="fixed inset-0 bg-li-gray-1100/50 dark:bg-li-gray-1200/50 backdrop-filter backdrop-blur-sm transition-opacity" />
-          </Transition.Child>
+          <ModalBackground />
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
