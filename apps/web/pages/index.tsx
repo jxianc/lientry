@@ -8,7 +8,7 @@ import {
   useGetTrendingTreesQuery,
 } from '../generated/graphql'
 import { MainLayout } from '../layouts/MainLayout'
-import { OrderBy, setOrderByAtom } from '../lib/atom'
+import { OrderBy, setOrderByAtom } from '../lib/atom/order-by.atom'
 import { cn } from '../lib/classname'
 
 interface HomeProps {}

@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { FaRegMoon, FaRegSun } from 'react-icons/fa'
 import { useLogoutMutation, useMeQuery } from '../generated/graphql'
 import { removeAccessToken } from '../lib/acess-token-operation'
-import { setCurrUserAtom } from '../lib/atom'
+import { setCurrUserAtom } from '../lib/atom/current-user.atom'
 import { cn } from '../lib/classname'
 import { Dropdown, DropdownAction, DropdownComponent } from './Dropdown'
 

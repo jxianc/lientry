@@ -10,7 +10,7 @@ import {
   DashboardDisplay,
   dashboardDisplayAtom,
   setDashboardDisplayAtom,
-} from '../lib/atom'
+} from '../lib/atom/dashboard-tab.atom'
 import { cn } from '../lib/classname'
 
 // dashboard tab component
