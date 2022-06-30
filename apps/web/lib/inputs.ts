@@ -63,4 +63,28 @@ const createTreeInputs: InputFieldProps[] = [
   },
 ]
 
-export { signUpInputs, signInInputs, createTreeInputs }
+const createLinkInputs: InputFieldProps[] = [
+  {
+    label: 'Title',
+    name: 'title',
+    type: 'text',
+    required: true,
+    placeholder: 'title',
+  },
+  {
+    label: 'Description',
+    name: 'description',
+    type: 'text',
+    required: false,
+    placeholder: 'description',
+  },
+  {
+    label: 'Url',
+    name: 'url',
+    type: 'url',
+    required: true,
+    placeholder: 'url',
+  },
+]
+
+export { signUpInputs, signInInputs, createTreeInputs, createLinkInputs }

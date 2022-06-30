@@ -1,8 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Field, Form, Formik } from 'formik'
 import React, { Fragment, useRef } from 'react'
-import { CreateTreeSchema } from '../../lib/input-validation'
-import { createTreeInputs } from '../../lib/inputs'
+import { CreateLinkSchema } from '../../lib/input-validation'
+import { createLinkInputs } from '../../lib/inputs'
 import { InputField } from '../InputField'
 import { ModalBackground } from './ModalBackground'
 
@@ -40,16 +40,18 @@ export const CreateLinkFormModal: React.FC<CreateLinkFormModalProps> = ({
               <div className="bg-white dark:bg-li-gray-1400 p-6">
                 <div className="text-left space-y-4">
                   <Dialog.Title as="h3" className="text-lg leading-6 font-bold">
-                    Create a new tree
+                    Add a new link
                   </Dialog.Title>
                   <div className="text-base">
                     <Formik
                       initialValues={{
                         title: '',
                         description: '',
+                        url: '',
                       }}
-                      validationSchema={CreateTreeSchema}
-                      onSubmit={async ({ title, description }) => {
+                      validationSchema={CreateLinkSchema}
+                      onSubmit={async ({ title, description, url }) => {
+                        console.log(title, description, url)
                         // const { data, error } = await execCreateTree({
                         //   createTreeInput: {
                         //     name: title,
@@ -69,7 +71,7 @@ export const CreateLinkFormModal: React.FC<CreateLinkFormModalProps> = ({
                       {() => (
                         <Form>
                           <div className="rounded-md space-y-4 text-left">
-                            {createTreeInputs.map((input, idx) => {
+                            {createLinkInputs.map((input, idx) => {
                               return (
                                 <Field
                                   key={idx}
@@ -99,7 +101,7 @@ export const CreateLinkFormModal: React.FC<CreateLinkFormModalProps> = ({
                               type="submit"
                               className="bg-li-green-btn hover:bg-li-green-btn-hov dark:bg-li-green-btn-hov dark:hover:bg-li-green-btn text-white py-1.5 px-4 rounded-[0.3rem]"
                             >
-                              create
+                              add
                             </button>
                           </div>
                         </Form>

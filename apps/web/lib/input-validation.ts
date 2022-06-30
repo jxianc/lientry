@@ -24,4 +24,11 @@ const CreateTreeSchema = Yup.object().shape({
   description: Yup.string(),
 })
 
-export { SignUpSchema, SignInSchema, CreateTreeSchema }
+// TODO add validation for createLink
+const CreateLinkSchema = Yup.object().shape({
+  title: Yup.string().required('Title is required'),
+  description: Yup.string(),
+  url: Yup.string().url('Invalid url').required('Url is required'),
+})
+
+export { SignUpSchema, SignInSchema, CreateTreeSchema, CreateLinkSchema }
