@@ -1,3 +1,4 @@
+import { useAtom } from 'jotai'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -12,6 +13,11 @@ import {
 import { CreateLinkFormModal } from '../../components/modals/CreateLinkFormModal'
 import { useGetTreeByIdQuery } from '../../generated/graphql'
 import { DraftLayout } from '../../layouts/DraftLayout'
+import {
+  LinkAtom,
+  setLinksAtom,
+  setTreeInfoAtom,
+} from '../../lib/atom/draft-tree.atom'
 import { formatDate } from '../../lib/date'
 
 interface TreeInfoCardProps {
@@ -68,21 +74,39 @@ export const TreeInfoCard: React.FC<TreeInfoCardProps> = ({
 interface CreateTreeProps {}
 
 const CreateTree: NextPage<CreateTreeProps> = ({}) => {
+  // router
   const router = useRouter()
   const { treeId } = router.query
+
+  // query
   const [{ data }] = useGetTreeByIdQuery({
     variables: {
       treeId: treeId as string,
     },
     pause: !treeId,
   })
-  const [treeInfo, setTreeInfo] = useState<JSX.Element>()
+
+  // jotai state
+  const [treeInfo, setTreeInfo] = useAtom(setTreeInfoAtom)
+  const [links, setLinks] = useAtom(setLinksAtom)
+
+  // useState
+  const [treeInfoElement, setTreeInfoElement] = useState<JSX.Element>()
   const [linkElements, setLinkElements] = useState<JSX.Element[]>()
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
   useEffect(() => {
     if (data && data.getTreeById) {
       const t = data.getTreeById
+
+      // init treeInfo atom state
+      setTreeInfo({
+        id: t.id,
+        title: t.name,
+        description: t.description,
+      })
+
+      // treeInfo card
       const tree = (
         <TreeInfoCard
           title={t.name}
@@ -91,9 +115,23 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
           createdAt={t.createdAt}
         />
       )
-      setTreeInfo(tree)
+      setTreeInfoElement(tree)
 
       if (t.links && t.links.length > 0) {
+        // init link atom state
+        setLinks(
+          t.links.map((l) => {
+            return {
+              id: l.id,
+              title: l.title,
+              description: l.description,
+              url: l.url,
+              status: 'original',
+            } as LinkAtom
+          }),
+        )
+
+        // link cards
         const links = t.links.map((l) => (
           <LinkDraftCard
             key={`lk-${l.id}`}
@@ -107,10 +145,13 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
     }
   }, [data])
 
+  console.log('treeInfo', treeInfo)
+  console.log('links', links)
+
   return (
     <DraftLayout>
       <div className="mt-4 space-y-8">
-        {treeInfo}
+        {treeInfoElement}
         <div className="space-y-4">
           <button
             className="bg-li-gray-100 dark:bg-li-gray-1400 hover:bg-li-gray-200 dark:hover:bg-li-gray-1300 px-4 py-1.5 rounded-[0.3rem] text-sm font-semibold"
