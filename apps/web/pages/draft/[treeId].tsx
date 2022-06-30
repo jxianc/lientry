@@ -3,15 +3,15 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { FiMoreVertical } from 'react-icons/fi'
 import { TreeCardLayout } from '../../components/cards/TreeCardLayout'
-import { CreateLinkFormModal } from '../../components/modals/CreateLinkFormModal'
 import { LinkDraftCard } from '../../components/draft/LinkDraftCard'
 import {
   Dropdown,
   DropdownAction,
   DropdownComponent,
 } from '../../components/Dropdown'
+import { CreateLinkFormModal } from '../../components/modals/CreateLinkFormModal'
 import { useGetTreeByIdQuery } from '../../generated/graphql'
-import { MainLayout } from '../../layouts/MainLayout'
+import { DraftLayout } from '../../layouts/DraftLayout'
 import { formatDate } from '../../lib/date'
 
 interface TreeInfoCardProps {
@@ -108,7 +108,7 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
   }, [data])
 
   return (
-    <MainLayout>
+    <DraftLayout>
       <div className="mt-4 space-y-8">
         {treeInfo}
         <div className="space-y-4">
@@ -130,14 +130,8 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
             </div>
           )}
         </div>
-
-        {/* <div className="flex justify-center w-full h-40 rounded-[0.3rem] border-8 border-dashed border-li-gray-100 dark:border-li-gray-1300 hover:cursor-pointer">
-          <div className="text-4xl font-bold text-li-gray-100 dark:text-li-gray-1300 inline-flex justify-center items-center">
-            +
-          </div>
-        </div> */}
       </div>
-    </MainLayout>
+    </DraftLayout>
   )
 }
 
