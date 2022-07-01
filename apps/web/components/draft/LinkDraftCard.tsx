@@ -1,18 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FiMoreVertical } from 'react-icons/fi'
 import { Dropdown, DropdownAction, DropdownComponent } from '../Dropdown'
+import { EditLinkFormModal } from '../modals/EditLinkFormModal'
 
 interface LinkDraftCardProps {
+  linkId: string
   title: string
   description?: string | null
   url: string
 }
 
 export const LinkDraftCard: React.FC<LinkDraftCardProps> = ({
+  linkId,
   title,
   description,
   url,
 }) => {
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+
   return (
     <div className="h-full p-4 w-full ml-auto rounded-[0.3rem] bg-li-gray-100 dark:bg-li-gray-1400">
       <div className="flex flex-row justify-between">
@@ -26,7 +31,14 @@ export const LinkDraftCard: React.FC<LinkDraftCardProps> = ({
             </h3>
           )}
         </div>
-
+        <EditLinkFormModal
+          linkId={linkId}
+          title={title}
+          description={description}
+          url={url}
+          modalIsOpen={modalIsOpen}
+          setModalIsOpen={setModalIsOpen}
+        />
         <Dropdown
           component={DropdownComponent.ICON}
           Icon={FiMoreVertical}
@@ -43,8 +55,10 @@ export const LinkDraftCard: React.FC<LinkDraftCardProps> = ({
             },
             {
               title: 'Edit',
-              action: DropdownAction.EXTERNAL_LINK,
-              href: '/#',
+              action: DropdownAction.BUTTON,
+              clickHandler: async () => {
+                setModalIsOpen(true)
+              },
             },
             {
               title: 'Delete',
