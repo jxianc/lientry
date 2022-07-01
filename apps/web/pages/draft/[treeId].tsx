@@ -122,7 +122,7 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
         setLinks(
           t.links.map((l) => {
             return {
-              id: l.id,
+              linkId: l.id,
               title: l.title,
               description: l.description,
               url: l.url,
@@ -139,7 +139,8 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
       links.map((l, idx) => (
         <LinkDraftCard
           key={`lk-${idx}`}
-          linkId={idx.toString()}
+          linkId={l.linkId || idx.toString()}
+          linkStatus={l.status}
           title={l.title}
           description={l.description}
           url={l.url}

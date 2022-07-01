@@ -1,6 +1,8 @@
 import { Transition, Dialog } from '@headlessui/react'
 import { Formik, Form, Field } from 'formik'
+import { useAtom } from 'jotai'
 import React, { Fragment, useRef } from 'react'
+import { LinkStatus, setLinksAtom } from '../../lib/atom/draft-tree.atom'
 import { CreateLinkSchema } from '../../lib/input-validation'
 import { createLinkInputs } from '../../lib/inputs'
 import { InputField } from '../InputField'
@@ -10,18 +12,24 @@ interface EditLinkFormModalProps {
   modalIsOpen: boolean
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>
   linkId: string
+  linkStatus: LinkStatus
   title: string
   description?: string | null
   url: string
 }
 
 export const EditLinkFormModal: React.FC<EditLinkFormModalProps> = ({
+  linkId,
+  linkStatus,
   title,
   description,
   url,
   modalIsOpen,
   setModalIsOpen,
 }) => {
+  // jotai state
+  const [links, setLinks] = useAtom(setLinksAtom)
+
   // useRef
   const cancelButtonRef = useRef(null)
 
@@ -59,7 +67,15 @@ export const EditLinkFormModal: React.FC<EditLinkFormModalProps> = ({
                       }}
                       validationSchema={CreateLinkSchema}
                       onSubmit={async ({ title, description, url }) => {
-                        console.log(title, description, url)
+                        const updatedLinks = links.map((l) => {
+                          if (l.linkId === linkId) {
+                            ;(l.title = title),
+                              (l.description = description),
+                              (l.url = url)
+                          }
+                          return l
+                        })
+                        setLinks(updatedLinks)
                         setModalIsOpen(false)
                       }}
                     >

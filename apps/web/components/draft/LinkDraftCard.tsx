@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { FiMoreVertical } from 'react-icons/fi'
+import { LinkStatus } from '../../lib/atom/draft-tree.atom'
 import { Dropdown, DropdownAction, DropdownComponent } from '../Dropdown'
 import { EditLinkFormModal } from '../modals/EditLinkFormModal'
 
 interface LinkDraftCardProps {
   linkId: string
+  linkStatus: LinkStatus
   title: string
   description?: string | null
   url: string
@@ -12,6 +14,7 @@ interface LinkDraftCardProps {
 
 export const LinkDraftCard: React.FC<LinkDraftCardProps> = ({
   linkId,
+  linkStatus,
   title,
   description,
   url,
@@ -33,6 +36,7 @@ export const LinkDraftCard: React.FC<LinkDraftCardProps> = ({
         </div>
         <EditLinkFormModal
           linkId={linkId}
+          linkStatus={linkStatus}
           title={title}
           description={description}
           url={url}

@@ -16,7 +16,7 @@ const setTreeInfoAtom = atom(
 type LinkStatus = 'original' | 'added' | 'edited' | 'deleted'
 
 interface LinkAtom {
-  id?: string | null
+  linkId: string
   title: string
   description?: string | null
   url: string

@@ -57,10 +57,15 @@ export const CreateLinkFormModal: React.FC<CreateLinkFormModalProps> = ({
                       }}
                       validationSchema={CreateLinkSchema}
                       onSubmit={async ({ title, description, url }) => {
-                        console.log(title, description, url)
                         setLinks([
                           ...links,
-                          { title, description, url, status: 'added' },
+                          {
+                            linkId: links.length.toString(), // TODO this is hacky but it works for now
+                            title,
+                            description,
+                            url,
+                            status: 'added',
+                          },
                         ])
                         setModalIsOpen(false)
                       }}
