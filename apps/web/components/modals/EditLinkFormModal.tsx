@@ -96,7 +96,7 @@ export const EditLinkFormModal: React.FC<EditLinkFormModalProps> = ({
                               type="submit"
                               className="bg-li-green-btn hover:bg-li-green-btn-hov dark:bg-li-green-btn-hov dark:hover:bg-li-green-btn text-white py-1.5 px-4 rounded-[0.3rem]"
                             >
-                              add
+                              edit
                             </button>
                           </div>
                         </Form>
