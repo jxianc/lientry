@@ -130,20 +130,22 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
             } as LinkAtom
           }),
         )
-
-        // link cards
-        const links = t.links.map((l) => (
-          <LinkDraftCard
-            key={`lk-${l.id}`}
-            title={l.title}
-            description={l.description}
-            url={l.url}
-          />
-        ))
-        setLinkElements(links)
       }
     }
   }, [data])
+
+  useEffect(() => {
+    setLinkElements(
+      links.map((l, idx) => (
+        <LinkDraftCard
+          key={`lk-${idx}`}
+          title={l.title}
+          description={l.description}
+          url={l.url}
+        />
+      )),
+    )
+  }, [links])
 
   console.log('treeInfo', treeInfo)
   console.log('links', links)

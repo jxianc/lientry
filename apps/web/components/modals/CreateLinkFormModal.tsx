@@ -1,6 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Field, Form, Formik } from 'formik'
+import { useAtom } from 'jotai'
 import React, { Fragment, useRef } from 'react'
+import { setLinksAtom } from '../../lib/atom/draft-tree.atom'
 import { CreateLinkSchema } from '../../lib/input-validation'
 import { createLinkInputs } from '../../lib/inputs'
 import { InputField } from '../InputField'
@@ -15,6 +17,10 @@ export const CreateLinkFormModal: React.FC<CreateLinkFormModalProps> = ({
   modalIsOpen,
   setModalIsOpen,
 }) => {
+  // jotai state
+  const [links, setLinks] = useAtom(setLinksAtom)
+
+  // useRef
   const cancelButtonRef = useRef(null)
 
   return (
@@ -52,20 +58,11 @@ export const CreateLinkFormModal: React.FC<CreateLinkFormModalProps> = ({
                       validationSchema={CreateLinkSchema}
                       onSubmit={async ({ title, description, url }) => {
                         console.log(title, description, url)
-                        // const { data, error } = await execCreateTree({
-                        //   createTreeInput: {
-                        //     name: title,
-                        //     description,
-                        //   },
-                        // })
-                        // if (error) {
-                        //   setBottomErrors(gqlErrorHandler(error.graphQLErrors))
-                        // } else if (data && data.createTree.success) {
-                        //   // NOTE if the success field is true, there should be a treeId
-                        //   router.push(
-                        //     `/create-tree/${data.createTree.tree!.id}`,
-                        //   )
-                        // }
+                        setLinks([
+                          ...links,
+                          { title, description, url, status: 'added' },
+                        ])
+                        setModalIsOpen(false)
                       }}
                     >
                       {() => (
