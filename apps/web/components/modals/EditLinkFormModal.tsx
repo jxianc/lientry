@@ -54,7 +54,7 @@ export const EditLinkFormModal: React.FC<EditLinkFormModalProps> = ({
                     <Formik
                       initialValues={{
                         title,
-                        description,
+                        description: description || '',
                         url,
                       }}
                       validationSchema={CreateLinkSchema}
