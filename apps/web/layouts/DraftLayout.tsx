@@ -1,12 +1,22 @@
+import { useAtom } from 'jotai'
+import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { FiSave, FiXCircle } from 'react-icons/fi'
 import { DraftCancelModal } from '../components/modals/DraftCancelModal'
+import { setLinksAtom } from '../lib/atom/draft-tree.atom'
 
 interface DraftLayoutProps {
   children?: React.ReactNode
 }
 
 export const DraftLayout: React.FC<DraftLayoutProps> = ({ children }) => {
+  // router
+  const router = useRouter()
+
+  // jotai state
+  const [links, setLinks] = useAtom(setLinksAtom)
+
+  // useState
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
   return (
@@ -24,7 +34,14 @@ export const DraftLayout: React.FC<DraftLayoutProps> = ({ children }) => {
               <button
                 className="bg-li-gray-100 dark:bg-li-gray-1400 hover:bg-li-gray-200 dark:hover:bg-li-gray-1300 px-3 py-1 rounded-[0.3rem] text-base font-semibold inline-flex items-center space-x-1"
                 onClick={() => {
-                  setModalIsOpen(true)
+                  const newLinks = links.filter(
+                    (l) => l.initalStatus === 'new' || l.status !== 'none',
+                  )
+                  if (newLinks.length > 0) {
+                    setModalIsOpen(true)
+                  } else {
+                    router.back()
+                  }
                 }}
               >
                 <FiXCircle />

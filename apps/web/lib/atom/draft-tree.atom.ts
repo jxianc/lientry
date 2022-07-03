@@ -1,5 +1,6 @@
 import { atom } from 'jotai'
 
+// tree info
 interface TreeInfo {
   id: string
   title: string
@@ -13,6 +14,7 @@ const setTreeInfoAtom = atom(
   (_get, set, treeInfo: TreeInfo | null) => set(treeInfoAtom, treeInfo),
 )
 
+// links
 type LinkInitialStatus = 'ori' | 'new'
 
 type LinkStatus = 'none' | 'added' | 'edited' | 'deleted'
