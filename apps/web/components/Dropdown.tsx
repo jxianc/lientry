@@ -53,6 +53,7 @@ interface IconDropdown extends BaseDropdown {
   Icon: IconType
 }
 
+// dropdown component
 type DropdownProps = ButtonDropdown | AvatarDropdown | IconDropdown
 
 export const Dropdown: React.FC<DropdownProps> = (p) => {
@@ -60,6 +61,7 @@ export const Dropdown: React.FC<DropdownProps> = (p) => {
     <Menu as="div" className="relative inline-block text-left">
       <div>
         {p.component === DropdownComponent.AVATAR ? (
+          // avatar dropdown
           <Menu.Button className="flex px-2">
             <Image
               alt="profile pic"
@@ -70,12 +72,14 @@ export const Dropdown: React.FC<DropdownProps> = (p) => {
             />
           </Menu.Button>
         ) : p.component === DropdownComponent.BUTTON ? (
+          // button dropdown
           <Menu.Button className="inline-flex items-center justify-center border border-gray-300 px-2 py-1 text-sm rounded-[0.3rem]">
             <span>{p.title}</span>
             <FiChevronDown className="ml-2" />
           </Menu.Button>
         ) : (
-          <Menu.Button className="">
+          // icon dropdown
+          <Menu.Button>
             <p.Icon size={18} />
           </Menu.Button>
         )}
@@ -89,14 +93,16 @@ export const Dropdown: React.FC<DropdownProps> = (p) => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="z-10 origin-top-right absolute right-0 mt-2 w-52 rounded-[0.3rem] shadow-md bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="z-10 origin-top-right absolute right-0 mt-2 w-52 rounded-[0.3rem] shadow-md bg-white dark:bg-li-gray-1300 ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
             {p.dropdownItems.map((d, idx) => (
               <Menu.Item key={idx}>
                 {({ active }) => (
                   <div
                     className={cn(
-                      active ? 'bg-gray-100 cursor-pointer' : 'bg-white',
+                      active
+                        ? 'bg-gray-100 dark:bg-li-gray-1200 cursor-pointer'
+                        : 'bg-white dark:bg-li-gray-1300',
                       'block px-4 py-2 text-sm w-full',
                     )}
                   >
