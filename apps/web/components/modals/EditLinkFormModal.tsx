@@ -49,7 +49,10 @@ export const EditLinkFormModal: React.FC<EditLinkFormModalProps> = ({
         onSubmit={async ({ title, description, url }) => {
           const updatedLinks = links.map((l) => {
             if (l.linkId === linkId) {
-              ;(l.title = title), (l.description = description), (l.url = url)
+              ;(l.title = title),
+                (l.description = description),
+                (l.url = url),
+                (l.status = 'edited')
             }
             return l
           })

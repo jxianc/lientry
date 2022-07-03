@@ -13,13 +13,16 @@ const setTreeInfoAtom = atom(
   (_get, set, treeInfo: TreeInfo | null) => set(treeInfoAtom, treeInfo),
 )
 
-type LinkStatus = 'original' | 'added' | 'edited' | 'deleted'
+type LinkInitialStatus = 'ori' | 'new'
+
+type LinkStatus = 'none' | 'added' | 'edited' | 'deleted'
 
 interface LinkAtom {
   linkId: string
   title: string
   description?: string | null
   url: string
+  initalStatus: LinkInitialStatus
   status: LinkStatus
 }
 
@@ -30,5 +33,5 @@ const setLinksAtom = atom(
   (_get, set, links: LinkAtom[]) => set(linksAtom, links),
 )
 
-export type { TreeInfo, LinkAtom, LinkStatus }
+export type { TreeInfo, LinkAtom, LinkInitialStatus, LinkStatus }
 export { treeInfoAtom, setTreeInfoAtom, linksAtom, setLinksAtom }

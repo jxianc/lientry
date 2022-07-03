@@ -126,7 +126,8 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
               title: l.title,
               description: l.description,
               url: l.url,
-              status: 'original',
+              initalStatus: 'ori',
+              status: 'none',
             } as LinkAtom
           }),
         )

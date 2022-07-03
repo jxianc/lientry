@@ -44,6 +44,7 @@ export const CreateLinkFormModal: React.FC<CreateLinkFormModalProps> = ({
               title,
               description,
               url,
+              initalStatus: 'new',
               status: 'added',
             },
           ])
