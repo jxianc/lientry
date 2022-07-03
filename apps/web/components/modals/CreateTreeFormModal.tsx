@@ -49,7 +49,7 @@ export const CreateTreeFormModal: React.FC<CreateTreeFormModalProps> = ({
             setBottomErrors(gqlErrorHandler(error.graphQLErrors))
           } else if (data && data.createTree.success) {
             // NOTE if the success field is true, there should be a treeId
-            router.push(`/create-tree/${data.createTree.tree!.id}`)
+            router.push(`/draft/${data.createTree.tree!.id}`)
           }
         }}
       >
