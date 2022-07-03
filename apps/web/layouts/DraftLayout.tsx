@@ -3,7 +3,9 @@ import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { FiSave, FiXCircle } from 'react-icons/fi'
 import { DraftCancelModal } from '../components/modals/DraftCancelModal'
-import { setLinksAtom } from '../lib/atom/draft-tree.atom'
+import { useEditLinksMutation } from '../generated/graphql'
+import { setLinksAtom, setTreeInfoAtom } from '../lib/atom/draft-tree.atom'
+import { saveLinks } from '../lib/save-links'
 
 interface DraftLayoutProps {
   children?: React.ReactNode
@@ -13,8 +15,12 @@ export const DraftLayout: React.FC<DraftLayoutProps> = ({ children }) => {
   // router
   const router = useRouter()
 
+  // edit links mutation
+  const [_, execEditLinks] = useEditLinksMutation()
+
   // jotai state
-  const [links, setLinks] = useAtom(setLinksAtom)
+  const [treeInfo, _setTreeInfo] = useAtom(setTreeInfoAtom)
+  const [links, _setLinks] = useAtom(setLinksAtom)
 
   // useState
   const [modalIsOpen, setModalIsOpen] = useState(false)
@@ -47,7 +53,35 @@ export const DraftLayout: React.FC<DraftLayoutProps> = ({ children }) => {
                 <FiXCircle />
                 <span>cancel</span>
               </button>
-              <button className="bg-li-gray-100 dark:bg-li-gray-1400 hover:bg-li-gray-200 dark:hover:bg-li-gray-1300 px-3 py-1 rounded-[0.3rem] text-base font-semibold inline-flex items-center space-x-1">
+              <button
+                className="bg-li-gray-100 dark:bg-li-gray-1400 hover:bg-li-gray-200 dark:hover:bg-li-gray-1300 px-3 py-1 rounded-[0.3rem] text-base font-semibold inline-flex items-center space-x-1"
+                onClick={async () => {
+                  console.log('save draft', saveLinks(links))
+                  const editLinksArgs = saveLinks(links)
+
+                  if (
+                    treeInfo &&
+                    treeInfo.id &&
+                    (editLinksArgs.creates?.length ||
+                      editLinksArgs.updates?.length ||
+                      editLinksArgs.removes?.length)
+                  ) {
+                    const { data, error } = await execEditLinks({
+                      curLinksInput: saveLinks(links),
+                      treeId: treeInfo.id,
+                    })
+                    console.log('response', data)
+                    console.log('error', error)
+
+                    if (data && data.EditLinks && data.EditLinks.success) {
+                      // TODO invalidate graphql cache
+                      router.back()
+                    }
+
+                    // TODO handle error
+                  }
+                }}
+              >
                 <FiSave />
                 <span>save</span>
               </button>

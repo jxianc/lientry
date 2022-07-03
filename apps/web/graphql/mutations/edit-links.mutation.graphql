@@ -1,0 +1,9 @@
+mutation EditLinks($curLinksInput: EditLinksInput!, $treeId: String!) {
+  EditLinks(CURLinksInput: $curLinksInput, treeId: $treeId) {
+    success
+    errMsg
+    links {
+      id
+    }
+  }
+}
