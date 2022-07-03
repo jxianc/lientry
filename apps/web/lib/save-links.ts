@@ -12,13 +12,13 @@ const saveLinks = (links: LinkAtom[]): EditLinksInput => {
   const removes: RemoveLinkInput[] = []
 
   for (const link of links) {
-    if (link.initalStatus === 'new' && link.status !== 'deleted') {
+    if (link.initialStatus === 'new' && link.status !== 'deleted') {
       creates.push({
         title: link.title,
         description: link.description,
         url: link.url,
       })
-    } else if (link.initalStatus === 'ori') {
+    } else if (link.initialStatus === 'ori') {
       if (link.status === 'edited') {
         updates.push({
           linkId: link.linkId,

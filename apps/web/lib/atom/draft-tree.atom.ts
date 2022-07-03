@@ -24,7 +24,7 @@ interface LinkAtom {
   title: string
   description?: string | null
   url: string
-  initalStatus: LinkInitialStatus
+  initialStatus: LinkInitialStatus
   status: LinkStatus
 }
 

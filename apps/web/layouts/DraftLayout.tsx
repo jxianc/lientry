@@ -41,7 +41,7 @@ export const DraftLayout: React.FC<DraftLayoutProps> = ({ children }) => {
                 className="bg-li-gray-100 dark:bg-li-gray-1400 hover:bg-li-gray-200 dark:hover:bg-li-gray-1300 px-3 py-1 rounded-[0.3rem] text-base font-semibold inline-flex items-center space-x-1"
                 onClick={() => {
                   const newLinks = links.filter(
-                    (l) => l.initalStatus === 'new' || l.status !== 'none',
+                    (l) => l.initialStatus === 'new' || l.status !== 'none',
                   )
                   if (newLinks.length > 0) {
                     setModalIsOpen(true)
