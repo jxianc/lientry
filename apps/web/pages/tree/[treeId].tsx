@@ -5,6 +5,7 @@ import { LinkCard } from '../../components/cards/LinkCard'
 import { TreeCard } from '../../components/cards/TreeCard'
 import { useGetTreeByIdQuery } from '../../generated/graphql'
 import { MainLayout } from '../../layouts/MainLayout'
+import { BiEditAlt } from 'react-icons/bi'
 
 interface TreeProps {}
 
@@ -55,6 +56,16 @@ const Tree: NextPage<TreeProps> = ({}) => {
   return (
     <MainLayout>
       <div className="mt-4 space-y-6">
+        {/* TODO this button should only be shown it to the author */}
+        <button
+          className="bg-li-gray-100 dark:bg-li-gray-1400 hover:bg-li-gray-200 dark:hover:bg-li-gray-1300 px-4 py-1.5 rounded-[0.3rem] text-sm font-semibold flex items-center space-x-1"
+          onClick={() => {
+            router.push(`/draft/${treeId}`)
+          }}
+        >
+          <BiEditAlt />
+          <span>Edit tree</span>
+        </button>
         {treeElement}
         {linkElements && linkElements.length > 0 ? (
           <div className="grid grid-cols-2 gap-4">{linkElements}</div>
