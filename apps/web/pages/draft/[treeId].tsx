@@ -135,9 +135,12 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
     }
   }, [data])
 
+  // set link draft cards
   useEffect(() => {
+    const filteredLinks = links.filter((l) => l.status !== 'deleted')
+
     setLinkElements(
-      links.map((l, idx) => (
+      filteredLinks.map((l, idx) => (
         <LinkDraftCard
           key={`lk-${idx}`}
           linkId={l.linkId || idx.toString()}

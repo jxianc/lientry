@@ -48,6 +48,7 @@ export const LinkDraftCard: React.FC<LinkDraftCardProps> = ({
         <DeleteLinkModal
           modalIsOpen={deleteLinkModalIsOpen}
           setModalIsOpen={setDeleteLinkModalIsOpen}
+          linkId={linkId}
         />
         <Dropdown
           component={DropdownComponent.ICON}
