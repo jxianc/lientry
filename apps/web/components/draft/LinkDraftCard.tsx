@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { FiMoreVertical } from 'react-icons/fi'
 import { LinkStatus } from '../../lib/atom/draft-tree.atom'
 import { Dropdown, DropdownAction, DropdownComponent } from '../Dropdown'
+import { DeleteLinkModal } from '../modals/DeleteLinkModal'
 import { EditLinkFormModal } from '../modals/EditLinkFormModal'
 
 interface LinkDraftCardProps {
@@ -19,7 +20,8 @@ export const LinkDraftCard: React.FC<LinkDraftCardProps> = ({
   description,
   url,
 }) => {
-  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [editLinkModalIsOpen, setEditLinkModalIsOpen] = useState(false)
+  const [deleteLinkModalIsOpen, setDeleteLinkModalIsOpen] = useState(false)
 
   return (
     <div className="h-full p-4 w-full ml-auto rounded-[0.3rem] bg-li-gray-100 dark:bg-li-gray-1400">
@@ -40,8 +42,12 @@ export const LinkDraftCard: React.FC<LinkDraftCardProps> = ({
           title={title}
           description={description}
           url={url}
-          modalIsOpen={modalIsOpen}
-          setModalIsOpen={setModalIsOpen}
+          modalIsOpen={editLinkModalIsOpen}
+          setModalIsOpen={setEditLinkModalIsOpen}
+        />
+        <DeleteLinkModal
+          modalIsOpen={deleteLinkModalIsOpen}
+          setModalIsOpen={setDeleteLinkModalIsOpen}
         />
         <Dropdown
           component={DropdownComponent.ICON}
@@ -61,14 +67,14 @@ export const LinkDraftCard: React.FC<LinkDraftCardProps> = ({
               title: 'Edit',
               action: DropdownAction.BUTTON,
               clickHandler: async () => {
-                setModalIsOpen(true)
+                setEditLinkModalIsOpen(true)
               },
             },
             {
               title: 'Delete',
               action: DropdownAction.BUTTON,
               clickHandler: async () => {
-                console.log('clicked dropdown')
+                setDeleteLinkModalIsOpen(true)
               },
             },
           ]}
