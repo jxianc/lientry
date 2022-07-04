@@ -3,8 +3,8 @@ query GetTreeById($treeId: String!) {
     id
     name
     description
-    isPublic
     viewed
+    isPublic
     createdAt
     updatedAt
     user {

@@ -2,6 +2,11 @@ import { devtoolsExchange } from '@urql/devtools'
 import { authExchange } from '@urql/exchange-auth'
 import { Cache, cacheExchange, QueryInput } from '@urql/exchange-graphcache'
 import { createClient, dedupExchange, fetchExchange } from 'urql'
+import {
+  EditLinksMutation,
+  GetTreeByIdDocument,
+  GetTreeByIdQuery,
+} from '../../generated/graphql'
 // import { LogoutMutation, MeDocument, MeQuery } from '../../generated/graphql'
 import { authExchangeConfig } from './auth-exchange.config'
 
@@ -30,7 +35,7 @@ export const client = createClient({
             cache.invalidate('Query', 'getRecentTrees')
             cache.invalidate('Query', 'getTrendingTrees')
           },
-          logout(_result, _args, cache, _info) {
+          logout(_result, _args, _cache, _info) {
             // customUpdateQuery<LogoutMutation, MeQuery>(
             //   cache,
             //   { query: MeDocument },
@@ -43,6 +48,23 @@ export const client = createClient({
             // )
             // cache.invalidate('Query', 'getRecentTrees')
             // cache.invalidate('Query', 'getTrendingTrees')
+          },
+          EditLinks(_result, _args, cache, _info) {
+            customUpdateQuery<EditLinksMutation, GetTreeByIdQuery>(
+              cache,
+              {
+                query: GetTreeByIdDocument,
+              },
+              _result,
+              (res, q) => {
+                return {
+                  // NOTE if the response.success is true, the tree exists
+                  getTreeById: res.EditLinks.success
+                    ? res.EditLinks.tree!
+                    : q.getTreeById,
+                }
+              },
+            )
           },
         },
       },

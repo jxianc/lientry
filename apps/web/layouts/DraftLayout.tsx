@@ -56,29 +56,34 @@ export const DraftLayout: React.FC<DraftLayoutProps> = ({ children }) => {
               <button
                 className="bg-li-gray-100 dark:bg-li-gray-1400 hover:bg-li-gray-200 dark:hover:bg-li-gray-1300 px-3 py-1 rounded-[0.3rem] text-base font-semibold inline-flex items-center space-x-1"
                 onClick={async () => {
-                  console.log('save draft', saveLinks(links))
                   const editLinksArgs = saveLinks(links)
 
                   if (
-                    treeInfo &&
-                    treeInfo.id &&
-                    (editLinksArgs.creates?.length ||
-                      editLinksArgs.updates?.length ||
-                      editLinksArgs.removes?.length)
+                    editLinksArgs.creates?.length ||
+                    editLinksArgs.updates?.length ||
+                    editLinksArgs.removes?.length
                   ) {
+                    // there are args to call mutation
+
+                    if (!(treeInfo && treeInfo.id)) {
+                      // TODO no tree id, should throw an error here
+                      console.error('no tree id')
+                      return
+                    }
+
                     const { data, error } = await execEditLinks({
                       curLinksInput: saveLinks(links),
                       treeId: treeInfo.id,
                     })
-                    console.log('response', data)
-                    console.log('error', error)
 
                     if (data && data.EditLinks && data.EditLinks.success) {
-                      // TODO invalidate graphql cache
                       router.back()
                     }
 
                     // TODO handle error
+                  } else {
+                    // no args
+                    router.back()
                   }
                 }}
               >

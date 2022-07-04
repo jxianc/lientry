@@ -153,9 +153,6 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
     )
   }, [links])
 
-  console.log('treeInfo', treeInfo)
-  console.log('links', links)
-
   return (
     <DraftLayout>
       <div className="mt-4 space-y-8">

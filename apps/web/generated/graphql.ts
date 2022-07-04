@@ -64,8 +64,8 @@ export type EditLinksInput = {
 export type EditLinksResponse = {
   __typename?: 'EditLinksResponse'
   errMsg?: Maybe<Scalars['String']>
-  links?: Maybe<Array<LinkEntity>>
   success: Scalars['Boolean']
+  tree?: Maybe<TreeEntity>
 }
 
 export type LinkEntity = {
@@ -244,7 +244,29 @@ export type EditLinksMutation = {
     __typename?: 'EditLinksResponse'
     success: boolean
     errMsg?: string | null
-    links?: Array<{ __typename?: 'LinkEntity'; id: string }> | null
+    tree?: {
+      __typename?: 'TreeEntity'
+      id: string
+      name: string
+      description?: string | null
+      viewed: number
+      isPublic: boolean
+      createdAt: any
+      updatedAt: any
+      user: {
+        __typename?: 'UserEntity'
+        id: string
+        name?: string | null
+        image?: string | null
+      }
+      links?: Array<{
+        __typename?: 'LinkEntity'
+        id: string
+        title: string
+        description?: string | null
+        url: string
+      }> | null
+    } | null
   }
 }
 
@@ -313,8 +335,8 @@ export type GetTreeByIdQuery = {
     id: string
     name: string
     description?: string | null
-    isPublic: boolean
     viewed: number
+    isPublic: boolean
     createdAt: any
     updatedAt: any
     user: {
@@ -405,8 +427,25 @@ export const EditLinksDocument = gql`
     EditLinks(CURLinksInput: $curLinksInput, treeId: $treeId) {
       success
       errMsg
-      links {
+      tree {
         id
+        name
+        description
+        viewed
+        isPublic
+        createdAt
+        updatedAt
+        user {
+          id
+          name
+          image
+        }
+        links {
+          id
+          title
+          description
+          url
+        }
       }
     }
   }
@@ -491,8 +530,8 @@ export const GetTreeByIdDocument = gql`
       id
       name
       description
-      isPublic
       viewed
+      isPublic
       createdAt
       updatedAt
       user {

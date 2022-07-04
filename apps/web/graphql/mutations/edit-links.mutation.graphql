@@ -2,8 +2,25 @@ mutation EditLinks($curLinksInput: EditLinksInput!, $treeId: String!) {
   EditLinks(CURLinksInput: $curLinksInput, treeId: $treeId) {
     success
     errMsg
-    links {
+    tree {
       id
+      name
+      description
+      viewed
+      isPublic
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        image
+      }
+      links {
+        id
+        title
+        description
+        url
+      }
     }
   }
 }
