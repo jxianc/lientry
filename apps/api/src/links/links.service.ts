@@ -36,7 +36,7 @@ export class LinksService {
     }
     return {
       success: true,
-      links: newLinks,
+      // links: newLinks,
     }
   }
 
@@ -57,7 +57,7 @@ export class LinksService {
     }
     return {
       success: true,
-      links: newLinks,
+      // links: newLinks,
     }
   }
 

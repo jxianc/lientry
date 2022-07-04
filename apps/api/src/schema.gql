@@ -44,8 +44,8 @@ input EditLinksInput {
 
 type EditLinksResponse {
   errMsg: String
-  links: [LinkEntity!]
   success: Boolean!
+  tree: TreeEntity
 }
 
 type LinkEntity {
