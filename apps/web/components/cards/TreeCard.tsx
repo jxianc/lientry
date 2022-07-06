@@ -8,6 +8,7 @@ import { TreeCardLayout } from './TreeCardLayout'
 import { IoLink, IoEye } from 'react-icons/io5'
 import { IconType } from 'react-icons/lib'
 
+// stats badge component
 interface StatsBadgeProps {
   label: string
   count: number
@@ -20,17 +21,31 @@ export const StatsBadge: React.FC<StatsBadgeProps> = ({
   Icon,
 }) => {
   return (
-    <div className="flex divide-x divide-li-gray-700 dark:divide-li-gray-500 border border-li-gray-700 dark:border-li-gray-500 rounded-[0.2rem] text-xs overflow-hidden">
-      <div className="flex space-x-1 justify-center text-center items-center px-1 bg-li-gray-700 dark:bg-li-gray-500 text-white dark:text-li-gray-1400">
+    <div className="flex divide-x divide-li-gray-400 dark:divide-li-gray-1200 border border-li-gray-600 dark:border-li-gray-900 rounded-[0.2rem] text-xs overflow-hidden">
+      <div className="flex space-x-1 justify-center text-center items-center px-1 bg-li-gray-200 dark:bg-li-gray-1200 dark:text-li-gray-500 text-li-gray-1100">
         <Icon />
         <span>{label}</span>
       </div>
-      <div className="text-center justify-center items-center flex px-1 text-li-gray-700 dark:bg-li-gray-1400">
+      <div className="text-center justify-center items-center flex px-1">
         {count}
       </div>
     </div>
   )
 }
+
+interface DateBadgeProps {
+  date: string
+}
+
+export const DateBadge: React.FC<DateBadgeProps> = ({ date }) => {
+  return (
+    <div className="flex px-1 text-center items-center justify-center border border-li-gray-600 dark:border-li-gray-900 rounded-[0.2rem] text-xs overflow-hidden">
+      {date}
+    </div>
+  )
+}
+
+// tree card component (main)
 
 interface TreeCardProps {
   treeId: string
@@ -111,7 +126,7 @@ export const TreeCard: React.FC<TreeCardProps> = ({
         <div className="flex flex-row text-sm space-x-4 text-li-gray-1100 dark:text-li-gray-700">
           <StatsBadge label="views" count={viewed} Icon={IoEye} />
           <StatsBadge label="links" count={numOfLinks} Icon={IoLink} />
-          <div>{formatDate(createdAt)}</div>
+          <DateBadge date={formatDate(createdAt)} />
         </div>
       </div>
     </TreeCardLayout>
