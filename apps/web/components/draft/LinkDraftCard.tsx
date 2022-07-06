@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { FiMoreVertical } from 'react-icons/fi'
 import { LinkStatus } from '../../lib/atom/draft-tree.atom'
+import { LinkCardLayout } from '../cards/LinkCardLayout'
 import { Dropdown, DropdownAction, DropdownComponent } from '../Dropdown'
 import { DeleteLinkModal } from '../modals/DeleteLinkModal'
 import { EditLinkFormModal } from '../modals/EditLinkFormModal'
@@ -24,7 +25,7 @@ export const LinkDraftCard: React.FC<LinkDraftCardProps> = ({
   const [deleteLinkModalIsOpen, setDeleteLinkModalIsOpen] = useState(false)
 
   return (
-    <div className="h-full p-4 w-full ml-auto rounded-[0.3rem] bg-li-gray-100 dark:bg-li-gray-1400">
+    <LinkCardLayout isClickable={false}>
       <div className="flex flex-row justify-between">
         <div className="space-y-2">
           <h5 className="font-semibold text-base leading-tight">
@@ -81,6 +82,6 @@ export const LinkDraftCard: React.FC<LinkDraftCardProps> = ({
           ]}
         />
       </div>
-    </div>
+    </LinkCardLayout>
   )
 }
