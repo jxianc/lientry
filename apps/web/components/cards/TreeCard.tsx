@@ -5,6 +5,32 @@ import Image from 'next/image'
 import { formatDate } from '../../lib/date'
 import { useRouter } from 'next/router'
 import { TreeCardLayout } from './TreeCardLayout'
+import { IoLink, IoEye } from 'react-icons/io5'
+import { IconType } from 'react-icons/lib'
+
+interface StatsBadgeProps {
+  label: string
+  count: number
+  Icon: IconType
+}
+
+export const StatsBadge: React.FC<StatsBadgeProps> = ({
+  label,
+  count,
+  Icon,
+}) => {
+  return (
+    <div className="flex divide-x divide-li-gray-700 dark:divide-li-gray-500 border border-li-gray-700 dark:border-li-gray-500 rounded-[0.2rem] text-xs overflow-hidden">
+      <div className="flex space-x-1 justify-center text-center items-center px-1 bg-li-gray-700 dark:bg-li-gray-500 text-white dark:text-li-gray-1400">
+        <Icon />
+        <span>{label}</span>
+      </div>
+      <div className="text-center justify-center items-center flex px-1 text-li-gray-700 dark:bg-li-gray-1400">
+        {count}
+      </div>
+    </div>
+  )
+}
 
 interface TreeCardProps {
   treeId: string
@@ -83,8 +109,8 @@ export const TreeCard: React.FC<TreeCardProps> = ({
           </a>
         </NextLink>
         <div className="flex flex-row text-sm space-x-4 text-li-gray-1100 dark:text-li-gray-700">
-          <div>{`${viewed} viewed`}</div>
-          <div>{`${numOfLinks} links`}</div>
+          <StatsBadge label="views" count={viewed} Icon={IoEye} />
+          <StatsBadge label="links" count={numOfLinks} Icon={IoLink} />
           <div>{formatDate(createdAt)}</div>
         </div>
       </div>
