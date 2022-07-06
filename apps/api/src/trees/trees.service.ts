@@ -47,9 +47,14 @@ export class TreesService {
       },
       include: {
         user: true,
-        links: true,
+        links: {
+          orderBy: {
+            createdAt: 'asc',
+          },
+        },
       },
     })
+    console.log(tree)
     if (!tree) {
       throw new NotFoundException('tree is not found')
     }
@@ -65,7 +70,11 @@ export class TreesService {
         },
         include: {
           user: true,
-          links: true,
+          links: {
+            orderBy: {
+              createdAt: 'asc',
+            },
+          },
         },
       })
       return updatedTree
