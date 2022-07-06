@@ -54,7 +54,6 @@ export class TreesService {
         },
       },
     })
-    console.log(tree)
     if (!tree) {
       throw new NotFoundException('tree is not found')
     }
