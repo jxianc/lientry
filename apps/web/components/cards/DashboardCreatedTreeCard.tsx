@@ -1,5 +1,5 @@
 import React from 'react'
-import { TreeCardLayout } from './TreeCardLayout'
+import { TreeCardLayout } from './layouts/TreeCardLayout'
 import NextLink from 'next/link'
 import { Dropdown, DropdownAction, DropdownComponent } from '../Dropdown'
 import { BsThreeDots } from 'react-icons/bs'

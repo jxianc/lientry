@@ -3,8 +3,8 @@ import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { FiMoreVertical } from 'react-icons/fi'
-import { TreeCardLayout } from '../../components/cards/TreeCardLayout'
-import { LinkDraftCard } from '../../components/draft/LinkDraftCard'
+import { TreeCardLayout } from '../../components/cards/layouts/TreeCardLayout'
+import { LinkDraftCard } from '../../components/cards/draft/LinkDraftCard'
 import {
   Dropdown,
   DropdownAction,

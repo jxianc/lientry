@@ -4,7 +4,7 @@ import NextLink from 'next/link'
 import Image from 'next/image'
 import { formatDate } from '../../lib/date'
 import { useRouter } from 'next/router'
-import { TreeCardLayout } from './TreeCardLayout'
+import { TreeCardLayout } from './layouts/TreeCardLayout'
 import { IoLink, IoEye } from 'react-icons/io5'
 import { IconType } from 'react-icons/lib'
 

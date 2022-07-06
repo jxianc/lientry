@@ -1,5 +1,5 @@
 import React from 'react'
-import { cn } from '../../lib/classname'
+import { cn } from '../../../lib/classname'
 
 interface LinkCardLayoutProps {
   children?: React.ReactNode

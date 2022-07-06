@@ -3,7 +3,7 @@ import React from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { VscCopy } from 'react-icons/vsc'
 import { cn } from '../../lib/classname'
-import { LinkCardLayout } from './LinkCardLayout'
+import { LinkCardLayout } from './layouts/LinkCardLayout'
 
 interface LinkCardProps {
   title: string

@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { FiMoreVertical } from 'react-icons/fi'
-import { LinkStatus } from '../../lib/atom/draft-tree.atom'
-import { LinkCardLayout } from '../cards/LinkCardLayout'
-import { Dropdown, DropdownAction, DropdownComponent } from '../Dropdown'
-import { DeleteLinkModal } from '../modals/DeleteLinkModal'
-import { EditLinkFormModal } from '../modals/EditLinkFormModal'
+import { LinkStatus } from '../../../lib/atom/draft-tree.atom'
+import { LinkCardLayout } from '../layouts/LinkCardLayout'
+import { Dropdown, DropdownAction, DropdownComponent } from '../../Dropdown'
+import { DeleteLinkModal } from '../../modals/DeleteLinkModal'
+import { EditLinkFormModal } from '../../modals/EditLinkFormModal'
 
 interface LinkDraftCardProps {
   linkId: string

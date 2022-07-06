@@ -3,7 +3,7 @@ import { BsThreeDots } from 'react-icons/bs'
 import { Dropdown, DropdownComponent, DropdownAction } from '../Dropdown'
 import NextLink from 'next/link'
 import Image from 'next/image'
-import { TreeCardLayout } from './TreeCardLayout'
+import { TreeCardLayout } from './layouts/TreeCardLayout'
 
 interface DashboardSavedTreeCardProps {}
 
