@@ -20,8 +20,10 @@ import {
 } from '../../lib/atom/draft-tree.atom'
 import { formatDate } from '../../lib/date'
 import { EditTreeFormModal } from '../../components/modals/EditTreeFormModal'
+import { DeleteTreeModal } from '../../components/modals/DeleteTreeModal'
 
 interface TreeInfoCardProps {
+  treeId: string
   title: string
   description?: string | null
   numOfLinks: number
@@ -29,12 +31,14 @@ interface TreeInfoCardProps {
 }
 
 export const TreeInfoCard: React.FC<TreeInfoCardProps> = ({
+  treeId,
   title,
   description,
   numOfLinks,
   createdAt,
 }) => {
-  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [editModalIsOpen, setEditModalIsOpen] = useState(false)
+  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false)
 
   return (
     <TreeCardLayout>
@@ -48,10 +52,15 @@ export const TreeInfoCard: React.FC<TreeInfoCardProps> = ({
           )}
         </div>
         <EditTreeFormModal
-          modalIsOpen={modalIsOpen}
-          setModalIsOpen={setModalIsOpen}
+          modalIsOpen={editModalIsOpen}
+          setModalIsOpen={setEditModalIsOpen}
           title={title}
           description={description}
+        />
+        <DeleteTreeModal
+          modalIsOpen={deleteModalIsOpen}
+          setModalIsOpen={setDeleteModalIsOpen}
+          treeId={treeId}
         />
         <Dropdown
           component={DropdownComponent.ICON}
@@ -61,14 +70,14 @@ export const TreeInfoCard: React.FC<TreeInfoCardProps> = ({
               title: 'Edit',
               action: DropdownAction.BUTTON,
               clickHandler: () => {
-                setModalIsOpen(true)
+                setEditModalIsOpen(true)
               },
             },
             {
               title: 'Delete',
               action: DropdownAction.BUTTON,
               clickHandler: async () => {
-                console.log('clicked dropdown')
+                setDeleteModalIsOpen(true)
               },
             },
           ]}
@@ -120,6 +129,7 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
       // treeInfo card
       const tree = (
         <TreeInfoCard
+          treeId={t.id}
           title={t.name}
           description={t.description}
           numOfLinks={t.links?.length || 0}
