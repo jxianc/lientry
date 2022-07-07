@@ -29,7 +29,7 @@ export const DraftLayout: React.FC<DraftLayoutProps> = ({ children }) => {
     <div className="bg-white dark:bg-li-gray-1500">
       <div className="max-w-4xl mx-auto w-full min-h-screen">
         <div className="flex flex-col justify-center">
-          <main className="p-4 pb-8 mt-10 border-2 border-li-gray-200 dark:border-li-gray-1300 rounded-md">
+          <main className="p-4 pb-8 mt-10 border border-li-gray-200 dark:border-li-gray-1300 rounded-md">
             <div className="px-2 font-bold text-xl">Draft</div>
             <DraftCancelModal
               modalIsOpen={modalIsOpen}
