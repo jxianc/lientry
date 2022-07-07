@@ -19,6 +19,7 @@ import {
   setTreeInfoAtom,
 } from '../../lib/atom/draft-tree.atom'
 import { formatDate } from '../../lib/date'
+import { EditTreeFormModal } from '../../components/modals/EditTreeFormModal'
 
 interface TreeInfoCardProps {
   title: string
@@ -33,6 +34,8 @@ export const TreeInfoCard: React.FC<TreeInfoCardProps> = ({
   numOfLinks,
   createdAt,
 }) => {
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+
   return (
     <TreeCardLayout>
       <div className="flex flex-row justify-between">
@@ -44,14 +47,22 @@ export const TreeInfoCard: React.FC<TreeInfoCardProps> = ({
             </p>
           )}
         </div>
+        <EditTreeFormModal
+          modalIsOpen={modalIsOpen}
+          setModalIsOpen={setModalIsOpen}
+          title={title}
+          description={description}
+        />
         <Dropdown
           component={DropdownComponent.ICON}
           Icon={FiMoreVertical}
           dropdownItems={[
             {
               title: 'Edit',
-              action: DropdownAction.EXTERNAL_LINK,
-              href: '/#',
+              action: DropdownAction.BUTTON,
+              clickHandler: () => {
+                setModalIsOpen(true)
+              },
             },
             {
               title: 'Delete',
