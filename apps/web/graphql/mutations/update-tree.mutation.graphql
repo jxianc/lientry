@@ -1,0 +1,34 @@
+mutation UpdateTree(
+  $curLinksInput: EditLinksInput!
+  $treeId: String!
+  $updateTreeInfoInput: UpdateTreeInfoInput!
+) {
+  updateTree(
+    CURLinksInput: $curLinksInput
+    treeId: $treeId
+    updateTreeInfoInput: $updateTreeInfoInput
+  ) {
+    success
+    errMsg
+    tree {
+      id
+      name
+      description
+      viewed
+      isPublic
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        image
+      }
+      links {
+        id
+        title
+        description
+        url
+      }
+    }
+  }
+}

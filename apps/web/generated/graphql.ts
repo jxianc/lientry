@@ -118,8 +118,9 @@ export type MutationRemoveTreeArgs = {
 }
 
 export type MutationUpdateTreeArgs = {
+  CURLinksInput: EditLinksInput
   treeId: Scalars['String']
-  updateTreeInput: UpdateTreeInput
+  updateTreeInfoInput: UpdateTreeInfoInput
 }
 
 export type ProviderEntity = {
@@ -186,7 +187,7 @@ export type UpdateLinkInput = {
   url?: InputMaybe<Scalars['String']>
 }
 
-export type UpdateTreeInput = {
+export type UpdateTreeInfoInput = {
   description?: InputMaybe<Scalars['String']>
   isPublic?: InputMaybe<Scalars['Boolean']>
   name?: InputMaybe<Scalars['String']>
@@ -297,6 +298,44 @@ export type RefreshTokenMutation = {
     success: boolean
     accessToken?: string | null
     errMsg?: string | null
+  }
+}
+
+export type UpdateTreeMutationVariables = Exact<{
+  curLinksInput: EditLinksInput
+  treeId: Scalars['String']
+  updateTreeInfoInput: UpdateTreeInfoInput
+}>
+
+export type UpdateTreeMutation = {
+  __typename?: 'Mutation'
+  updateTree: {
+    __typename?: 'UpdateTreeResponse'
+    success: boolean
+    errMsg?: string | null
+    tree?: {
+      __typename?: 'TreeEntity'
+      id: string
+      name: string
+      description?: string | null
+      viewed: number
+      isPublic: boolean
+      createdAt: any
+      updatedAt: any
+      user: {
+        __typename?: 'UserEntity'
+        id: string
+        name?: string | null
+        image?: string | null
+      }
+      links?: Array<{
+        __typename?: 'LinkEntity'
+        id: string
+        title: string
+        description?: string | null
+        url: string
+      }> | null
+    } | null
   }
 }
 
@@ -493,6 +532,48 @@ export const RefreshTokenDocument = gql`
 export function useRefreshTokenMutation() {
   return Urql.useMutation<RefreshTokenMutation, RefreshTokenMutationVariables>(
     RefreshTokenDocument,
+  )
+}
+export const UpdateTreeDocument = gql`
+  mutation UpdateTree(
+    $curLinksInput: EditLinksInput!
+    $treeId: String!
+    $updateTreeInfoInput: UpdateTreeInfoInput!
+  ) {
+    updateTree(
+      CURLinksInput: $curLinksInput
+      treeId: $treeId
+      updateTreeInfoInput: $updateTreeInfoInput
+    ) {
+      success
+      errMsg
+      tree {
+        id
+        name
+        description
+        viewed
+        isPublic
+        createdAt
+        updatedAt
+        user {
+          id
+          name
+          image
+        }
+        links {
+          id
+          title
+          description
+          url
+        }
+      }
+    }
+  }
+`
+
+export function useUpdateTreeMutation() {
+  return Urql.useMutation<UpdateTreeMutation, UpdateTreeMutationVariables>(
+    UpdateTreeDocument,
   )
 }
 export const GetRecentTreesDocument = gql`
