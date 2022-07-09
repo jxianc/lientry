@@ -15,6 +15,7 @@ export class LinksResolver {
     private readonly treesService: TreesService,
   ) {}
 
+  // NOTE this might need to be removed, it is not used anymore
   @UseGuards(JwtGqlAuthGuard, TreeAuthorGuard)
   @Mutation(() => EditLinksResponse)
   async EditLinks(

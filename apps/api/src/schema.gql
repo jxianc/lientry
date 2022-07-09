@@ -71,7 +71,7 @@ type Mutation {
   refreshToken: AuthResponse!
   register(registerUserInput: RegisterUserInput!): AuthResponse!
   removeTree(treeId: String!): BaseResponse!
-  updateTree(treeId: String!, updateTreeInput: UpdateTreeInput!): UpdateTreeResponse!
+  updateTree(CURLinksInput: EditLinksInput!, treeId: String!, updateTreeInfoInput: UpdateTreeInfoInput!): UpdateTreeResponse!
 }
 
 type ProviderEntity {
@@ -119,7 +119,7 @@ input UpdateLinkInput {
   url: String
 }
 
-input UpdateTreeInput {
+input UpdateTreeInfoInput {
   description: String
   isPublic: Boolean
   name: String

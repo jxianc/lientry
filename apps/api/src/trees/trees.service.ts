@@ -4,7 +4,7 @@ import { BaseResponse } from '../base/base.response'
 import { PrismaService } from '../prisma.service'
 import { CreateTreeInput } from './dto/create-tree.input'
 import { CreateTreeResponse } from './dto/create-tree.response'
-import { UpdateTreeInput } from './dto/update-tree.input'
+import { UpdateTreeInfoInput } from './dto/update-tree.input'
 import { UpdateTreeResponse } from './dto/update-tree.response'
 
 @Injectable()
@@ -141,7 +141,7 @@ export class TreesService {
   }
 
   async updateTree(
-    { name, description, isPublic }: UpdateTreeInput,
+    { name, description, isPublic }: UpdateTreeInfoInput,
     treeId: string,
   ): Promise<UpdateTreeResponse> {
     const tree = await this.getTreeById(treeId, true)
@@ -153,9 +153,9 @@ export class TreesService {
           id: tree?.id,
         },
         data: {
-          name,
-          description,
-          isPublic,
+          name: name || undefined,
+          description: description || undefined,
+          isPublic: isPublic || undefined,
         },
         include: {
           user: true,
