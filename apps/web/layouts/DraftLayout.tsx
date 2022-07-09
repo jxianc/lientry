@@ -3,8 +3,12 @@ import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { FiSave, FiXCircle } from 'react-icons/fi'
 import { DraftCancelModal } from '../components/modals/DraftCancelModal'
-import { useEditLinksMutation } from '../generated/graphql'
-import { setLinksAtom, setTreeInfoAtom } from '../lib/atom/draft-tree.atom'
+import { useUpdateTreeMutation } from '../generated/graphql'
+import {
+  setEditedTreeAtom,
+  setLinksAtom,
+  setTreeInfoAtom,
+} from '../lib/atom/draft-tree.atom'
 import { saveLinks } from '../lib/save-links'
 
 interface DraftLayoutProps {
@@ -15,12 +19,13 @@ export const DraftLayout: React.FC<DraftLayoutProps> = ({ children }) => {
   // router
   const router = useRouter()
 
-  // edit links mutation
-  const [_, execEditLinks] = useEditLinksMutation()
+  // update tree mutation
+  const [__, execUpdateTree] = useUpdateTreeMutation()
 
   // jotai state
   const [treeInfo, _setTreeInfo] = useAtom(setTreeInfoAtom)
   const [links, _setLinks] = useAtom(setLinksAtom)
+  const [editedTree, setEditedTree] = useAtom(setEditedTreeAtom)
 
   // useState
   const [modalIsOpen, setModalIsOpen] = useState(false)
@@ -40,10 +45,7 @@ export const DraftLayout: React.FC<DraftLayoutProps> = ({ children }) => {
               <button
                 className="bg-li-gray-100 dark:bg-li-gray-1400 hover:bg-li-gray-200 dark:hover:bg-li-gray-1300 px-3 py-1 rounded-[0.3rem] text-base font-semibold inline-flex items-center space-x-1"
                 onClick={() => {
-                  const newLinks = links.filter(
-                    (l) => l.initialStatus === 'new' || l.status !== 'none',
-                  )
-                  if (newLinks.length > 0) {
+                  if (editedTree) {
                     setModalIsOpen(true)
                   } else {
                     router.back()
@@ -56,33 +58,30 @@ export const DraftLayout: React.FC<DraftLayoutProps> = ({ children }) => {
               <button
                 className="bg-li-gray-100 dark:bg-li-gray-1400 hover:bg-li-gray-200 dark:hover:bg-li-gray-1300 px-3 py-1 rounded-[0.3rem] text-base font-semibold inline-flex items-center space-x-1"
                 onClick={async () => {
-                  const editLinksArgs = saveLinks(links)
-
-                  if (
-                    editLinksArgs.creates?.length ||
-                    editLinksArgs.updates?.length ||
-                    editLinksArgs.removes?.length
-                  ) {
-                    // there are args to call mutation
-
+                  if (editedTree) {
                     if (!(treeInfo && treeInfo.id)) {
                       // TODO no tree id, should throw an error here
                       console.error('no tree id')
                       return
                     }
 
-                    const { data, error } = await execEditLinks({
-                      curLinksInput: saveLinks(links),
+                    const { data, error } = await execUpdateTree({
                       treeId: treeInfo.id,
+                      updateTreeInfoInput: {
+                        name: treeInfo.title,
+                        description: treeInfo.description,
+                      },
+                      curLinksInput: saveLinks(links),
                     })
 
-                    if (data && data.EditLinks && data.EditLinks.success) {
+                    if (data && data.updateTree && data.updateTree.success) {
+                      setEditedTree(false)
                       router.back()
                     }
 
                     // TODO handle error
                   } else {
-                    // no args
+                    // tree is not edited, just go back
                     router.back()
                   }
                 }}

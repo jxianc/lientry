@@ -1,7 +1,10 @@
 import { Field, Form, Formik } from 'formik'
 import { useAtom } from 'jotai'
 import React, { useRef } from 'react'
-import { setTreeInfoAtom } from '../../lib/atom/draft-tree.atom'
+import {
+  setEditedTreeAtom,
+  setTreeInfoAtom,
+} from '../../lib/atom/draft-tree.atom'
 import { CreateTreeSchema } from '../../lib/input-validation'
 import { createTreeInputs } from '../../lib/inputs'
 import { InputField } from '../InputField'
@@ -22,6 +25,7 @@ export const EditTreeFormModal: React.FC<EditTreeFormModalProps> = ({
 }) => {
   // jotai state
   const [treeInfo, setTreeInfo] = useAtom(setTreeInfoAtom)
+  const [_, setEditedTree] = useAtom(setEditedTreeAtom)
 
   // useRef
   const cancelButtonRef = useRef(null)
@@ -44,6 +48,7 @@ export const EditTreeFormModal: React.FC<EditTreeFormModalProps> = ({
             title,
             description,
           }
+          setEditedTree(true)
           setTreeInfo(updatedTreeInfo)
           setModalIsOpen(false)
         }}

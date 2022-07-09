@@ -1,7 +1,11 @@
 import { Field, Form, Formik } from 'formik'
 import { useAtom } from 'jotai'
 import React, { useRef } from 'react'
-import { LinkStatus, setLinksAtom } from '../../lib/atom/draft-tree.atom'
+import {
+  LinkStatus,
+  setEditedTreeAtom,
+  setLinksAtom,
+} from '../../lib/atom/draft-tree.atom'
 import { CreateLinkSchema } from '../../lib/input-validation'
 import { createLinkInputs } from '../../lib/inputs'
 import { InputField } from '../InputField'
@@ -28,6 +32,7 @@ export const EditLinkFormModal: React.FC<EditLinkFormModalProps> = ({
 }) => {
   // jotai state
   const [links, setLinks] = useAtom(setLinksAtom)
+  const [_, setEditedTree] = useAtom(setEditedTreeAtom)
 
   // useRef
   const cancelButtonRef = useRef(null)
@@ -56,6 +61,7 @@ export const EditLinkFormModal: React.FC<EditLinkFormModalProps> = ({
             }
             return l
           })
+          setEditedTree(true)
           setLinks(updatedLinks)
           setModalIsOpen(false)
         }}

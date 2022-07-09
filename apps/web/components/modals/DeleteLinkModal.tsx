@@ -1,6 +1,6 @@
 import { useAtom } from 'jotai'
 import React, { useRef } from 'react'
-import { setLinksAtom } from '../../lib/atom/draft-tree.atom'
+import { setEditedTreeAtom, setLinksAtom } from '../../lib/atom/draft-tree.atom'
 import { BaseModal } from './BaseModal'
 
 interface DeleteLinkModalProps {
@@ -16,6 +16,7 @@ export const DeleteLinkModal: React.FC<DeleteLinkModalProps> = ({
 }) => {
   // jotai state
   const [links, setLinks] = useAtom(setLinksAtom)
+  const [_, setEditedTree] = useAtom(setEditedTreeAtom)
 
   // useRef
   const cancelButtonRef = useRef(null)
@@ -49,6 +50,7 @@ export const DeleteLinkModal: React.FC<DeleteLinkModalProps> = ({
               }
               return l
             })
+            setEditedTree(true)
             setLinks(updatedLinks)
             setModalIsOpen(false)
           }}

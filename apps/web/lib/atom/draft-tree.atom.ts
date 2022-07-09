@@ -36,5 +36,19 @@ const setLinksAtom = atom(
   (_get, set, links: LinkAtom[]) => set(linksAtom, links),
 )
 
+// edited tree info and links
+const editedTreeAtom = atom<boolean>(false)
+
+const setEditedTreeAtom = atom(
+  (get) => get(editedTreeAtom),
+  (_get, set, editedTree: boolean) => set(editedTreeAtom, editedTree),
+)
+
 export type { TreeInfo, LinkAtom, LinkInitialStatus, LinkStatus }
-export { treeInfoAtom, setTreeInfoAtom, linksAtom, setLinksAtom }
+export {
+  treeInfoAtom,
+  setTreeInfoAtom,
+  linksAtom,
+  setLinksAtom,
+  setEditedTreeAtom,
+}
