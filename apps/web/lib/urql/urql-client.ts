@@ -3,9 +3,9 @@ import { authExchange } from '@urql/exchange-auth'
 import { Cache, cacheExchange, QueryInput } from '@urql/exchange-graphcache'
 import { createClient, dedupExchange, fetchExchange } from 'urql'
 import {
-  EditLinksMutation,
   GetTreeByIdDocument,
   GetTreeByIdQuery,
+  UpdateTreeMutation,
 } from '../../generated/graphql'
 // import { LogoutMutation, MeDocument, MeQuery } from '../../generated/graphql'
 import { authExchangeConfig } from './auth-exchange.config'
@@ -49,8 +49,8 @@ export const client = createClient({
             // cache.invalidate('Query', 'getRecentTrees')
             // cache.invalidate('Query', 'getTrendingTrees')
           },
-          EditLinks(_result, _args, cache, _info) {
-            customUpdateQuery<EditLinksMutation, GetTreeByIdQuery>(
+          updateTree(_result, _args, cache, _info) {
+            customUpdateQuery<UpdateTreeMutation, GetTreeByIdQuery>(
               cache,
               {
                 query: GetTreeByIdDocument,
@@ -59,8 +59,8 @@ export const client = createClient({
               (res, q) => {
                 return {
                   // NOTE if the response.success is true, the tree exists
-                  getTreeById: res.EditLinks.success
-                    ? res.EditLinks.tree!
+                  getTreeById: res.updateTree.success
+                    ? res.updateTree.tree!
                     : q.getTreeById,
                 }
               },
