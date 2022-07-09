@@ -234,43 +234,6 @@ export type CreateTreeMutation = {
   }
 }
 
-export type EditLinksMutationVariables = Exact<{
-  curLinksInput: EditLinksInput
-  treeId: Scalars['String']
-}>
-
-export type EditLinksMutation = {
-  __typename?: 'Mutation'
-  EditLinks: {
-    __typename?: 'EditLinksResponse'
-    success: boolean
-    errMsg?: string | null
-    tree?: {
-      __typename?: 'TreeEntity'
-      id: string
-      name: string
-      description?: string | null
-      viewed: number
-      isPublic: boolean
-      createdAt: any
-      updatedAt: any
-      user: {
-        __typename?: 'UserEntity'
-        id: string
-        name?: string | null
-        image?: string | null
-      }
-      links?: Array<{
-        __typename?: 'LinkEntity'
-        id: string
-        title: string
-        description?: string | null
-        url: string
-      }> | null
-    } | null
-  }
-}
-
 export type LoginMutationVariables = Exact<{
   loginUserInput: LoginUserInput
 }>
@@ -459,40 +422,6 @@ export const CreateTreeDocument = gql`
 export function useCreateTreeMutation() {
   return Urql.useMutation<CreateTreeMutation, CreateTreeMutationVariables>(
     CreateTreeDocument,
-  )
-}
-export const EditLinksDocument = gql`
-  mutation EditLinks($curLinksInput: EditLinksInput!, $treeId: String!) {
-    EditLinks(CURLinksInput: $curLinksInput, treeId: $treeId) {
-      success
-      errMsg
-      tree {
-        id
-        name
-        description
-        viewed
-        isPublic
-        createdAt
-        updatedAt
-        user {
-          id
-          name
-          image
-        }
-        links {
-          id
-          title
-          description
-          url
-        }
-      }
-    }
-  }
-`
-
-export function useEditLinksMutation() {
-  return Urql.useMutation<EditLinksMutation, EditLinksMutationVariables>(
-    EditLinksDocument,
   )
 }
 export const LoginDocument = gql`
