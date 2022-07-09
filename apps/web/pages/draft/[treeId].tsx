@@ -124,19 +124,8 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
         id: t.id,
         title: t.name,
         description: t.description,
+        createdAt: t.createdAt,
       })
-
-      // treeInfo card
-      const tree = (
-        <TreeInfoCard
-          treeId={t.id}
-          title={t.name}
-          description={t.description}
-          numOfLinks={t.links?.length || 0}
-          createdAt={t.createdAt}
-        />
-      )
-      setTreeInfoElement(tree)
 
       if (t.links && t.links.length > 0) {
         // init link atom state
@@ -155,6 +144,23 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
       }
     }
   }, [data])
+
+  // set tree info cards
+  useEffect(() => {
+    if (treeInfo) {
+      const t = treeInfo
+      const tree = (
+        <TreeInfoCard
+          treeId={t.id}
+          title={t.title}
+          description={t.description}
+          numOfLinks={links.length}
+          createdAt={t.createdAt}
+        />
+      )
+      setTreeInfoElement(tree)
+    }
+  }, [treeInfo, links])
 
   // set link draft cards
   useEffect(() => {

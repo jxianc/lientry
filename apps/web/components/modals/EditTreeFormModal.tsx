@@ -1,5 +1,7 @@
 import { Field, Form, Formik } from 'formik'
+import { useAtom } from 'jotai'
 import React, { useRef } from 'react'
+import { setTreeInfoAtom } from '../../lib/atom/draft-tree.atom'
 import { CreateTreeSchema } from '../../lib/input-validation'
 import { createTreeInputs } from '../../lib/inputs'
 import { InputField } from '../InputField'
@@ -18,6 +20,9 @@ export const EditTreeFormModal: React.FC<EditTreeFormModalProps> = ({
   title,
   description,
 }) => {
+  // jotai state
+  const [treeInfo, setTreeInfo] = useAtom(setTreeInfoAtom)
+
   // useRef
   const cancelButtonRef = useRef(null)
 
@@ -34,7 +39,13 @@ export const EditTreeFormModal: React.FC<EditTreeFormModalProps> = ({
         }}
         validationSchema={CreateTreeSchema}
         onSubmit={async ({ title, description }) => {
-          console.log(title, description)
+          const updatedTreeInfo = {
+            ...treeInfo!, // NOTE this should be fine lol
+            title,
+            description,
+          }
+          setTreeInfo(updatedTreeInfo)
+          setModalIsOpen(false)
         }}
       >
         {() => (

@@ -5,6 +5,7 @@ interface TreeInfo {
   id: string
   title: string
   description?: string | null
+  createdAt: string
 }
 
 const treeInfoAtom = atom<TreeInfo | null>(null)
