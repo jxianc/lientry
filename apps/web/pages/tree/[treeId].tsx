@@ -6,21 +6,33 @@ import { TreeCard } from '../../components/cards/TreeCard'
 import { useGetTreeByIdQuery } from '../../generated/graphql'
 import { MainLayout } from '../../layouts/MainLayout'
 import { BiEditAlt } from 'react-icons/bi'
+import { useAtom } from 'jotai'
+import { currUserAtom } from '../../lib/atom/current-user.atom'
+import { cn } from '../../lib/classname'
 
 interface TreeProps {}
 
 const Tree: NextPage<TreeProps> = ({}) => {
+  // router
   const router = useRouter()
   const { treeId } = router.query
+
+  // jotai state
+  const [currUser] = useAtom(currUserAtom)
+
+  // query
   const [{ data }] = useGetTreeByIdQuery({
     variables: {
       treeId: treeId as string,
     },
     pause: !treeId,
   })
+
+  // useState
   const [treeElement, setTreeElement] = useState<JSX.Element>()
   const [linkElements, setLinkElements] = useState<JSX.Element[]>()
 
+  // useEffect
   useEffect(() => {
     if (data && data.getTreeById) {
       const t = data.getTreeById
@@ -58,7 +70,12 @@ const Tree: NextPage<TreeProps> = ({}) => {
       <div className="mt-4 space-y-6">
         {/* TODO this button should only be shown it to the author */}
         <button
-          className="bg-li-gray-100 dark:bg-li-gray-1400 hover:bg-li-gray-200 dark:hover:bg-li-gray-1300 px-4 py-1.5 rounded-[0.3rem] text-sm font-semibold flex items-center space-x-1"
+          className={cn(
+            'bg-li-gray-100 dark:bg-li-gray-1400 hover:bg-li-gray-200 dark:hover:bg-li-gray-1300 px-4 py-1.5 rounded-[0.3rem] text-sm font-semibold flex items-center space-x-1',
+            currUser && currUser.id === data?.getTreeById?.user.id
+              ? 'block'
+              : 'hidden',
+          )}
           onClick={() => {
             router.push(`/draft/${treeId}`)
           }}
