@@ -127,8 +127,10 @@ const Dashboard: NextPage<DashboardProps> = ({}) => {
       <div className="mt-2 mb-10 space-y-4">
         <div className="flex justify-between items-baseline">
           <div className="flex space-x-4">
-            {/* TODO display real data here */}
-            <DashboardTab title="69 created trees" type="created" />
+            <DashboardTab
+              title={`${createdTreeElements.length} created trees`}
+              type="created"
+            />
             <DashboardTab title="87 saved trees" type="saved" />
           </div>
           <DashboardAction />
