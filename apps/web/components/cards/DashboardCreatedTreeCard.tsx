@@ -2,40 +2,54 @@ import React from 'react'
 import { TreeCardLayout } from './layouts/TreeCardLayout'
 import NextLink from 'next/link'
 import { Dropdown, DropdownAction, DropdownComponent } from '../Dropdown'
-import { BsThreeDots } from 'react-icons/bs'
+import { StatsBadge } from '../StatsBadge'
+import { DateBadge } from '../DateBadge'
+import { IoEye, IoLink } from 'react-icons/io5'
+import { FiMoreVertical } from 'react-icons/fi'
+import { formatDate } from '../../lib/date'
+import { useRouter } from 'next/router'
 
-interface DashboardCreatedTreeCardProps {}
+interface DashboardCreatedTreeCardProps {
+  treeId: string
+  title: string
+  views: number
+  createdAt: string
+  numOfLinks: number
+}
 
 export const DashboardCreatedTreeCard: React.FC<
   DashboardCreatedTreeCardProps
-> = () => {
+> = ({ treeId, title, views, createdAt, numOfLinks }) => {
+  const router = useRouter()
+
   return (
     <TreeCardLayout>
       <div className="flex justify-between">
-        <NextLink href="/#" passHref>
+        <NextLink href={`/tree/${treeId}`} passHref>
           <a className="hover:underline hover:text-li-green-main">
-            <h2 className="font-semibold text-base">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus,
-              ad.
-            </h2>
+            <h2 className="font-semibold text-base">{title}</h2>
           </a>
         </NextLink>
         <Dropdown
           component={DropdownComponent.ICON}
-          Icon={BsThreeDots}
+          Icon={FiMoreVertical}
           dropdownItems={[
             {
               title: 'Visit',
-              action: DropdownAction.EXTERNAL_LINK,
-              href: '/#',
+              action: DropdownAction.BUTTON,
+              clickHandler: () => {
+                router.push(`/tree/${treeId}`)
+              },
             },
             {
               title: 'Edit',
-              action: DropdownAction.EXTERNAL_LINK,
-              href: '/#',
+              action: DropdownAction.BUTTON,
+              clickHandler: () => {
+                router.push(`/draft/${treeId}/`)
+              },
             },
             {
-              title: 'Remove',
+              title: 'Delete',
               action: DropdownAction.BUTTON,
               clickHandler: async () => {
                 console.log('clicked dropdown')
@@ -44,10 +58,10 @@ export const DashboardCreatedTreeCard: React.FC<
           ]}
         />
       </div>
-      <div className="flex space-x-4 text-sm">
-        <div>11 links</div>
-        <div>18590 views</div>
-        <div>Jun 20, 2022</div>
+      <div className="flex flex-row text-sm space-x-4 text-li-gray-1100 dark:text-li-gray-700">
+        <StatsBadge label="views" count={views} Icon={IoEye} />
+        <StatsBadge label="links" count={numOfLinks} Icon={IoLink} />
+        <DateBadge date={formatDate(createdAt)} />
       </div>
     </TreeCardLayout>
   )

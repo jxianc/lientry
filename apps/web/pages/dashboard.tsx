@@ -1,8 +1,7 @@
 import { useAtom } from 'jotai'
 import { NextPage } from 'next'
-import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FiBookOpen, FiPlus } from 'react-icons/fi'
 import { DashboardCreatedTreeCard } from '../components/cards/DashboardCreatedTreeCard'
 import { DashboardSavedTreeCard } from '../components/cards/DashboardSavedTreeCard'
@@ -86,8 +85,11 @@ export const DashboardAction: React.FC<DashboardActionProps> = ({}) => {
 interface DashboardProps {}
 
 const Dashboard: NextPage<DashboardProps> = ({}) => {
+  // jotai state
   const [dashboardDisplay] = useAtom(dashboardDisplayAtom)
   const [currUser] = useAtom(currUserAtom)
+
+  // query
   const [{ data }] = useGetUserByIdQuery({
     variables: {
       // NOTE this might be fine, because the query won't be executed until the currUser is not undefined
@@ -96,7 +98,29 @@ const Dashboard: NextPage<DashboardProps> = ({}) => {
     pause: !currUser,
   })
 
-  console.log(data)
+  // useState
+  const [createdTreeElements, setCreatedTreeElements] = useState<JSX.Element[]>(
+    [],
+  )
+
+  // useEffect
+  useEffect(() => {
+    if (data && data.getUserById && data.getUserById.trees) {
+      const t = data.getUserById.trees
+      setCreatedTreeElements(
+        t.map((t) => (
+          <DashboardCreatedTreeCard
+            key={t.id}
+            treeId={t.id}
+            title={t.name}
+            views={t.viewed}
+            createdAt={t.createdAt}
+            numOfLinks={t.links?.length || 0}
+          />
+        )),
+      )
+    }
+  }, [data])
 
   return (
     <MainLayout>
@@ -111,10 +135,9 @@ const Dashboard: NextPage<DashboardProps> = ({}) => {
         </div>
         {dashboardDisplay === 'created' ? (
           <>
-            <DashboardCreatedTreeCard />
-            <DashboardCreatedTreeCard />
-            <DashboardCreatedTreeCard />
-            <DashboardCreatedTreeCard />
+            {createdTreeElements &&
+              createdTreeElements.length > 0 &&
+              createdTreeElements}
           </>
         ) : (
           <>
