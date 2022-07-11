@@ -1,7 +1,9 @@
 import { useAtom } from 'jotai'
 import { NextPage } from 'next'
 import NextLink from 'next/link'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { FiBookOpen, FiPlus } from 'react-icons/fi'
 import { DashboardCreatedTreeCard } from '../components/cards/DashboardCreatedTreeCard'
 import { DashboardSavedTreeCard } from '../components/cards/DashboardSavedTreeCard'
 import { CreateTreeFormModal } from '../components/modals/CreateTreeFormModal'
@@ -45,6 +47,7 @@ interface DashboardActionProps {}
 export const DashboardAction: React.FC<DashboardActionProps> = ({}) => {
   const [dashboardDisplay] = useAtom(dashboardDisplayAtom)
   const [modalIsOpen, setModalIsOpen] = useState(false)
+  const router = useRouter()
 
   return (
     <>
@@ -52,17 +55,27 @@ export const DashboardAction: React.FC<DashboardActionProps> = ({}) => {
         modalIsOpen={modalIsOpen}
         setModalIsOpen={setModalIsOpen}
       />
-      <div className="px-3 text-sm hover:cursor-pointer hover:underline hover:text-li-green-main">
+      <button
+        className="px-3 py-2 rounded-[0.3rem] text-sm bg-li-gray-100 hover:bg-li-gray-200 dark:bg-li-gray-1400 dark:hover:bg-li-gray-1300 font-medium text-black dark:text-white flex items-center space-x-2"
+        onClick={() => {
+          if (dashboardDisplay === 'created') {
+            setModalIsOpen(true)
+          } else if (dashboardDisplay === 'saved') {
+            router.push('/')
+          }
+        }}
+      >
         {dashboardDisplay === 'created' ? (
-          <div onClick={() => setModalIsOpen(true)}>create a new tree</div>
+          <FiPlus size={16} />
         ) : (
-          <NextLink href="/" passHref>
-            <a>
-              <span>browse trees</span>
-            </a>
-          </NextLink>
+          <FiBookOpen size={16} />
         )}
-      </div>
+        <span>
+          {dashboardDisplay === 'created'
+            ? 'create a new tree'
+            : 'browse trees'}
+        </span>
+      </button>
     </>
   )
 }
