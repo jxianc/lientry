@@ -30,7 +30,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({ title, type }) => {
     <button
       className={cn(
         dashboardDisplay === type
-          ? 'bg-li-gray-100 dark:bg-li-gray-1400 font-medium text-black dark:text-white'
+          ? 'bg-li-gray-100 dark:bg-li-gray-1400 font-medium text-black dark:text-white border border-li-gray-200 dark:border-li-gray-1300'
           : 'text-li-gray-1100 dark:text-li-gray-700 hover:bg-li-gray-100/70 dark:hover:bg-li-gray-1300 ',
         'px-3 py-2 rounded-[0.3rem] text-sm',
       )}
@@ -56,7 +56,7 @@ export const DashboardAction: React.FC<DashboardActionProps> = ({}) => {
         setModalIsOpen={setModalIsOpen}
       />
       <button
-        className="px-3 py-2 rounded-[0.3rem] text-sm bg-li-gray-100 hover:bg-li-gray-200 dark:bg-li-gray-1400 dark:hover:bg-li-gray-1300 font-medium text-black dark:text-white flex items-center space-x-2"
+        className="px-3 py-2 rounded-[0.3rem] text-sm bg-li-gray-100 hover:bg-li-gray-200 dark:bg-li-gray-1400 dark:hover:bg-li-gray-1300 font-medium text-black dark:text-white flex items-center space-x-2 border border-li-gray-200 dark:border-li-gray-1300"
         onClick={() => {
           if (dashboardDisplay === 'created') {
             setModalIsOpen(true)

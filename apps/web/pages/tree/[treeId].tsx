@@ -71,7 +71,7 @@ const Tree: NextPage<TreeProps> = ({}) => {
         {/* TODO this button should only be shown it to the author */}
         <button
           className={cn(
-            'bg-li-gray-100 dark:bg-li-gray-1400 hover:bg-li-gray-200 dark:hover:bg-li-gray-1300 px-4 py-1.5 rounded-[0.3rem] text-sm font-semibold flex items-center space-x-1',
+            'bg-li-gray-100 dark:bg-li-gray-1400 hover:bg-li-gray-200 dark:hover:bg-li-gray-1300 px-4 py-1.5 rounded-[0.3rem] text-sm font-semibold flex items-center space-x-1 border border-li-gray-200 dark:border-li-gray-1300',
             currUser && currUser.id === data?.getTreeById?.user.id
               ? 'block'
               : 'hidden',
