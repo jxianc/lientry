@@ -86,6 +86,11 @@ export class UsersService {
               },
               include: {
                 user: true,
+                links: {
+                  orderBy: {
+                    createdAt: 'asc',
+                  },
+                },
               },
             },
           }
