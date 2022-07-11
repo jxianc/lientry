@@ -7,7 +7,9 @@ import { FiBookOpen, FiPlus } from 'react-icons/fi'
 import { DashboardCreatedTreeCard } from '../components/cards/DashboardCreatedTreeCard'
 import { DashboardSavedTreeCard } from '../components/cards/DashboardSavedTreeCard'
 import { CreateTreeFormModal } from '../components/modals/CreateTreeFormModal'
+import { useGetUserByIdQuery } from '../generated/graphql'
 import { MainLayout } from '../layouts/MainLayout'
+import { currUserAtom } from '../lib/atom/current-user.atom'
 import {
   DashboardDisplay,
   dashboardDisplayAtom,
@@ -85,6 +87,16 @@ interface DashboardProps {}
 
 const Dashboard: NextPage<DashboardProps> = ({}) => {
   const [dashboardDisplay] = useAtom(dashboardDisplayAtom)
+  const [currUser] = useAtom(currUserAtom)
+  const [{ data }] = useGetUserByIdQuery({
+    variables: {
+      // NOTE this might be fine, because the query won't be executed until the currUser is not undefined
+      userId: currUser?.id as string,
+    },
+    pause: !currUser,
+  })
+
+  console.log(data)
 
   return (
     <MainLayout>

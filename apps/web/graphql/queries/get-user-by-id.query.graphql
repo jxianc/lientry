@@ -1,0 +1,17 @@
+query GetUserById($userId: String!) {
+  getUserById(userId: $userId) {
+    id
+    name
+    email
+    image
+    trees {
+      id
+      name
+      links {
+        id
+      }
+      viewed
+      createdAt
+    }
+  }
+}

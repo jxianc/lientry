@@ -382,6 +382,29 @@ export type GetTrendingTreesQuery = {
   }>
 }
 
+export type GetUserByIdQueryVariables = Exact<{
+  userId: Scalars['String']
+}>
+
+export type GetUserByIdQuery = {
+  __typename?: 'Query'
+  getUserById?: {
+    __typename?: 'UserEntity'
+    id: string
+    name?: string | null
+    email?: string | null
+    image?: string | null
+    trees?: Array<{
+      __typename?: 'TreeEntity'
+      id: string
+      name: string
+      viewed: number
+      createdAt: any
+      links?: Array<{ __typename?: 'LinkEntity'; id: string }> | null
+    }> | null
+  } | null
+}
+
 export type GreetingQueryVariables = Exact<{ [key: string]: never }>
 
 export type GreetingQuery = { __typename?: 'Query'; greeting: string }
@@ -594,6 +617,34 @@ export function useGetTrendingTreesQuery(
 ) {
   return Urql.useQuery<GetTrendingTreesQuery>({
     query: GetTrendingTreesDocument,
+    ...options,
+  })
+}
+export const GetUserByIdDocument = gql`
+  query GetUserById($userId: String!) {
+    getUserById(userId: $userId) {
+      id
+      name
+      email
+      image
+      trees {
+        id
+        name
+        links {
+          id
+        }
+        viewed
+        createdAt
+      }
+    }
+  }
+`
+
+export function useGetUserByIdQuery(
+  options: Omit<Urql.UseQueryArgs<GetUserByIdQueryVariables>, 'query'>,
+) {
+  return Urql.useQuery<GetUserByIdQuery>({
+    query: GetUserByIdDocument,
     ...options,
   })
 }
