@@ -84,6 +84,9 @@ export class UsersService {
                 isPublic:
                   typeof isAuthor === 'boolean' && isAuthor ? undefined : true,
               },
+              orderBy: {
+                createdAt: 'asc',
+              },
               include: {
                 user: true,
                 links: {
