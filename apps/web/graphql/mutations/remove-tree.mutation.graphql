@@ -1,0 +1,6 @@
+mutation RemoveTree($treeId: String!) {
+  removeTree(treeId: $treeId) {
+    success
+    errMsg
+  }
+}

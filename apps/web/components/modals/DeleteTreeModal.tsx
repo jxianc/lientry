@@ -1,4 +1,6 @@
+import { useRouter } from 'next/router'
 import React, { useRef } from 'react'
+import { useRemoveTreeMutation } from '../../generated/graphql'
 import { BaseModal } from './BaseModal'
 
 interface DeleteTreeModalProps {
@@ -12,6 +14,12 @@ export const DeleteTreeModal: React.FC<DeleteTreeModalProps> = ({
   setModalIsOpen,
   treeId,
 }) => {
+  // useRouter
+  const router = useRouter()
+
+  // mutation
+  const [_, execRemoveTree] = useRemoveTreeMutation()
+
   // useRef
   const cancelButtonRef = useRef(null)
 
@@ -38,9 +46,17 @@ export const DeleteTreeModal: React.FC<DeleteTreeModalProps> = ({
         <button
           type="button"
           className="bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white py-1.5 px-4 rounded-[0.3rem]"
-          onClick={() => {
-            console.log(`deleting tree ${treeId}`)
-            // TODO delete tree, and route back to user's dashboard page
+          onClick={async () => {
+            const { data, error } = await execRemoveTree({
+              treeId,
+            })
+
+            if (data && data.removeTree && data.removeTree.success) {
+              setModalIsOpen(false)
+              router.push('/dashboard')
+            }
+
+            // TODO handle error
           }}
         >
           delete

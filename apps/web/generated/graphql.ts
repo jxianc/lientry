@@ -264,6 +264,19 @@ export type RefreshTokenMutation = {
   }
 }
 
+export type RemoveTreeMutationVariables = Exact<{
+  treeId: Scalars['String']
+}>
+
+export type RemoveTreeMutation = {
+  __typename?: 'Mutation'
+  removeTree: {
+    __typename?: 'BaseResponse'
+    success: boolean
+    errMsg?: string | null
+  }
+}
+
 export type UpdateTreeMutationVariables = Exact<{
   curLinksInput: EditLinksInput
   treeId: Scalars['String']
@@ -484,6 +497,20 @@ export const RefreshTokenDocument = gql`
 export function useRefreshTokenMutation() {
   return Urql.useMutation<RefreshTokenMutation, RefreshTokenMutationVariables>(
     RefreshTokenDocument,
+  )
+}
+export const RemoveTreeDocument = gql`
+  mutation RemoveTree($treeId: String!) {
+    removeTree(treeId: $treeId) {
+      success
+      errMsg
+    }
+  }
+`
+
+export function useRemoveTreeMutation() {
+  return Urql.useMutation<RemoveTreeMutation, RemoveTreeMutationVariables>(
+    RemoveTreeDocument,
   )
 }
 export const UpdateTreeDocument = gql`

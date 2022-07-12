@@ -66,6 +66,15 @@ export const client = createClient({
               },
             )
           },
+          removeTree(_result, _args, cache, _info) {
+            const key = 'Query'
+            const fields = cache
+              .inspectFields(key)
+              .filter((field) => field.fieldName === 'getUserById')
+              .forEach((field) => {
+                cache.invalidate(key, field.fieldName, field.arguments)
+              })
+          },
         },
       },
     }),
