@@ -76,6 +76,7 @@ export const TreeInfoCard: React.FC<TreeInfoCardProps> = ({
             {
               title: 'Delete',
               action: DropdownAction.BUTTON,
+              warning: true,
               clickHandler: async () => {
                 setDeleteModalIsOpen(true)
               },

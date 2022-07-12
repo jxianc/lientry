@@ -13,6 +13,7 @@ export enum DropdownAction {
 interface BaseDropdownItem {
   title: string
   action: DropdownAction
+  warning?: boolean
 }
 
 interface ButtonDropdownItem extends BaseDropdownItem {
@@ -108,13 +109,22 @@ export const Dropdown: React.FC<DropdownProps> = (p) => {
                   >
                     {d.action === 'button' ? (
                       <button
-                        className="w-full text-left"
+                        className={cn(
+                          'w-full text-left',
+                          d.warning ? 'text-red-600 dark:text-red-500' : '',
+                        )}
                         onClick={d.clickHandler}
                       >
                         {d.title}
                       </button>
                     ) : (
-                      <a href={d.href} className="w-full text-left">
+                      <a
+                        href={d.href}
+                        className={cn(
+                          'w-full text-left',
+                          d.warning ? 'text-red-600 dark:text-red-500' : '',
+                        )}
+                      >
                         {d.title}
                       </a>
                     )}

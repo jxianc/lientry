@@ -75,6 +75,7 @@ export const LinkDraftCard: React.FC<LinkDraftCardProps> = ({
             {
               title: 'Delete',
               action: DropdownAction.BUTTON,
+              warning: true,
               clickHandler: async () => {
                 setDeleteLinkModalIsOpen(true)
               },

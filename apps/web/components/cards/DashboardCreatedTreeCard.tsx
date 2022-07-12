@@ -51,6 +51,7 @@ export const DashboardCreatedTreeCard: React.FC<
             {
               title: 'Delete',
               action: DropdownAction.BUTTON,
+              warning: true,
               clickHandler: async () => {
                 console.log('clicked dropdown')
               },
