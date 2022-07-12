@@ -100,7 +100,7 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
   const { treeId } = router.query
 
   // query
-  const [{ data }] = useGetTreeByIdQuery({
+  const [{ data, fetching }] = useGetTreeByIdQuery({
     variables: {
       treeId: treeId as string,
     },
@@ -143,6 +143,8 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
           }),
         )
       }
+    } else if (!fetching && !data?.getTreeById) {
+      router.push('/404')
     }
   }, [data])
 

@@ -21,7 +21,7 @@ const Tree: NextPage<TreeProps> = ({}) => {
   const [currUser] = useAtom(currUserAtom)
 
   // query
-  const [{ data }] = useGetTreeByIdQuery({
+  const [{ data, fetching }] = useGetTreeByIdQuery({
     variables: {
       treeId: treeId as string,
     },
@@ -62,8 +62,10 @@ const Tree: NextPage<TreeProps> = ({}) => {
         ))
         setLinkElements(links)
       }
+    } else if (!fetching && !data?.getTreeById) {
+      router.push('/404')
     }
-  }, [data])
+  }, [data, fetching])
 
   return (
     <MainLayout>
