@@ -119,8 +119,6 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
   const [linkElements, setLinkElements] = useState<JSX.Element[]>()
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
-  console.log(treeInfo)
-
   useEffect(() => {
     if (data && data.getTreeById) {
       const t = data.getTreeById
