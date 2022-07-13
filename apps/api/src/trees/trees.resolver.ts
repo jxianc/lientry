@@ -48,7 +48,7 @@ export class TreesResolver {
     @Args({ name: 'treeId' }) treeId: string,
   ) {
     // update tree info
-    const res = await this.treesService.updateTree(updateTreeInfoInput, treeId)
+    await this.treesService.updateTree(updateTreeInfoInput, treeId)
 
     // create links
     if (creates && creates.length > 0) {

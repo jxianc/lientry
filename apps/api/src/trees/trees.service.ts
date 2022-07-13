@@ -155,7 +155,7 @@ export class TreesService {
         data: {
           name: name || undefined,
           description: description || undefined,
-          isPublic: isPublic || undefined,
+          isPublic: typeof isPublic === 'boolean' ? isPublic : undefined,
         },
         include: {
           user: true,
