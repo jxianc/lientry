@@ -116,6 +116,7 @@ const Dashboard: NextPage<DashboardProps> = ({}) => {
             views={t.viewed}
             createdAt={t.createdAt}
             numOfLinks={t.links?.length || 0}
+            isPublic={t.isPublic}
           />
         )),
       )

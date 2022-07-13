@@ -413,6 +413,7 @@ export type GetUserByIdQuery = {
       name: string
       viewed: number
       createdAt: any
+      isPublic: boolean
       links?: Array<{ __typename?: 'LinkEntity'; id: string }> | null
     }> | null
   } | null
@@ -662,6 +663,7 @@ export const GetUserByIdDocument = gql`
         }
         viewed
         createdAt
+        isPublic
       }
     }
   }

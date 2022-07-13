@@ -12,6 +12,7 @@ query GetUserById($userId: String!) {
       }
       viewed
       createdAt
+      isPublic
     }
   }
 }

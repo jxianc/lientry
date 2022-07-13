@@ -9,6 +9,7 @@ import { FiMoreVertical } from 'react-icons/fi'
 import { formatDate } from '../../lib/date'
 import { useRouter } from 'next/router'
 import { DeleteTreeModal } from '../modals/DeleteTreeModal'
+import { PrivateBadge } from '../PrivateBadge'
 
 interface DashboardCreatedTreeCardProps {
   treeId: string
@@ -16,11 +17,12 @@ interface DashboardCreatedTreeCardProps {
   views: number
   createdAt: string
   numOfLinks: number
+  isPublic: boolean
 }
 
 export const DashboardCreatedTreeCard: React.FC<
   DashboardCreatedTreeCardProps
-> = ({ treeId, title, views, createdAt, numOfLinks }) => {
+> = ({ treeId, title, views, createdAt, numOfLinks, isPublic }) => {
   const router = useRouter()
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
@@ -63,6 +65,7 @@ export const DashboardCreatedTreeCard: React.FC<
           />
         </div>
         <div className="flex flex-row text-sm space-x-4 text-li-gray-1100 dark:text-li-gray-700">
+          {!isPublic && <PrivateBadge />}
           <StatsBadge label="views" count={views} Icon={IoEye} />
           <StatsBadge label="links" count={numOfLinks} Icon={IoLink} />
           <DateBadge date={formatDate(createdAt)} />

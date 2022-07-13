@@ -60,6 +60,7 @@ const Home: NextPage<HomeProps> = ({}) => {
             viewed={t.viewed}
             numOfLinks={t.links?.length || 0}
             createdAt={t.createdAt}
+            isPublic={t.isPublic}
           />
         ))
         setTreeElements(trees)
@@ -78,6 +79,7 @@ const Home: NextPage<HomeProps> = ({}) => {
             viewed={t.viewed}
             numOfLinks={t.links?.length || 0}
             createdAt={t.createdAt}
+            isPublic={t.isPublic}
           />
         ))
         setTreeElements(trees)
