@@ -100,7 +100,7 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
   const { treeId } = router.query
 
   // query
-  const [{ data, fetching }] = useGetTreeByIdQuery({
+  const [{ data, error }] = useGetTreeByIdQuery({
     variables: {
       treeId: treeId as string,
     },
@@ -143,10 +143,10 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
           }),
         )
       }
-    } else if (!fetching && !data?.getTreeById) {
+    } else if (error) {
       router.push('/404')
     }
-  }, [data])
+  }, [data, error, router, setLinks, setTreeInfo])
 
   // set tree info cards
   useEffect(() => {
