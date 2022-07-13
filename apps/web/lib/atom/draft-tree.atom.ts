@@ -6,6 +6,7 @@ interface TreeInfo {
   title: string
   description?: string | null
   createdAt: string
+  isPublic: boolean
 }
 
 const treeInfoAtom = atom<TreeInfo | null>(null)

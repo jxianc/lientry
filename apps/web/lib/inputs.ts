@@ -61,6 +61,13 @@ const createTreeInputs: InputFieldProps[] = [
     required: false,
     placeholder: 'description',
   },
+  {
+    label: 'Public',
+    name: 'isPublic',
+    type: 'checkbox',
+    required: false,
+    placeholder: 'set your tree to public',
+  },
 ]
 
 const createLinkInputs: InputFieldProps[] = [

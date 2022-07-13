@@ -8,6 +8,7 @@ import {
 import { CreateTreeSchema } from '../../lib/input-validation'
 import { createTreeInputs } from '../../lib/inputs'
 import { InputField } from '../InputField'
+import { ToggleButtonInput } from '../ToggleButtonInput'
 import { BaseModal } from './BaseModal'
 
 interface EditTreeFormModalProps {
@@ -15,6 +16,7 @@ interface EditTreeFormModalProps {
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>
   title: string
   description?: string | null
+  isPublic: boolean
 }
 
 export const EditTreeFormModal: React.FC<EditTreeFormModalProps> = ({
@@ -22,6 +24,7 @@ export const EditTreeFormModal: React.FC<EditTreeFormModalProps> = ({
   setModalIsOpen,
   title,
   description,
+  isPublic,
 }) => {
   // jotai state
   const [treeInfo, setTreeInfo] = useAtom(setTreeInfoAtom)
@@ -40,24 +43,30 @@ export const EditTreeFormModal: React.FC<EditTreeFormModalProps> = ({
         initialValues={{
           title,
           description: description || '',
+          isPublic,
         }}
         validationSchema={CreateTreeSchema}
-        onSubmit={async ({ title, description }) => {
+        onSubmit={async ({ title, description, isPublic }) => {
           const updatedTreeInfo = {
             ...treeInfo!, // NOTE this should be fine lol
             title,
             description,
+            isPublic,
           }
           setEditedTree(true)
           setTreeInfo(updatedTreeInfo)
           setModalIsOpen(false)
         }}
       >
-        {() => (
+        {({}) => (
           <Form>
             <div className="rounded-md space-y-4 text-left">
               {createTreeInputs.map((input, idx) => {
-                return <Field key={idx} {...input} component={InputField} />
+                if (input.type === 'checkbox') {
+                  return <ToggleButtonInput key={idx} {...input} />
+                } else {
+                  return <Field key={idx} {...input} component={InputField} />
+                }
               })}
             </div>
             <div className="flex space-x-4 justify-end mt-20">

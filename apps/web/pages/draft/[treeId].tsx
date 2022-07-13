@@ -28,6 +28,7 @@ interface TreeInfoCardProps {
   description?: string | null
   numOfLinks: number
   createdAt: string
+  isPublic: boolean
 }
 
 export const TreeInfoCard: React.FC<TreeInfoCardProps> = ({
@@ -36,6 +37,7 @@ export const TreeInfoCard: React.FC<TreeInfoCardProps> = ({
   description,
   numOfLinks,
   createdAt,
+  isPublic,
 }) => {
   const [editModalIsOpen, setEditModalIsOpen] = useState(false)
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false)
@@ -56,6 +58,7 @@ export const TreeInfoCard: React.FC<TreeInfoCardProps> = ({
           setModalIsOpen={setEditModalIsOpen}
           title={title}
           description={description}
+          isPublic={isPublic}
         />
         <DeleteTreeModal
           modalIsOpen={deleteModalIsOpen}
@@ -116,6 +119,8 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
   const [linkElements, setLinkElements] = useState<JSX.Element[]>()
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
+  console.log(treeInfo)
+
   useEffect(() => {
     if (data && data.getTreeById) {
       const t = data.getTreeById
@@ -126,6 +131,7 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
         title: t.name,
         description: t.description,
         createdAt: t.createdAt,
+        isPublic: t.isPublic,
       })
 
       if (t.links && t.links.length > 0) {
@@ -159,6 +165,7 @@ const CreateTree: NextPage<CreateTreeProps> = ({}) => {
           description={t.description}
           numOfLinks={links.length}
           createdAt={t.createdAt}
+          isPublic={t.isPublic}
         />
       )
       setTreeInfoElement(tree)

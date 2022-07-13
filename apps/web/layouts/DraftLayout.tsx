@@ -70,6 +70,7 @@ export const DraftLayout: React.FC<DraftLayoutProps> = ({ children }) => {
                       updateTreeInfoInput: {
                         name: treeInfo.title,
                         description: treeInfo.description,
+                        isPublic: treeInfo.isPublic,
                       },
                       curLinksInput: saveLinks(links),
                     })
