@@ -145,6 +145,8 @@ type UserEntity {
 }
 
 type UserSavedTreeEntity {
+  createdAt: DateTime!
   tree: TreeEntity!
+  updatedAt: DateTime!
   user: UserEntity!
 }
