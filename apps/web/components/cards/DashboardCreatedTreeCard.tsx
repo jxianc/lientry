@@ -2,14 +2,13 @@ import React, { useState } from 'react'
 import { TreeCardLayout } from './layouts/TreeCardLayout'
 import NextLink from 'next/link'
 import { Dropdown, DropdownAction, DropdownComponent } from '../Dropdown'
-import { StatsBadge } from '../StatsBadge'
-import { DateBadge } from '../DateBadge'
+import { StatsBadge } from '../badges/StatsBadge'
 import { IoEye, IoLink } from 'react-icons/io5'
 import { FiMoreVertical } from 'react-icons/fi'
 import { formatDate } from '../../lib/date'
 import { useRouter } from 'next/router'
 import { DeleteTreeModal } from '../modals/DeleteTreeModal'
-import { PrivateBadge } from '../PrivateBadge'
+import { Badge } from '../badges/Badge'
 
 interface DashboardCreatedTreeCardProps {
   treeId: string
@@ -65,10 +64,10 @@ export const DashboardCreatedTreeCard: React.FC<
           />
         </div>
         <div className="flex flex-row text-sm space-x-4 text-li-gray-1100 dark:text-li-gray-700">
-          {!isPublic && <PrivateBadge />}
+          {!isPublic && <Badge text="private" />}
           <StatsBadge label="views" count={views} Icon={IoEye} />
           <StatsBadge label="links" count={numOfLinks} Icon={IoLink} />
-          <DateBadge date={formatDate(createdAt)} />
+          <Badge text={formatDate(createdAt)} />
         </div>
       </TreeCardLayout>
       <DeleteTreeModal

@@ -6,9 +6,8 @@ import { formatDate } from '../../lib/date'
 import { useRouter } from 'next/router'
 import { TreeCardLayout } from './layouts/TreeCardLayout'
 import { IoLink, IoEye } from 'react-icons/io5'
-import { StatsBadge } from '../StatsBadge'
-import { DateBadge } from '../DateBadge'
-import { PrivateBadge } from '../PrivateBadge'
+import { StatsBadge } from '../badges/StatsBadge'
+import { Badge } from '../badges/Badge'
 
 // tree card component (main)
 
@@ -69,7 +68,7 @@ export const TreeCard: React.FC<TreeCardProps> = ({
             <h3 className="text-sm text-li-gray-1100 dark:text-li-gray-700 mb-2">
               {description}
             </h3>
-            {!isPublic && <PrivateBadge />}
+            {!isPublic && <Badge text="private" />}
           </div>
         </div>
         <div className="flex flex-row justify-between mt-4">
@@ -97,7 +96,7 @@ export const TreeCard: React.FC<TreeCardProps> = ({
           <div className="flex flex-row text-sm space-x-4 text-li-gray-1100 dark:text-li-gray-700">
             <StatsBadge label="views" count={viewed} Icon={IoEye} />
             <StatsBadge label="links" count={numOfLinks} Icon={IoLink} />
-            <DateBadge date={formatDate(createdAt)} />
+            <Badge text={formatDate(createdAt)} />
           </div>
         </div>
       </div>
