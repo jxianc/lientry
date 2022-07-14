@@ -109,6 +109,7 @@ type TreeEntity {
   name: String!
   updatedAt: DateTime!
   user: UserEntity!
+  userSavedTrees: [UserSavedTreeEntity!]
   viewed: Float!
 }
 
@@ -140,4 +141,10 @@ type UserEntity {
   provider: ProviderEntity
   trees: [TreeEntity!]
   updatedAt: DateTime!
+  userSavedTrees: [UserSavedTreeEntity!]
+}
+
+type UserSavedTreeEntity {
+  tree: TreeEntity!
+  user: UserEntity!
 }
