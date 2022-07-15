@@ -32,10 +32,13 @@ export class TreesResolver {
     return await this.treesService.createTree(createTreeInput, user.id)
   }
 
-  @UseGuards(ReadTreeAuthorGuard)
+  @UseGuards(JwtGqlSoftAuthGuard, ReadTreeAuthorGuard)
   @Query(() => TreeEntity)
-  async getTreeById(@Args({ name: 'treeId' }) treeId: string) {
-    return await this.treesService.getTreeById(treeId)
+  async getTreeById(
+    @Args({ name: 'treeId' }) treeId: string,
+    @Context() ctx: any,
+  ) {
+    return await this.treesService.getTreeById(treeId, ctx.req.userId)
   }
 
   @UseGuards(JwtGqlAuthGuard, TreeAuthorGuard)
@@ -116,5 +119,23 @@ export class TreesResolver {
     @Context() ctx: any,
   ) {
     return await this.treesService.getTrendingTrees(cursorId, ctx.req.userId)
+  }
+
+  @UseGuards(JwtGqlAuthGuard)
+  @Mutation(() => BaseResponse)
+  async saveTree(
+    @Args({ name: 'treeId' }) treeId: string,
+    @CurrentUser() user: User,
+  ) {
+    return await this.treesService.saveTree(treeId, user.id)
+  }
+
+  @UseGuards(JwtGqlAuthGuard)
+  @Mutation(() => BaseResponse)
+  async unsaveTree(
+    @Args({ name: 'treeId' }) treeId: string,
+    @CurrentUser() user: User,
+  ) {
+    return await this.treesService.unsaveTree(treeId, user.id)
   }
 }

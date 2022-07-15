@@ -40,7 +40,7 @@ export class TreesService {
     }
   }
 
-  async getTreeById(treeId: string, isInternal = false) {
+  async getTreeById(treeId: string, isInternal = false, userId?: string) {
     const tree = await this.prisma.tree.findUnique({
       where: {
         id: treeId,
@@ -50,6 +50,15 @@ export class TreesService {
         links: {
           orderBy: {
             createdAt: 'asc',
+          },
+        },
+        userSavedTrees: {
+          where: {
+            userId,
+            treeId,
+          },
+          include: {
+            user: true,
           },
         },
       },
@@ -97,6 +106,14 @@ export class TreesService {
       include: {
         user: true,
         links: true,
+        userSavedTrees: {
+          where: {
+            userId,
+          },
+          include: {
+            user: true,
+          },
+        },
       },
       take: 10,
       skip: cursorId ? 1 : undefined,
@@ -127,6 +144,14 @@ export class TreesService {
       include: {
         user: true,
         links: true,
+        userSavedTrees: {
+          where: {
+            userId,
+          },
+          include: {
+            user: true,
+          },
+        },
       },
       take: 10,
       skip: cursorId ? 1 : undefined,
@@ -183,6 +208,58 @@ export class TreesService {
 
     return {
       success: true,
+    }
+  }
+
+  async saveTree(treeId: string, userId: string): Promise<BaseResponse> {
+    try {
+      await this.prisma.userSavedTree.create({
+        data: {
+          user: {
+            connect: {
+              id: userId,
+            },
+          },
+          tree: {
+            connect: {
+              id: treeId,
+            },
+          },
+        },
+      })
+
+      return {
+        success: true,
+      }
+    } catch (err) {
+      console.log(err)
+      return {
+        success: false,
+        errMsg: 'failed to save tree',
+      }
+    }
+  }
+
+  async unsaveTree(treeId: string, userId: string): Promise<BaseResponse> {
+    try {
+      await this.prisma.userSavedTree.delete({
+        where: {
+          userId_treeId: {
+            userId,
+            treeId,
+          },
+        },
+      })
+
+      return {
+        success: true,
+      }
+    } catch (err) {
+      console.log(err)
+      return {
+        success: false,
+        errMsg: 'failed to unsave tree',
+      }
     }
   }
 }

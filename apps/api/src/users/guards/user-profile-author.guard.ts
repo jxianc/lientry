@@ -50,6 +50,7 @@ export class UserProfileAuthor extends AuthGuard('jwt') {
 
     // no accesstoken so just fetch user profile with only public trees
     const user = await this.usersService.getUserById(userIdFromArgs, {
+      includeTree: true,
       isAuthor: false,
     })
     ctx.getContext().req.user = user
