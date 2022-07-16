@@ -15,5 +15,8 @@ query GetTrendingTrees($cursorId: String) {
     links {
       id
     }
+    userSavedTrees {
+      ...BaseUserSavedTree
+    }
   }
 }

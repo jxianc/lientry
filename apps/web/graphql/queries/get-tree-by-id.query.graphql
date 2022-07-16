@@ -18,5 +18,8 @@ query GetTreeById($treeId: String!) {
       description
       url
     }
+    userSavedTrees {
+      ...BaseUserSavedTree
+    }
   }
 }

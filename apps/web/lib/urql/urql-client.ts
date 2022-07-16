@@ -28,6 +28,9 @@ export const client = createClient({
     devtoolsExchange,
     dedupExchange,
     cacheExchange({
+      keys: {
+        UserSavedTreeEntity: () => null,
+      },
       updates: {
         Mutation: {
           login(_result, _args, cache, _info) {

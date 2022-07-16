@@ -22,6 +22,7 @@ interface TreeCardProps {
   numOfLinks: number
   createdAt: string
   isPublic: boolean
+  isSaved?: boolean
 }
 
 export const TreeCard: React.FC<TreeCardProps> = ({
@@ -35,8 +36,9 @@ export const TreeCard: React.FC<TreeCardProps> = ({
   numOfLinks,
   createdAt,
   isPublic,
+  isSaved,
 }) => {
-  const [isSaved, setIsSaved] = useState(false)
+  // const [isSaved, setIsSaved] = useState(false)
   const router = useRouter()
 
   const isTreePage = () => {
@@ -49,7 +51,7 @@ export const TreeCard: React.FC<TreeCardProps> = ({
         <div className="flex flex-row space-x-2 items-start">
           <div
             className="hover:cursor-pointer mt-1"
-            onClick={() => setIsSaved(!isSaved)}
+            // onClick={() => setIsSaved(!isSaved)}
           >
             {isSaved ? <BsBookmarkFill /> : <BsBookmark />}
           </div>

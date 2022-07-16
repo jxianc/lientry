@@ -48,6 +48,7 @@ const Tree: NextPage<TreeProps> = ({}) => {
           numOfLinks={t.links?.length || 0}
           createdAt={t.createdAt}
           isPublic={t.isPublic}
+          isSaved={(t.userSavedTrees && t.userSavedTrees.length > 0) || false}
         />
       )
       setTreeElement(tree)

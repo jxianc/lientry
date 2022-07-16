@@ -93,6 +93,8 @@ export type Mutation = {
   refreshToken: AuthResponse
   register: AuthResponse
   removeTree: BaseResponse
+  saveTree: BaseResponse
+  unsaveTree: BaseResponse
   updateTree: UpdateTreeResponse
 }
 
@@ -114,6 +116,14 @@ export type MutationRegisterArgs = {
 }
 
 export type MutationRemoveTreeArgs = {
+  treeId: Scalars['String']
+}
+
+export type MutationSaveTreeArgs = {
+  treeId: Scalars['String']
+}
+
+export type MutationUnsaveTreeArgs = {
   treeId: Scalars['String']
 }
 
@@ -177,6 +187,7 @@ export type TreeEntity = {
   name: Scalars['String']
   updatedAt: Scalars['DateTime']
   user: UserEntity
+  userSavedTrees?: Maybe<Array<UserSavedTreeEntity>>
   viewed: Scalars['Float']
 }
 
@@ -210,6 +221,20 @@ export type UserEntity = {
   provider?: Maybe<ProviderEntity>
   trees?: Maybe<Array<TreeEntity>>
   updatedAt: Scalars['DateTime']
+  userSavedTrees?: Maybe<Array<UserSavedTreeEntity>>
+}
+
+export type UserSavedTreeEntity = {
+  __typename?: 'UserSavedTreeEntity'
+  createdAt: Scalars['DateTime']
+  tree: TreeEntity
+  updatedAt: Scalars['DateTime']
+  user: UserEntity
+}
+
+export type BaseUserSavedTreeFragment = {
+  __typename?: 'UserSavedTreeEntity'
+  user: { __typename?: 'UserEntity'; id: string }
 }
 
 export type CreateTreeMutationVariables = Exact<{
@@ -336,6 +361,10 @@ export type GetRecentTreesQuery = {
       image?: string | null
     }
     links?: Array<{ __typename?: 'LinkEntity'; id: string }> | null
+    userSavedTrees?: Array<{
+      __typename?: 'UserSavedTreeEntity'
+      user: { __typename?: 'UserEntity'; id: string }
+    }> | null
   }>
 }
 
@@ -367,6 +396,10 @@ export type GetTreeByIdQuery = {
       description?: string | null
       url: string
     }> | null
+    userSavedTrees?: Array<{
+      __typename?: 'UserSavedTreeEntity'
+      user: { __typename?: 'UserEntity'; id: string }
+    }> | null
   }
 }
 
@@ -392,6 +425,10 @@ export type GetTrendingTreesQuery = {
       image?: string | null
     }
     links?: Array<{ __typename?: 'LinkEntity'; id: string }> | null
+    userSavedTrees?: Array<{
+      __typename?: 'UserSavedTreeEntity'
+      user: { __typename?: 'UserEntity'; id: string }
+    }> | null
   }>
 }
 
@@ -437,6 +474,13 @@ export type MeQuery = {
   } | null
 }
 
+export const BaseUserSavedTreeFragmentDoc = gql`
+  fragment BaseUserSavedTree on UserSavedTreeEntity {
+    user {
+      id
+    }
+  }
+`
 export const CreateTreeDocument = gql`
   mutation CreateTree($createTreeInput: CreateTreeInput!) {
     createTree(createTreeInput: $createTreeInput) {
@@ -573,8 +617,12 @@ export const GetRecentTreesDocument = gql`
       links {
         id
       }
+      userSavedTrees {
+        ...BaseUserSavedTree
+      }
     }
   }
+  ${BaseUserSavedTreeFragmentDoc}
 `
 
 export function useGetRecentTreesQuery(
@@ -606,8 +654,12 @@ export const GetTreeByIdDocument = gql`
         description
         url
       }
+      userSavedTrees {
+        ...BaseUserSavedTree
+      }
     }
   }
+  ${BaseUserSavedTreeFragmentDoc}
 `
 
 export function useGetTreeByIdQuery(
@@ -636,8 +688,12 @@ export const GetTrendingTreesDocument = gql`
       links {
         id
       }
+      userSavedTrees {
+        ...BaseUserSavedTree
+      }
     }
   }
+  ${BaseUserSavedTreeFragmentDoc}
 `
 
 export function useGetTrendingTreesQuery(
