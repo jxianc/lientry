@@ -212,6 +212,12 @@ export class TreesService {
   }
 
   async saveTree(treeId: string, userId: string): Promise<BaseResponse> {
+    const tree = await this.getTreeById(treeId, true, userId)
+
+    if (!tree) {
+      throw new NotFoundException('tree is not found')
+    }
+
     try {
       await this.prisma.userSavedTree.create({
         data: {
@@ -241,6 +247,12 @@ export class TreesService {
   }
 
   async unsaveTree(treeId: string, userId: string): Promise<BaseResponse> {
+    const tree = await this.getTreeById(treeId, true, userId)
+
+    if (!tree) {
+      throw new NotFoundException('tree is not found')
+    }
+
     try {
       await this.prisma.userSavedTree.delete({
         where: {
