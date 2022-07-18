@@ -87,6 +87,34 @@ export const client = createClient({
                 cache.invalidate(key, field.fieldName, field.arguments)
               })
           },
+          unsaveTree(_result, _args, cache, _info) {
+            const key = 'Query'
+            const fields = cache
+              .inspectFields(key)
+              .filter(
+                (field) =>
+                  field.fieldName === 'getUserById' ||
+                  field.fieldName === 'getRecentTrees' ||
+                  field.fieldName === 'getTrendingTrees',
+              )
+              .forEach((field) => {
+                cache.invalidate(key, field.fieldName, field.arguments)
+              })
+          },
+          saveTree(_result, _args, cache, _info) {
+            const key = 'Query'
+            const fields = cache
+              .inspectFields(key)
+              .filter(
+                (field) =>
+                  field.fieldName === 'getUserById' ||
+                  field.fieldName === 'getRecentTrees' ||
+                  field.fieldName === 'getTrendingTrees',
+              )
+              .forEach((field) => {
+                cache.invalidate(key, field.fieldName, field.arguments)
+              })
+          },
         },
       },
     }),

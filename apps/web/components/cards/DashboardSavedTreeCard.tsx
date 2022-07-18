@@ -9,6 +9,7 @@ import { formatDate } from '../../lib/date'
 import { Badge } from '../badges/Badge'
 import { StatsBadge } from '../badges/StatsBadge'
 import { useRouter } from 'next/router'
+import { useUnsaveTreeMutation } from '../../generated/graphql'
 
 interface DashboardSavedTreeCardProps {
   treeId: string
@@ -32,6 +33,7 @@ export const DashboardSavedTreeCard: React.FC<DashboardSavedTreeCardProps> = ({
   createdAt,
 }) => {
   const router = useRouter()
+  const [__, execUnsaveTree] = useUnsaveTreeMutation()
 
   return (
     <TreeCardLayout>
@@ -57,7 +59,10 @@ export const DashboardSavedTreeCard: React.FC<DashboardSavedTreeCardProps> = ({
               action: DropdownAction.BUTTON,
               warning: true,
               clickHandler: async () => {
-                console.log('clicked dropdown')
+                const { data, error } = await execUnsaveTree({ treeId })
+                if (error) {
+                  // TODO handle error here
+                }
               },
             },
           ]}
