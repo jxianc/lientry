@@ -1,13 +1,17 @@
+import Image from 'next/image'
+import NextLink from 'next/link'
+import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
-import NextLink from 'next/link'
-import Image from 'next/image'
+import { IoEye, IoLink } from 'react-icons/io5'
+import {
+  useSaveTreeMutation,
+  useUnsaveTreeMutation,
+} from '../../generated/graphql'
 import { formatDate } from '../../lib/date'
-import { useRouter } from 'next/router'
-import { TreeCardLayout } from './layouts/TreeCardLayout'
-import { IoLink, IoEye } from 'react-icons/io5'
-import { StatsBadge } from '../badges/StatsBadge'
 import { Badge } from '../badges/Badge'
+import { StatsBadge } from '../badges/StatsBadge'
+import { TreeCardLayout } from './layouts/TreeCardLayout'
 
 // tree card component (main)
 
@@ -36,11 +40,19 @@ export const TreeCard: React.FC<TreeCardProps> = ({
   numOfLinks,
   createdAt,
   isPublic,
-  isSaved,
+  isSaved: isSavedFromProps,
 }) => {
-  // const [isSaved, setIsSaved] = useState(false)
+  // useState
+  const [isSaved, setIsSaved] = useState(isSavedFromProps)
+
+  // mutation
+  const [_, execSaveTree] = useSaveTreeMutation()
+  const [__, execUnsaveTree] = useUnsaveTreeMutation()
+
+  // router
   const router = useRouter()
 
+  // helpers
   const isTreePage = () => {
     return router.pathname.includes('tree')
   }
@@ -51,7 +63,34 @@ export const TreeCard: React.FC<TreeCardProps> = ({
         <div className="flex flex-row space-x-2 items-start">
           <div
             className="hover:cursor-pointer mt-1"
-            // onClick={() => setIsSaved(!isSaved)}
+            onClick={async () => {
+              if (isSaved) {
+                // tree is saved, unsave it
+                const { data, error } = await execUnsaveTree({
+                  treeId,
+                })
+                if (error) {
+                  // TODO handle error here
+                }
+
+                if (data?.unsaveTree.success) {
+                  setIsSaved(!isSaved)
+                }
+              } else {
+                // tree is not saved, save it
+                const { data, error } = await execSaveTree({
+                  treeId,
+                })
+
+                if (error) {
+                  // TODO handle error here
+                }
+
+                if (data?.saveTree.success) {
+                  setIsSaved(!isSaved)
+                }
+              }
+            }}
           >
             {isSaved ? <BsBookmarkFill /> : <BsBookmark />}
           </div>

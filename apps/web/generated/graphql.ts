@@ -302,6 +302,32 @@ export type RemoveTreeMutation = {
   }
 }
 
+export type SaveTreeMutationVariables = Exact<{
+  treeId: Scalars['String']
+}>
+
+export type SaveTreeMutation = {
+  __typename?: 'Mutation'
+  saveTree: {
+    __typename?: 'BaseResponse'
+    success: boolean
+    errMsg?: string | null
+  }
+}
+
+export type UnsaveTreeMutationVariables = Exact<{
+  treeId: Scalars['String']
+}>
+
+export type UnsaveTreeMutation = {
+  __typename?: 'Mutation'
+  unsaveTree: {
+    __typename?: 'BaseResponse'
+    success: boolean
+    errMsg?: string | null
+  }
+}
+
 export type UpdateTreeMutationVariables = Exact<{
   curLinksInput: EditLinksInput
   treeId: Scalars['String']
@@ -556,6 +582,34 @@ export const RemoveTreeDocument = gql`
 export function useRemoveTreeMutation() {
   return Urql.useMutation<RemoveTreeMutation, RemoveTreeMutationVariables>(
     RemoveTreeDocument,
+  )
+}
+export const SaveTreeDocument = gql`
+  mutation SaveTree($treeId: String!) {
+    saveTree(treeId: $treeId) {
+      success
+      errMsg
+    }
+  }
+`
+
+export function useSaveTreeMutation() {
+  return Urql.useMutation<SaveTreeMutation, SaveTreeMutationVariables>(
+    SaveTreeDocument,
+  )
+}
+export const UnsaveTreeDocument = gql`
+  mutation UnsaveTree($treeId: String!) {
+    unsaveTree(treeId: $treeId) {
+      success
+      errMsg
+    }
+  }
+`
+
+export function useUnsaveTreeMutation() {
+  return Urql.useMutation<UnsaveTreeMutation, UnsaveTreeMutationVariables>(
+    UnsaveTreeDocument,
   )
 }
 export const UpdateTreeDocument = gql`
