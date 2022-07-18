@@ -102,13 +102,14 @@ const Dashboard: NextPage<DashboardProps> = ({}) => {
   const [createdTreeElements, setCreatedTreeElements] = useState<JSX.Element[]>(
     [],
   )
+  const [savedTreeElements, setSavedTreeElements] = useState<JSX.Element[]>([])
 
   // useEffect
   useEffect(() => {
     if (data && data.getUserById && data.getUserById.trees) {
-      const t = data.getUserById.trees
+      const ts = data.getUserById.trees
       setCreatedTreeElements(
-        t.map((t) => (
+        ts.map((t) => (
           <DashboardCreatedTreeCard
             key={t.id}
             treeId={t.id}
@@ -119,6 +120,28 @@ const Dashboard: NextPage<DashboardProps> = ({}) => {
             isPublic={t.isPublic}
           />
         )),
+      )
+    }
+
+    if (data && data.getUserById && data.getUserById.userSavedTrees) {
+      const ts = data.getUserById.userSavedTrees
+      setSavedTreeElements(
+        ts.map((t) => {
+          const tt = t.tree // lol
+          return (
+            <DashboardSavedTreeCard
+              key={tt.id}
+              treeId={tt.id}
+              title={tt.name}
+              userId={tt.user.id}
+              userName={tt.user.name}
+              userImage={tt.user.image}
+              numOfLinks={tt.links?.length || 0}
+              views={tt.viewed}
+              createdAt={tt.createdAt}
+            />
+          )
+        }),
       )
     }
   }, [data])
@@ -132,7 +155,10 @@ const Dashboard: NextPage<DashboardProps> = ({}) => {
               title={`${createdTreeElements.length} created trees`}
               type="created"
             />
-            <DashboardTab title="87 saved trees" type="saved" />
+            <DashboardTab
+              title={`${savedTreeElements.length} created trees`}
+              type="saved"
+            />
           </div>
           <DashboardAction />
         </div>
@@ -144,10 +170,9 @@ const Dashboard: NextPage<DashboardProps> = ({}) => {
           </>
         ) : (
           <>
-            <DashboardSavedTreeCard />
-            <DashboardSavedTreeCard />
-            <DashboardSavedTreeCard />
-            <DashboardSavedTreeCard />
+            {savedTreeElements &&
+              savedTreeElements.length > 0 &&
+              savedTreeElements}
           </>
         )}
       </div>

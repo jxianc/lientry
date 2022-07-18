@@ -113,10 +113,7 @@ export const TreeCard: React.FC<TreeCardProps> = ({
           </div>
         </div>
         <div className="flex flex-row justify-between mt-4">
-          <NextLink
-            href={`/user/${'9a31f334-b7d9-4362-8ab6-f8d667378f45'}`}
-            passHref
-          >
+          <NextLink href={`/user/${userId}`} passHref>
             <a className="inline-flex items-center space-x-2">
               <Image
                 alt="profile pic"

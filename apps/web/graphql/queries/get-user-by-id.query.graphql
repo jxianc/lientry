@@ -14,5 +14,21 @@ query GetUserById($userId: String!) {
       createdAt
       isPublic
     }
+    userSavedTrees {
+      tree {
+        id
+        name
+        links {
+          id
+        }
+        viewed
+        user {
+          id
+          name
+          image
+        }
+        createdAt
+      }
+    }
   }
 }

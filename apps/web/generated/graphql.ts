@@ -479,6 +479,23 @@ export type GetUserByIdQuery = {
       isPublic: boolean
       links?: Array<{ __typename?: 'LinkEntity'; id: string }> | null
     }> | null
+    userSavedTrees?: Array<{
+      __typename?: 'UserSavedTreeEntity'
+      tree: {
+        __typename?: 'TreeEntity'
+        id: string
+        name: string
+        viewed: number
+        createdAt: any
+        links?: Array<{ __typename?: 'LinkEntity'; id: string }> | null
+        user: {
+          __typename?: 'UserEntity'
+          id: string
+          name?: string | null
+          image?: string | null
+        }
+      }
+    }> | null
   } | null
 }
 
@@ -774,6 +791,22 @@ export const GetUserByIdDocument = gql`
         viewed
         createdAt
         isPublic
+      }
+      userSavedTrees {
+        tree {
+          id
+          name
+          links {
+            id
+          }
+          viewed
+          user {
+            id
+            name
+            image
+          }
+          createdAt
+        }
       }
     }
   }
