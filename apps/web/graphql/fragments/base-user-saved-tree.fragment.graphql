@@ -1,0 +1,5 @@
+fragment BaseUserSavedTree on UserSavedTreeEntity {
+  user {
+    id
+  }
+}

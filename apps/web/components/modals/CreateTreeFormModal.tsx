@@ -7,6 +7,7 @@ import { gqlErrorHandler } from '../../lib/error-handler'
 import { CreateTreeSchema } from '../../lib/input-validation'
 import { createTreeInputs } from '../../lib/inputs'
 import { InputField } from '../InputField'
+import { ToggleButtonInput } from '../ToggleButtonInput'
 import { BaseModal } from './BaseModal'
 import { ModalBackground } from './ModalBackground'
 
@@ -57,7 +58,11 @@ export const CreateTreeFormModal: React.FC<CreateTreeFormModalProps> = ({
           <Form>
             <div className="rounded-md space-y-4 text-left">
               {createTreeInputs.map((input, idx) => {
-                return <Field key={idx} {...input} component={InputField} />
+                if (input.type === 'checkbox') {
+                  return <ToggleButtonInput key={idx} {...input} />
+                } else {
+                  return <Field key={idx} {...input} component={InputField} />
+                }
               })}
             </div>
             {bottomErrors && (

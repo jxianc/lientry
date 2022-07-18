@@ -21,31 +21,33 @@ model Provider {
 }
 
 model User {
-  id           String    @id @default(uuid())
-  name         String?
-  email        String?   @unique
-  password     String?
-  image        String?
-  provider     Provider?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt()
-  refreshToken String?
-  trees        Tree[]
+  id             String          @id @default(uuid())
+  name           String?
+  email          String?         @unique
+  password       String?
+  image          String?
+  provider       Provider?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt()
+  refreshToken   String?
+  trees          Tree[]
+  userSavedTrees UserSavedTree[]
 
   @@map("users")
 }
 
 model Tree {
-  id          String   @id @default(cuid())
-  name        String
-  description String?
-  viewed      Int      @default(0)
-  isPublic    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt()
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      String
-  links       Link[]
+  id             String          @id @default(cuid())
+  name           String
+  description    String?
+  viewed         Int             @default(0)
+  isPublic       Boolean         @default(true)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt()
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String
+  links          Link[]
+  userSavedTrees UserSavedTree[]
 
   @@map("trees")
 }
@@ -56,9 +58,21 @@ model Link {
   description String?
   url         String
   createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  updatedAt   DateTime @updatedAt()
   tree        Tree     @relation(fields: [treeId], references: [id], onDelete: Cascade)
   treeId      String
 
   @@map("links")
+}
+
+model UserSavedTree {
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  treeId    String
+  tree      Tree     @relation(fields: [treeId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+
+  @@id([userId, treeId])
+  @@map("user_saved_tree")
 }

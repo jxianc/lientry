@@ -71,6 +71,8 @@ type Mutation {
   refreshToken: AuthResponse!
   register(registerUserInput: RegisterUserInput!): AuthResponse!
   removeTree(treeId: String!): BaseResponse!
+  saveTree(treeId: String!): BaseResponse!
+  unsaveTree(treeId: String!): BaseResponse!
   updateTree(CURLinksInput: EditLinksInput!, treeId: String!, updateTreeInfoInput: UpdateTreeInfoInput!): UpdateTreeResponse!
 }
 
@@ -109,6 +111,7 @@ type TreeEntity {
   name: String!
   updatedAt: DateTime!
   user: UserEntity!
+  userSavedTrees: [UserSavedTreeEntity!]
   viewed: Float!
 }
 
@@ -140,4 +143,12 @@ type UserEntity {
   provider: ProviderEntity
   trees: [TreeEntity!]
   updatedAt: DateTime!
+  userSavedTrees: [UserSavedTreeEntity!]
+}
+
+type UserSavedTreeEntity {
+  createdAt: DateTime!
+  tree: TreeEntity!
+  updatedAt: DateTime!
+  user: UserEntity!
 }

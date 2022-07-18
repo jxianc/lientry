@@ -3,6 +3,7 @@ import { User } from '@prisma/client'
 import { BaseEntity } from '../../base/base.entity'
 import { LinkEntity } from '../../links/entities/link.entity'
 import { UserEntity } from '../../users/entities/user.entity'
+import { UserSavedTreeEntity } from './user-saved-tree.entity'
 
 @ObjectType()
 export class TreeEntity extends BaseEntity {
@@ -26,4 +27,7 @@ export class TreeEntity extends BaseEntity {
 
   @Field(() => [LinkEntity], { nullable: true })
   links?: LinkEntity[] | null
+
+  @Field(() => [UserSavedTreeEntity], { nullable: true })
+  userSavedTrees?: UserSavedTreeEntity[] | null
 }

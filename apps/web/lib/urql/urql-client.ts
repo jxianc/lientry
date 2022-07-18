@@ -28,6 +28,9 @@ export const client = createClient({
     devtoolsExchange,
     dedupExchange,
     cacheExchange({
+      keys: {
+        UserSavedTreeEntity: () => null,
+      },
       updates: {
         Mutation: {
           login(_result, _args, cache, _info) {
@@ -80,6 +83,34 @@ export const client = createClient({
             const fields = cache
               .inspectFields(key)
               .filter((field) => field.fieldName === 'getUserById')
+              .forEach((field) => {
+                cache.invalidate(key, field.fieldName, field.arguments)
+              })
+          },
+          unsaveTree(_result, _args, cache, _info) {
+            const key = 'Query'
+            const fields = cache
+              .inspectFields(key)
+              .filter(
+                (field) =>
+                  field.fieldName === 'getUserById' ||
+                  field.fieldName === 'getRecentTrees' ||
+                  field.fieldName === 'getTrendingTrees',
+              )
+              .forEach((field) => {
+                cache.invalidate(key, field.fieldName, field.arguments)
+              })
+          },
+          saveTree(_result, _args, cache, _info) {
+            const key = 'Query'
+            const fields = cache
+              .inspectFields(key)
+              .filter(
+                (field) =>
+                  field.fieldName === 'getUserById' ||
+                  field.fieldName === 'getRecentTrees' ||
+                  field.fieldName === 'getTrendingTrees',
+              )
               .forEach((field) => {
                 cache.invalidate(key, field.fieldName, field.arguments)
               })

@@ -14,5 +14,8 @@ query GetRecentTrees($cursorId: String) {
     links {
       id
     }
+    userSavedTrees {
+      ...BaseUserSavedTree
+    }
   }
 }

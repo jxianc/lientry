@@ -1,0 +1,6 @@
+mutation SaveTree($treeId: String!) {
+  saveTree(treeId: $treeId) {
+    success
+    errMsg
+  }
+}

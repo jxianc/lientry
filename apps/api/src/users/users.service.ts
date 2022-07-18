@@ -96,6 +96,26 @@ export class UsersService {
                 },
               },
             },
+            userSavedTrees: {
+              where: {
+                userId: id,
+              },
+              orderBy: {
+                createdAt: 'asc',
+              },
+              include: {
+                tree: {
+                  include: {
+                    user: true,
+                    links: {
+                      orderBy: {
+                        createdAt: 'asc',
+                      },
+                    },
+                  },
+                },
+              },
+            },
           }
         : undefined,
     })
