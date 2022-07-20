@@ -156,7 +156,7 @@ const Dashboard: NextPage<DashboardProps> = ({}) => {
               type="created"
             />
             <DashboardTab
-              title={`${savedTreeElements.length} created trees`}
+              title={`${savedTreeElements.length} saved trees`}
               type="saved"
             />
           </div>
