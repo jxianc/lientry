@@ -9,6 +9,8 @@ import {
   setLinksAtom,
   setTreeInfoAtom,
 } from '../lib/atom/draft-tree.atom'
+import { ErrorAlert, setErrorAlertsAtom } from '../lib/atom/error-alerts.atom'
+import { gqlErrorHandler } from '../lib/error-handler'
 import { saveLinks } from '../lib/save-links'
 
 interface DraftLayoutProps {
@@ -26,6 +28,7 @@ export const DraftLayout: React.FC<DraftLayoutProps> = ({ children }) => {
   const [treeInfo, _setTreeInfo] = useAtom(setTreeInfoAtom)
   const [links, _setLinks] = useAtom(setLinksAtom)
   const [editedTree, setEditedTree] = useAtom(setEditedTreeAtom)
+  const [errorAlerts, setErrorAlerts] = useAtom(setErrorAlertsAtom)
 
   // useState
   const [modalIsOpen, setModalIsOpen] = useState(false)
@@ -60,8 +63,12 @@ export const DraftLayout: React.FC<DraftLayoutProps> = ({ children }) => {
                 onClick={async () => {
                   if (editedTree) {
                     if (!(treeInfo && treeInfo.id)) {
-                      // TODO no tree id, should throw an error here
-                      console.error('no tree id')
+                      setErrorAlerts(
+                        errorAlerts.concat({
+                          index: errorAlerts.length,
+                          message: 'tree not found',
+                        }),
+                      )
                       return
                     }
 
@@ -80,7 +87,20 @@ export const DraftLayout: React.FC<DraftLayoutProps> = ({ children }) => {
                       router.back()
                     }
 
-                    // TODO handle error
+                    if (error) {
+                      const errMsgs = gqlErrorHandler(error.graphQLErrors)
+
+                      setErrorAlerts(
+                        errorAlerts.concat(
+                          errMsgs.map(
+                            (message, index): ErrorAlert => ({
+                              index: index + errorAlerts.length,
+                              message,
+                            }),
+                          ),
+                        ),
+                      )
+                    }
                   } else {
                     // tree is not edited, just go back
                     router.back()

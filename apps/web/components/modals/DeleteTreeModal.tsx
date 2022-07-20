@@ -1,6 +1,12 @@
+import { useAtom } from 'jotai'
 import { useRouter } from 'next/router'
 import React, { useRef } from 'react'
 import { useRemoveTreeMutation } from '../../generated/graphql'
+import {
+  setErrorAlertsAtom,
+  ErrorAlert,
+} from '../../lib/atom/error-alerts.atom'
+import { gqlErrorHandler } from '../../lib/error-handler'
 import { BaseModal } from './BaseModal'
 
 interface DeleteTreeModalProps {
@@ -22,6 +28,9 @@ export const DeleteTreeModal: React.FC<DeleteTreeModalProps> = ({
 
   // useRef
   const cancelButtonRef = useRef(null)
+
+  // jotai
+  const [errorAlerts, setErrorAlerts] = useAtom(setErrorAlertsAtom)
 
   return (
     <BaseModal
@@ -56,7 +65,20 @@ export const DeleteTreeModal: React.FC<DeleteTreeModalProps> = ({
               router.push('/dashboard')
             }
 
-            // TODO handle error
+            if (error) {
+              const errMsgs = gqlErrorHandler(error.graphQLErrors)
+
+              setErrorAlerts(
+                errorAlerts.concat(
+                  errMsgs.map(
+                    (message, index): ErrorAlert => ({
+                      index: index + errorAlerts.length,
+                      message,
+                    }),
+                  ),
+                ),
+              )
+            }
           }}
         >
           delete

@@ -10,6 +10,12 @@ import { Badge } from '../badges/Badge'
 import { StatsBadge } from '../badges/StatsBadge'
 import { useRouter } from 'next/router'
 import { useUnsaveTreeMutation } from '../../generated/graphql'
+import { useAtom } from 'jotai'
+import {
+  ErrorAlert,
+  setErrorAlertsAtom,
+} from '../../lib/atom/error-alerts.atom'
+import { gqlErrorHandler } from '../../lib/error-handler'
 
 interface DashboardSavedTreeCardProps {
   treeId: string
@@ -34,6 +40,7 @@ export const DashboardSavedTreeCard: React.FC<DashboardSavedTreeCardProps> = ({
 }) => {
   const router = useRouter()
   const [__, execUnsaveTree] = useUnsaveTreeMutation()
+  const [errorAlerts, setErrorAlerts] = useAtom(setErrorAlertsAtom)
 
   return (
     <TreeCardLayout>
@@ -61,7 +68,20 @@ export const DashboardSavedTreeCard: React.FC<DashboardSavedTreeCardProps> = ({
               clickHandler: async () => {
                 const { data, error } = await execUnsaveTree({ treeId })
                 if (error) {
-                  // TODO handle error here
+                  const errMsgs = gqlErrorHandler(error.graphQLErrors)
+
+                  // TODO handle not logged in error here
+
+                  setErrorAlerts(
+                    errorAlerts.concat(
+                      errMsgs.map(
+                        (message, index): ErrorAlert => ({
+                          index: index + errorAlerts.length,
+                          message,
+                        }),
+                      ),
+                    ),
+                  )
                 }
               },
             },

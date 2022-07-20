@@ -1,3 +1,4 @@
+import { useAtom } from 'jotai'
 import Image from 'next/image'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
@@ -8,7 +9,12 @@ import {
   useSaveTreeMutation,
   useUnsaveTreeMutation,
 } from '../../generated/graphql'
+import {
+  ErrorAlert,
+  setErrorAlertsAtom,
+} from '../../lib/atom/error-alerts.atom'
 import { formatDate } from '../../lib/date'
+import { gqlErrorHandler } from '../../lib/error-handler'
 import { Badge } from '../badges/Badge'
 import { StatsBadge } from '../badges/StatsBadge'
 import { TreeCardLayout } from './layouts/TreeCardLayout'
@@ -45,6 +51,9 @@ export const TreeCard: React.FC<TreeCardProps> = ({
   // useState
   const [isSaved, setIsSaved] = useState(isSavedFromProps)
 
+  // jotai
+  const [errorAlerts, setErrorAlerts] = useAtom(setErrorAlertsAtom)
+
   // mutation
   const [_, execSaveTree] = useSaveTreeMutation()
   const [__, execUnsaveTree] = useUnsaveTreeMutation()
@@ -70,7 +79,20 @@ export const TreeCard: React.FC<TreeCardProps> = ({
                   treeId,
                 })
                 if (error) {
-                  // TODO handle error here
+                  const errMsgs = gqlErrorHandler(error.graphQLErrors)
+
+                  // TODO handle not logged in error here
+
+                  setErrorAlerts(
+                    errorAlerts.concat(
+                      errMsgs.map(
+                        (message, index): ErrorAlert => ({
+                          index: index + errorAlerts.length,
+                          message,
+                        }),
+                      ),
+                    ),
+                  )
                 }
 
                 if (data?.unsaveTree.success) {
@@ -83,7 +105,20 @@ export const TreeCard: React.FC<TreeCardProps> = ({
                 })
 
                 if (error) {
-                  // TODO handle error here
+                  const errMsgs = gqlErrorHandler(error.graphQLErrors)
+
+                  // TODO handle not logged in error here
+
+                  setErrorAlerts(
+                    errorAlerts.concat(
+                      errMsgs.map(
+                        (message, index): ErrorAlert => ({
+                          index: index + errorAlerts.length,
+                          message,
+                        }),
+                      ),
+                    ),
+                  )
                 }
 
                 if (data?.saveTree.success) {
