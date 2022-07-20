@@ -1,6 +1,7 @@
 import { atom } from 'jotai'
 
 interface ErrorAlert {
+  index: number
   message: string
 }
 

@@ -9,7 +9,7 @@ interface MainLayoutProps {
 }
 
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  const [errorAlerts, setErrorAlerts] = useAtom(setErrorAlertsAtom)
+  const [errorAlerts, _setErrorAlerts] = useAtom(setErrorAlertsAtom)
 
   return (
     <div className="bg-white dark:bg-li-gray-1500">
