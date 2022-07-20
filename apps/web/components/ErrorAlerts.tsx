@@ -3,12 +3,15 @@ import React from 'react'
 import { MdClose, MdError } from 'react-icons/md'
 import { ErrorAlert, setErrorAlertsAtom } from '../lib/atom/error-alerts.atom'
 
-interface ErroAlertProps {
+interface ErrorAlertProps {
   message: string
   index: number
 }
 
-export const ErroAlert: React.FC<ErroAlertProps> = ({ message, index }) => {
+export const ErrorAlertElement: React.FC<ErrorAlertProps> = ({
+  message,
+  index,
+}) => {
   // jotai
   const [errorAlerts, setErrorAlerts] = useAtom(setErrorAlertsAtom)
 
@@ -31,16 +34,16 @@ export const ErroAlert: React.FC<ErroAlertProps> = ({ message, index }) => {
   )
 }
 
-interface ErrorAlertProps {
+interface ErrorAlertsProps {
   errors: ErrorAlert[]
 }
 
-export const ErrorAlerts: React.FC<ErrorAlertProps> = ({ errors }) => {
+export const ErrorAlerts: React.FC<ErrorAlertsProps> = ({ errors }) => {
   return (
     <div className="flex justify-center">
       <div className="fixed w-[36rem] space-y-4">
         {errors.map((error) => (
-          <ErroAlert
+          <ErrorAlertElement
             key={error.index}
             message={error.message}
             index={error.index}
