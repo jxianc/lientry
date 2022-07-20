@@ -107,14 +107,16 @@ export class TreesService {
       include: {
         user: true,
         links: true,
-        userSavedTrees: {
-          where: {
-            userId,
-          },
-          include: {
-            user: true,
-          },
-        },
+        userSavedTrees: userId
+          ? {
+              where: {
+                userId,
+              },
+              include: {
+                user: true,
+              },
+            }
+          : false,
       },
       take: 10,
       skip: cursorId ? 1 : undefined,
@@ -145,14 +147,16 @@ export class TreesService {
       include: {
         user: true,
         links: true,
-        userSavedTrees: {
-          where: {
-            userId,
-          },
-          include: {
-            user: true,
-          },
-        },
+        userSavedTrees: userId
+          ? {
+              where: {
+                userId,
+              },
+              include: {
+                user: true,
+              },
+            }
+          : false,
       },
       take: 10,
       skip: cursorId ? 1 : undefined,
